@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 6 ELA | Peer Revision Practice | Georgia Milestones</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1a3a5c; --gold:#c8973a; --gold-light:#f0d28a;
+  --green:#1a7a4a; --blue:#2563a8; --purple:#6d28d9; --teal:#0891b2;
+  --gray-100:#f4f6f9; --gray-200:#e2e8f0; --gray-400:#94a3b8;
+  --gray-700:#334155; --white:#ffffff; --passage-bg:#fefdf8; --passage-border:#d4c89a;
+  --header-h:66px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'DM Sans',sans-serif;background:var(--gray-100);color:var(--gray-700);}
+
+/* HEADER */
+.sim-header{background:var(--navy);border-bottom:4px solid var(--gold);position:sticky;top:0;z-index:100;}
+.header-inner{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.header-title{font-family:'Libre Baskerville',serif;font-size:1.05rem;font-weight:700;color:white;line-height:1.3;}
+.header-title span{display:block;font-size:.72rem;font-weight:400;font-family:'DM Sans',sans-serif;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase;}
+.progress-wrap{display:flex;align-items:center;gap:10px;}
+.progress-bar-outer{width:160px;height:8px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;}
+.progress-bar-inner{height:100%;background:var(--gold);border-radius:4px;transition:width .4s ease;width:0%;}
+#progress-label{color:var(--gold-light);font-size:.78rem;white-space:nowrap;}
+
+/* SCREENS */
+.screen{display:none;}
+.screen.active{display:block;}
+#screen-sim.active{display:block;}
+
+/* INTRO */
+#screen-intro{max-width:620px;margin:60px auto;padding:0 20px;}
+.intro-card{background:white;border-radius:12px;border:1px solid var(--gray-200);box-shadow:0 4px 24px rgba(0,0,0,.08);overflow:hidden;}
+.intro-hero{background:var(--navy);padding:32px 36px 28px;color:white;}
+.intro-hero h1{font-family:'Libre Baskerville',serif;font-size:1.5rem;line-height:1.35;margin-bottom:6px;}
+.intro-hero p{font-size:.85rem;color:var(--gold-light);letter-spacing:.04em;text-transform:uppercase;}
+.intro-body{padding:32px 36px;}
+.intro-body h2{font-family:'Libre Baskerville',serif;font-size:1rem;color:var(--navy);margin-bottom:16px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
+.info-chip{background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:12px 14px;font-size:.82rem;}
+.info-chip strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:3px;}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--navy);margin-bottom:6px;}
+.form-group input,.form-group select{width:100%;padding:11px 14px;border:2px solid var(--gray-200);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--gray-700);background:white;transition:border-color .2s;outline:none;}
+.form-group input:focus,.form-group select:focus{border-color:var(--navy);}
+.btn-start{width:100%;padding:14px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s;}
+.btn-start:hover{background:#0f2540;}
+.vocab-note{margin-top:16px;padding:12px 14px;background:#fff8e6;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:.8rem;line-height:1.5;color:#5a4010;}
+
+/* SIM LAYOUT */
+#screen-sim{display:block;}
+.sim-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  height:calc(100vh - var(--header-h));
+  overflow:hidden;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+/* PASSAGE */
+.passage-panel{
+  background:var(--passage-bg);
+  border-right:1px solid var(--passage-border);
+  border-radius:0;
+  padding:28px;
+  overflow-y:auto;
+  height:100%;
+}
+.passage-panel::-webkit-scrollbar{width:5px;}
+.passage-panel::-webkit-scrollbar-thumb{background:var(--passage-border);border-radius:4px;}
+
+/* QUESTIONS COLUMN */
+#questions-container{
+  overflow-y:auto;
+  height:100%;
+  padding:24px 20px 100px;
+}
+.passage-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;}
+.passage-scenario{background:white;border:1px solid var(--passage-border);border-radius:8px;padding:14px 16px;margin-bottom:18px;font-size:.82rem;line-height:1.6;color:#4a3c10;}
+.passage-scenario strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:5px;}
+.passage-title{font-family:'Libre Baskerville',serif;font-size:1.05rem;color:var(--navy);margin-bottom:6px;line-height:1.3;}
+.source-tag{display:inline-block;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:white;background:var(--navy);padding:2px 8px;border-radius:10px;margin-bottom:12px;}
+.passage-text{font-size:.87rem;line-height:1.75;color:#333;}
+.passage-text p{margin-bottom:12px;}
+.passage-divider{border:none;border-top:2px dashed var(--passage-border);margin:18px 0;}
+.model-essay{font-family:'Libre Baskerville',serif;font-size:.85rem;line-height:1.8;color:#333;}
+.model-essay p{margin-bottom:14px;}
+
+/* QUESTIONS */
+.question-block{background:white;border:1px solid var(--gray-200);border-radius:10px;padding:22px 24px;margin-bottom:16px;transition:box-shadow .2s;}
+.question-block:hover{box-shadow:0 2px 12px rgba(0,0,0,.07);}
+.question-block.answered{border-left:4px solid var(--navy);}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.q-num{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);background:var(--gray-100);padding:2px 8px;border-radius:10px;}
+.q-domain{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:white;padding:2px 8px;border-radius:10px;}
+.domain-tech{background:#7c3aed;} .domain-struct{background:#0891b2;} .domain-arg{background:#d97706;} .domain-lang{background:#059669;}
+.q-dok{font-size:.66rem;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-left:auto;}
+.q-stem{font-size:.9rem;line-height:1.55;color:var(--gray-700);margin-bottom:14px;font-weight:500;}
+
+/* SELECTED RESPONSE */
+.options-list{list-style:none;}
+.options-list li{margin-bottom:8px;}
+.option-btn{width:100%;text-align:left;padding:10px 14px;border:2px solid var(--gray-200);border-radius:8px;background:white;font-family:'DM Sans',sans-serif;font-size:.87rem;color:var(--gray-700);cursor:pointer;line-height:1.45;transition:border-color .15s,background .15s;display:flex;align-items:flex-start;gap:10px;}
+.option-btn:hover{border-color:var(--navy);background:var(--gray-100);}
+.option-btn.selected{border-color:var(--navy);background:#eef3fb;}
+.opt-letter{font-weight:700;font-size:.78rem;min-width:20px;height:20px;border-radius:50%;background:var(--gray-200);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.option-btn.selected .opt-letter{background:var(--navy);color:white;}
+
+/* MULTI-SELECT */
+.multiselect-note{font-size:.75rem;color:var(--blue);font-weight:600;margin-bottom:10px;padding:6px 10px;background:#eff6ff;border-radius:6px;border-left:3px solid var(--blue);}
+.option-check{width:100%;text-align:left;padding:9px 14px;border:2px solid var(--gray-200);border-radius:8px;background:white;font-family:'DM Sans',sans-serif;font-size:.87rem;color:var(--gray-700);cursor:pointer;line-height:1.45;transition:all .15s;display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.option-check:hover{border-color:var(--navy);}
+.option-check.checked{border-color:var(--navy);background:#eef3fb;}
+.check-box{width:18px;height:18px;border:2px solid var(--gray-400);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;}
+.option-check.checked .check-box{border-color:var(--navy);background:var(--navy);color:white;}
+
+/* INLINE DROPDOWN */
+.inline-sentence{font-size:.9rem;line-height:1.7;color:var(--gray-700);margin-bottom:10px;}
+.inline-dropdown{display:inline-block;position:relative;}
+.inline-dropdown select{appearance:none;-webkit-appearance:none;padding:4px 28px 4px 10px;border:2px solid var(--navy);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--navy);background:#eef3fb;cursor:pointer;outline:none;min-width:200px;}
+.inline-dropdown::after{content:"▾";position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--navy);font-size:.8rem;}
+.dropdown-selected{border-color:var(--navy) !important;background:#eef3fb !important;}
+
+/* MATCHING TABLE */
+.match-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:6px;}
+.match-table th{background:var(--navy);color:white;padding:9px 10px;text-align:center;font-weight:600;font-size:.76rem;border:1px solid #2a4a6c;}
+.match-table th:first-child{text-align:left;min-width:180px;}
+.match-table td{padding:9px 10px;border:1px solid var(--gray-200);vertical-align:middle;}
+.match-table td:first-child{font-size:.84rem;color:var(--gray-700);background:var(--gray-100);}
+.match-table td:not(:first-child){text-align:center;}
+.match-table tr:nth-child(even) td{background:white;}
+.match-table tr:nth-child(odd) td{background:#fafbfc;}
+.match-table tr:nth-child(even) td:first-child{background:var(--gray-100);}
+.match-radio{width:18px;height:18px;cursor:pointer;accent-color:var(--navy);}
+.match-table tr.row-answered td:first-child{font-weight:600;color:var(--navy);}
+
+/* DRAG & DROP */
+.drag-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.drag-item{padding:7px 14px;background:var(--navy);color:white;border-radius:20px;font-size:.82rem;cursor:grab;user-select:none;transition:transform .15s,opacity .15s;}
+.drag-item:active{cursor:grabbing;transform:scale(1.05);}
+.drag-item.placed{opacity:.35;pointer-events:none;}
+.drop-slots-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
+.drop-slot-wrap .slot-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-400);margin-bottom:4px;display:block;}
+.drop-slot{min-height:36px;border:2px dashed var(--gray-400);border-radius:6px;padding:5px 10px;font-size:.82rem;color:var(--gray-400);background:var(--gray-100);transition:all .15s;display:flex;align-items:center;}
+.drop-slot.filled{border-style:solid;border-color:var(--navy);background:white;color:var(--gray-700);}
+.drop-slot.drag-over{border-color:var(--blue);background:#eff6ff;}
+
+/* VOCAB FLAG */
+.q-actions{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--gray-100);}
+.btn-vocab-flag{padding:7px 14px;border:2px solid var(--gold);background:white;color:#7a5a00;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.btn-vocab-flag:hover{background:#fff8e6;}
+.btn-vocab-flag.flagged{background:#fff8e6;border-color:#b8860b;}
+.answered-check{font-size:.78rem;color:var(--navy);font-weight:600;margin-left:auto;opacity:0;}
+.question-block.answered .answered-check{opacity:1;}
+
+/* BOTTOM BAR */
+.submit-all-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:2px solid var(--gray-200);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;box-shadow:0 -4px 16px rgba(0,0,0,.08);}
+.submit-status{font-size:.84rem;color:var(--gray-400);}
+.submit-status strong{color:var(--navy);}
+.btn-finish{padding:12px 32px;background:var(--green);color:white;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s;}
+.btn-finish:hover:not(:disabled){background:#125e38;}
+.btn-finish:disabled{background:var(--gray-400);cursor:default;}
+
+/* RESULTS */
+#screen-results{max-width:760px;margin:40px auto;padding:0 20px 60px;}
+.results-hero{background:var(--navy);border-radius:12px 12px 0 0;padding:32px 36px;color:white;text-align:center;border-bottom:4px solid var(--gold);}
+.results-hero h2{font-family:'Libre Baskerville',serif;font-size:1.5rem;margin-bottom:4px;}
+.student-name-result{font-size:1rem;color:var(--gold-light);margin-bottom:24px;}
+.score-circle{width:130px;height:130px;border-radius:50%;border:6px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px;background:rgba(255,255,255,.08);}
+.score-pct{font-size:2.2rem;font-weight:700;line-height:1;}
+.score-raw{font-size:.8rem;color:var(--gold-light);margin-top:4px;}
+.achievement-badge{display:inline-block;padding:6px 20px;border-radius:20px;font-size:.9rem;font-weight:700;letter-spacing:.04em;}
+.badge-distinguished{background:#1a8c4e;color:white;} .badge-proficient{background:#2e7bbf;color:white;}
+.badge-developing{background:#e0a800;color:#000;} .badge-beginning{background:#c0392b;color:white;}
+.results-body{background:white;border:1px solid var(--gray-200);border-top:none;border-radius:0 0 12px 12px;padding:32px 36px;}
+.results-section{margin-bottom:28px;}
+.results-section h3{font-family:'Libre Baskerville',serif;font-size:1rem;color:var(--navy);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--gray-200);}
+.domain-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.domain-card{background:var(--gray-100);border-radius:8px;padding:14px 16px;}
+.domain-card .d-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin-bottom:8px;}
+.domain-bar-outer{height:8px;background:var(--gray-200);border-radius:4px;overflow:hidden;margin-bottom:6px;}
+.domain-bar-inner{height:100%;border-radius:4px;}
+.domain-card .d-score{font-size:.8rem;color:var(--gray-700);}
+.dok-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:.85rem;}
+.dok-label{width:60px;font-weight:600;color:var(--navy);flex-shrink:0;}
+.dok-bar-outer{flex:1;height:10px;background:var(--gray-200);border-radius:5px;overflow:hidden;}
+.dok-bar-inner{height:100%;border-radius:5px;background:var(--navy);}
+.dok-score{width:55px;text-align:right;color:var(--gray-400);flex-shrink:0;}
+.vocab-flags-list{display:flex;flex-wrap:wrap;gap:8px;}
+.vocab-flag-chip{padding:5px 12px;background:#fff8e6;border:1px solid var(--gold);border-radius:16px;font-size:.8rem;color:#7a5a00;}
+.no-flags{font-size:.85rem;color:var(--gray-400);font-style:italic;}
+.results-note{padding:14px 16px;background:#fff8e6;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.6;color:#5a4010;margin-top:16px;}
+.submit-msg{padding:12px 16px;border-radius:8px;font-size:.84rem;margin-top:20px;text-align:center;}
+.submit-msg.success{background:#e8f7ee;color:#155a35;border:1px solid #a8d5bb;}
+.submit-msg.error{background:#fdecea;color:#7a1f1f;border:1px solid #f5b3ae;}
+.submit-msg.sending{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;}
+
+@media(max-width:768px){
+  .sim-layout{grid-template-columns:1fr;height:auto;overflow:visible;}
+  .passage-panel{height:50vh;border-right:none;border-bottom:1px solid var(--passage-border);border-radius:10px 10px 0 0;}
+  #questions-container{height:auto;overflow:visible;padding:16px 12px 100px;}
+  .domain-grid{grid-template-columns:1fr;}
+  .info-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="sim-header">
+  <div class="header-inner">
+    <div class="header-title">
+      <span>Georgia Milestones EOG Practice</span>
+      Grade 6 ELA · Peer Revision Task
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar"></div></div>
+      <span id="progress-label">0 / 20</span>
+    </div>
+  </div>
+</header>
+
+<!-- INTRO -->
+<div id="screen-intro" class="screen active">
+  <div style="max-width:620px;margin:60px auto;padding:0 20px;">
+    <div class="intro-card">
+      <div class="intro-hero">
+        <h1>ELA Peer Revision<br>Practice Simulation</h1>
+        <p>Grade 6 · Georgia Milestones EOG Format</p>
+      </div>
+      <div class="intro-body">
+        <h2>About This Practice</h2>
+        <div class="info-grid">
+          <div class="info-chip"><strong>Questions</strong>20 items</div>
+          <div class="info-chip"><strong>Format</strong>Selected Response, Multi-Select, Dropdown, Matching, Drag &amp; Drop</div>
+          <div class="info-chip"><strong>Topic</strong>Peer Revision — Argumentative Writing</div>
+          <div class="info-chip"><strong>Standards</strong>6.T.T.3, 6.T.SS.1–2, 6.L.V.1–3, 6.L.GC.2</div>
+        </div>
+        <div class="form-group">
+          <label for="student-name">Your Full Name</label>
+          <input type="text" id="student-name" placeholder="First Last" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="student-period">Class Period</label>
+          <select id="student-period">
+            <option value="">— Select Period —</option>
+            <option>1st</option><option>2nd</option><option>3rd</option>
+            <option>4th</option><option>5th</option><option>6th</option><option>7th</option>
+          </select>
+        </div>
+        <button class="btn-start" onclick="startSim()">Begin Practice →</button>
+        <div class="vocab-note">🏳 <strong>Vocabulary Flag:</strong> If a question is hard because of a word you don't know, tap the flag. Your teacher uses this to plan vocabulary lessons.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIM -->
+<div id="screen-sim" class="screen">
+  <div class="sim-layout">
+    <div class="passage-panel">
+      <div class="passage-label">📄 Read — Then Answer the Questions</div>
+      <div class="passage-scenario"><strong>Scenario</strong>You are a student reporter for your school newspaper. Research whether young people should take action to protect the environment and write an article convincing other students why it matters.</div>
+
+      <div class="passage-title">Source 1: "What Is Climate Change — and Why It Matters"</div>
+      <span class="source-tag">Informational Text</span>
+      <div class="passage-text">
+        <p>Climate change refers to long-term shifts in the Earth's average weather patterns — including temperature, rainfall, seasons, and other climate conditions. Unlike weather (which changes day to day), climate describes what is typical over decades or more.</p>
+        <p>Scientists have observed that the Earth is warming. Data collected by satellites, weather stations, ice measurements, and ocean monitoring all show increases in global average temperature, melting glaciers and sea ice, rising sea levels, and changes in precipitation patterns.</p>
+        <p>A major reason for this change is the increase of "greenhouse gases" in Earth's atmosphere — gases like carbon dioxide (CO₂), methane (CH₄), nitrous oxide (N₂O), and certain industrial gases. These gases act like a blanket around the Earth: when sunlight reaches Earth it warms the surface, and normally some of that heat would radiate back to space. But greenhouse gases absorb and trap part of the heat, preventing it from escaping, which keeps the planet warmer.</p>
+        <p>Human activities over the past 150–200 years — especially since the Industrial Revolution — have greatly increased emissions of greenhouse gases. Because of this extra heat, the Earth's climate is changing faster than natural cycles would, with serious consequences including stronger storms, rising sea levels, and threats to wildlife and human health.</p>
+      </div>
+      <hr class="passage-divider">
+
+      <div class="passage-title">Source 2: "Why Reducing Waste and Recycling Helps Our Planet"</div>
+      <span class="source-tag">Informational Text</span>
+      <div class="passage-text">
+        <p>Every day, people use lots of materials — paper, plastic, metal, glass — and many of these become waste when we throw them away. But recycling and reducing waste can make a big difference. When we recycle, we reuse materials instead of extracting new ones, conserving natural resources and protecting forests, water supplies, and minerals.</p>
+        <p>Recycling also reduces greenhouse-gas emissions. The process of creating new products from virgin raw materials often consumes lots of energy and releases carbon dioxide. By contrast, recycling usually uses less energy — which helps lower pollution and slow down climate change.</p>
+        <p>Finally, recycling supports a more sustainable way of living: a "circular economy," where materials are reused rather than wasted. This not only helps the environment but can also support jobs in recycling and manufacturing, and encourage responsible use of resources so future generations can continue to live on a healthy planet.</p>
+      </div>
+      <hr class="passage-divider">
+
+      <div class="passage-title">Model Essay — Student Reporter Response</div>
+      <span class="source-tag">Argumentative Writing Sample</span>
+      <div class="model-essay">
+        <p>As our world changes, it is more important than ever for young people — and especially students — to take action to protect the environment. Climate change is not a distant problem for adults only; it affects all of us, and we have the power to help.</p>
+        <p>According to environmental scientists, rising global temperatures are caused largely by human emissions of greenhouse gases from burning fossil fuels and other harmful activities. (Source 1) This warming leads to severe weather, rising sea levels, and threats to wildlife and human health. If we do nothing, future generations may face much worse conditions.</p>
+        <p>But we don't have to wait for someone else to fix things. Simple everyday actions can make a real difference. Recycling paper, plastic, and glass; reducing waste by reusing items; and conserving energy by turning off lights when not in use are effective steps that everyone can do — even students. (Source 2) Families who recycle, reduce waste, and conserve energy help lower pollution and lessen environmental impact.</p>
+        <p>Moreover, planting trees, using less energy at home, and choosing more eco-friendly transportation — like walking or biking when possible — are all practical ways we can help right now. By doing these things, we show we care about our planet — and we help make it healthier for everyone.</p>
+        <p>Because we all share this Earth, students and families should act now. Even small steps — recycling, conserving energy, planting trees — add up to big changes over time. If each of us does our part, we can help prevent worse effects of climate change, protect wildlife, and secure a safer, cleaner future. Let's make a difference — starting today.</p>
+      </div>
+    </div>
+
+    <div id="questions-container"></div>
+  </div>
+
+  <div class="submit-all-bar">
+    <div class="submit-status">Answered: <strong id="answered-count">0</strong> of <strong>20</strong></div>
+    <button class="btn-finish" id="btn-finish" onclick="finishSim()" disabled>Submit &amp; See Results →</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="screen-results" class="screen">
+  <div class="results-hero">
+    <h2>Practice Complete!</h2>
+    <div class="student-name-result" id="result-name"></div>
+    <div class="score-circle">
+      <div class="score-pct" id="result-pct">--</div>
+      <div class="score-raw" id="result-raw">-- / --</div>
+    </div>
+    <div id="result-badge"></div>
+  </div>
+  <div class="results-body">
+    <div class="results-section"><h3>Performance by Domain</h3><div class="domain-grid" id="domain-grid"></div></div>
+    <div class="results-section"><h3>Performance by DOK Level</h3><div id="dok-breakdown"></div></div>
+    <div class="results-section"><h3>🚩 Vocabulary Flags</h3><div id="vocab-flag-summary"></div></div>
+    <div id="submit-msg" class="submit-msg sending">Sending results to your teacher…</div>
+    <div class="results-note"><strong>What's next?</strong> Review any missed questions. Pay attention to vocabulary flags — those words will appear on the real EOG.</div>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5Lnma0nsVruhq1gsEGjtnGN582xOcNXP0ycn6o6e3sPqGBAkzpwJGLOzFemPoy03J/exec";
+
+// ─── QUESTION BANK ────────────────────────────────────────────
+// Types: sr=selected response, ms=multi-select, dd=drag-drop, dropdown=inline dropdown, match=matching table
+const QUESTIONS = [
+  // DOK 1
+  {id:"Q1",dok:1,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"sr",
+   stem:"Which sentence from the model essay states the author's <strong>claim</strong>?",
+   options:[
+     {text:"Simple everyday actions can make a real difference.",correct:false},
+     {text:"As our world changes, it is more important than ever for young people to take action to protect the environment.",correct:true},
+     {text:"Because we all share this Earth, students and families should act now.",correct:false},
+     {text:"If each of us does our part, we can help prevent worse effects of climate change.",correct:false}
+   ],
+   vocabTerm:"claim — the writer's main argument or position"},
+
+  {id:"Q2",dok:1,domain:"lang",domainLabel:"Language & Vocab",domainClass:"domain-lang",type:"sr",
+   stem:"Read this sentence from Source 1:<br><em>\"These gases act like a blanket around the Earth.\"</em><br><br>What type of figurative language is used?",
+   options:[
+     {text:"Personification",correct:false},
+     {text:"Hyperbole",correct:false},
+     {text:"Simile",correct:true},
+     {text:"Alliteration",correct:false}
+   ],
+   vocabTerm:"simile — a comparison using 'like' or 'as'"},
+
+  // DOK 2
+  {id:"Q3",dok:2,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"sr",
+   stem:"Which revision would <strong>best strengthen</strong> the model essay's second body paragraph?",
+   options:[
+     {text:"Add a new paragraph about the history of recycling.",correct:false},
+     {text:"Include a specific statistic from Source 2 about how much energy recycling saves.",correct:true},
+     {text:"Remove the citation (Source 2) so the paragraph flows better.",correct:false},
+     {text:"Replace the paragraph with a poem about recycling.",correct:false}
+   ],
+   vocabTerm:"evidence — specific facts, details, or data used to support a claim"},
+
+  {id:"Q4",dok:2,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"sr",
+   stem:"The word <strong>\"Moreover\"</strong> begins the fourth paragraph of the model essay. What is its purpose?",
+   options:[
+     {text:"To introduce a counterclaim",correct:false},
+     {text:"To signal a contrasting idea",correct:false},
+     {text:"To add an additional supporting point",correct:true},
+     {text:"To signal the conclusion is beginning",correct:false}
+   ],
+   vocabTerm:"transition — a word or phrase that connects ideas between sentences or paragraphs"},
+
+  {id:"Q5",dok:2,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"sr",
+   stem:"A peer reviewer says the model essay needs a <strong>counterclaim</strong>. Which option best fits that role?",
+   options:[
+     {text:"Some people argue that individual actions are too small to make a meaningful difference against climate change.",correct:true},
+     {text:"Climate change is caused by greenhouse gases.",correct:false},
+     {text:"Students should recycle more often.",correct:false},
+     {text:"The planet is getting warmer every year.",correct:false}
+   ],
+   vocabTerm:"counterclaim — an opposing argument the writer then addresses and refutes"},
+
+  {id:"Q6",dok:2,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"sr",
+   stem:"Which sentence from the model essay <strong>best</strong> serves as the concluding statement?",
+   options:[
+     {text:"Even small steps — recycling, conserving energy, planting trees — add up to big changes over time.",correct:false},
+     {text:"Let's make a difference — starting today.",correct:true},
+     {text:"Because we all share this Earth, students and families should act now.",correct:false},
+     {text:"By doing these things, we show we care about our planet.",correct:false}
+   ],
+   vocabTerm:"conclusion — the ending section of a text that wraps up the argument"},
+
+  // Inline Dropdown
+  {id:"Q7",dok:2,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"dropdown",
+   stem:"Select the best revision to make the introduction more engaging:",
+   prefix:'Replace "As our world changes, it is more important than ever …" with',
+   options:[
+     {text:"Every day, we see changes in Earth's weather — hotter summers, stronger storms, melting ice caps. Could that be your future if we don't act now?",correct:true},
+     {text:"Climate change is a serious issue that needs to be addressed by everyone.",correct:false},
+     {text:"Many people are talking about climate change these days.",correct:false},
+     {text:"In conclusion, we must all try to help the environment.",correct:false}
+   ],
+   vocabTerm:"hook — an engaging opening that draws the reader into the text"},
+
+  // Matching Table
+  {id:"Q8",dok:2,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"match",
+   stem:"Match each suggested revision with the purpose it serves:",
+   rows:[
+     {label:"Add a statistic about rising temperatures",correct:"Adds supporting facts/details"},
+     {label:"Use a personal anecdote — e.g., a student planting a tree",correct:"Hooks the reader; makes it personal"},
+     {label:"Insert a transition phrase \"However, ...\" before the counterargument",correct:"Improves the flow & readability"},
+     {label:"Add a sentence crediting sources when using facts or quotes",correct:"Improves credibility"}
+   ],
+   columns:["Hooks the reader; makes it personal","Improves credibility","Improves the flow & readability","Adds supporting facts/details"],
+   vocabTerm:"revision — a change made to a draft to improve its clarity, structure, or support"},
+
+  {id:"Q9",dok:2,domain:"lang",domainLabel:"Language & Vocab",domainClass:"domain-lang",type:"sr",
+   stem:"The word <strong>\"emissions\"</strong> in Source 1 refers to:",
+   options:[
+     {text:"Gases or pollutants released into the atmosphere",correct:true},
+     {text:"Government rules about pollution",correct:false},
+     {text:"The removal of harmful gases from the air",correct:false},
+     {text:"Natural weather patterns",correct:false}
+   ],
+   vocabTerm:"emissions — gases or pollutants released into the air from human activities"},
+
+  {id:"Q10",dok:2,domain:"tech",domainLabel:"Techniques",domainClass:"domain-tech",type:"sr",
+   stem:"Which revision would <strong>best improve the introduction</strong> of the model essay?",
+   options:[
+     {text:"Start with the conclusion instead of an introduction.",correct:false},
+     {text:"Add a surprising fact about climate change before stating the claim.",correct:true},
+     {text:"Remove the claim from the introduction entirely.",correct:false},
+     {text:"Replace the introduction with a bulleted list of facts.",correct:false}
+   ],
+   vocabTerm:"hook — an opening that grabs the reader's attention before the claim"},
+
+  {id:"Q11",dok:2,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"sr",
+   stem:"A peer reviewer notices one sentence in the model essay shifts to <strong>informal style</strong>. Which sentence is it?",
+   options:[
+     {text:"According to environmental scientists, rising global temperatures are caused largely by human emissions.",correct:false},
+     {text:"But we don't have to wait for someone else to fix things.",correct:true},
+     {text:"Recycling paper, plastic, and glass are effective steps that everyone can do.",correct:false},
+     {text:"Simple everyday actions can make a real difference.",correct:false}
+   ],
+   vocabTerm:"formal style — writing that avoids contractions, slang, and informal phrases"},
+
+  {id:"Q12",dok:2,domain:"lang",domainLabel:"Language & Vocab",domainClass:"domain-lang",type:"sr",
+   stem:"Which word from Source 2 is closest in meaning to <strong>\"sustainable\"</strong>?",
+   options:[
+     {text:"Harmful",correct:false},
+     {text:"Responsible",correct:true},
+     {text:"Excessive",correct:false},
+     {text:"Temporary",correct:false}
+   ],
+   vocabTerm:"sustainable — able to continue without using up resources or harming the environment"},
+
+  {id:"Q13",dok:2,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"sr",
+   stem:"Which detail provides the <strong>strongest evidence</strong> for the claim that students should take action?",
+   options:[
+     {text:"Climate change refers to long-term shifts in the Earth's average weather patterns.",correct:false},
+     {text:"The Industrial Revolution began 150–200 years ago.",correct:false},
+     {text:"Recycling usually uses less energy than producing from scratch, which helps lower pollution.",correct:true},
+     {text:"Materials like paper, plastic, and metal become waste when thrown away.",correct:false}
+   ],
+   vocabTerm:"relevant evidence — details that directly connect to and support the main claim"},
+
+  {id:"Q14",dok:2,domain:"tech",domainLabel:"Techniques",domainClass:"domain-tech",type:"sr",
+   stem:"What is the <strong>purpose</strong> of the model essay?",
+   options:[
+     {text:"To inform readers about what greenhouse gases are",correct:false},
+     {text:"To entertain readers with a story about a student reporter",correct:false},
+     {text:"To persuade readers that young people should take action to protect the environment",correct:true},
+     {text:"To explain the history of the recycling movement",correct:false}
+   ],
+   vocabTerm:"purpose — the reason an author writes a text (to inform, persuade, or entertain)"},
+
+  // DOK 3
+  {id:"Q15",dok:3,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"ms",correctCount:2,
+   stem:"Select <strong>TWO</strong> revisions that would <strong>most effectively</strong> strengthen the model essay's argument.",
+   options:[
+     {text:"Add a specific statistic from Source 1 about rising global temperatures.",correct:true},
+     {text:"Replace all citations with the phrase 'experts say.'",correct:false},
+     {text:"Include a counterclaim and a rebuttal before the conclusion.",correct:true},
+     {text:"Change the conclusion to introduce a new topic about ocean pollution.",correct:false},
+     {text:"Remove the body paragraphs and only keep the introduction.",correct:false}
+   ],
+   vocabTerm:"rebuttal — the writer's response to a counterclaim showing why the original argument is stronger"},
+
+  {id:"Q16",dok:3,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"ms",correctCount:2,
+   stem:"Select <strong>TWO</strong> organizational features the model essay uses effectively.",
+   options:[
+     {text:"A clearly stated claim in the introduction",correct:true},
+     {text:"Body paragraphs organized by chronological order",correct:false},
+     {text:"Transition words that connect ideas between paragraphs",correct:true},
+     {text:"A bulleted list of reasons instead of paragraphs",correct:false},
+     {text:"A separate glossary defining all difficult words",correct:false}
+   ],
+   vocabTerm:"coherence — the quality of writing where all parts connect logically and smoothly"},
+
+  {id:"Q17",dok:3,domain:"tech",domainLabel:"Techniques",domainClass:"domain-tech",type:"dd",
+   stem:"Drag each element to its correct place in the <strong>argumentative essay structure</strong>.",
+   slots:[{label:"Introduction",correct:"Claim"},{label:"1st Body",correct:"Evidence"},{label:"2nd Body",correct:"Counterclaim"},{label:"Conclusion",correct:"Call to Action"}],
+   items:["Evidence","Call to Action","Claim","Counterclaim"],
+   vocabTerm:"argumentative structure — the organized arrangement of claim, evidence, counterclaim, and conclusion"},
+
+  {id:"Q18",dok:3,domain:"lang",domainLabel:"Language & Vocab",domainClass:"domain-lang",type:"sr",
+   stem:"Based on context clues, what does <strong>\"circular economy\"</strong> mean in Source 2?",
+   options:[
+     {text:"An economy based on buying new products to grow the market",correct:false},
+     {text:"A system where materials are continually reused rather than discarded",correct:true},
+     {text:"A type of government program that pays people to recycle",correct:false},
+     {text:"A scientific model for measuring greenhouse gas emissions",correct:false}
+   ],
+   vocabTerm:"context clues — words or phrases near an unknown word that help reveal its meaning"},
+
+  {id:"Q19",dok:3,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"ms",correctCount:2,
+   stem:"A peer reviewer evaluates the model essay using the Milestones rubric. Select <strong>TWO</strong> accurate statements about the essay's strengths.",
+   options:[
+     {text:"The essay presents a clear claim and supports it with evidence from two sources.",correct:true},
+     {text:"The essay uses varied sentence structures and maintains mostly formal style.",correct:true},
+     {text:"The essay includes a fully developed counterclaim and rebuttal.",correct:false},
+     {text:"The essay copies large sections of text directly from the sources.",correct:false},
+     {text:"The essay has no transitions between paragraphs.",correct:false}
+   ],
+   vocabTerm:"rubric — a scoring guide that describes what quality looks like at each level"},
+
+  {id:"Q20",dok:3,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"dd",
+   stem:"Drag each transition to the purpose it <strong>best</strong> serves in argumentative writing.",
+   slots:[{label:"Add a point",correct:"Moreover"},{label:"Show contrast",correct:"However"},{label:"Show cause/effect",correct:"Therefore"},{label:"Conclude",correct:"In conclusion"}],
+   items:["However","Therefore","In conclusion","Moreover"],
+   vocabTerm:"transitions — signal words that show the relationship between ideas"}
+];
+
+// ─── STATE ────────────────────────────────────────────────────
+let studentName="", studentPeriod="";
+let answers={};
+let vocabFlags=new Set();
+let srSel={}, msSel={}, ddData={}, ddSel={}, matchSel={};
+
+// ─── START ────────────────────────────────────────────────────
+function startSim(){
+  studentName=document.getElementById("student-name").value.trim();
+  studentPeriod=document.getElementById("student-period").value;
+  if(!studentName||!studentPeriod){alert("Please enter your name and select your class period.");return;}
+  showScreen("screen-sim");
+  renderQuestions();
+}
+function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");}
+
+function setHeaderHeight(){
+  const h=document.querySelector(".sim-header");
+  if(h) document.documentElement.style.setProperty("--header-h", h.offsetHeight+"px");
+}
+window.addEventListener("load", setHeaderHeight);
+window.addEventListener("resize", setHeaderHeight);
+
+// ─── RENDER ───────────────────────────────────────────────────
+function renderQuestions(){
+  const c=document.getElementById("questions-container");
+  c.innerHTML="";
+  QUESTIONS.forEach((q,i)=>{
+    const b=document.createElement("div");
+    b.className="question-block";b.id="block-"+q.id;
+    let h=`<div class="q-meta">
+      <span class="q-num">Question ${i+1}</span>
+      <span class="q-domain ${q.domainClass}">${q.domainLabel}</span>
+      <span class="q-dok">DOK ${q.dok}</span>
+    </div>
+    <div class="q-stem">${q.stem}</div>`;
+    if(q.type==="sr") h+=renderSR(q);
+    else if(q.type==="ms") h+=renderMS(q);
+    else if(q.type==="dd") h+=renderDD(q);
+    else if(q.type==="dropdown") h+=renderDropdown(q);
+    else if(q.type==="match") h+=renderMatch(q);
+    h+=`<div class="q-actions">
+      <button class="btn-vocab-flag" id="flag-${q.id}" onclick="toggleFlag('${q.id}')">🏳 Flag Vocabulary</button>
+      <span class="answered-check" id="check-${q.id}">✓ Answered</span>
+    </div>`;
+    b.innerHTML=h;
+    c.appendChild(b);
+  });
+  QUESTIONS.filter(q=>q.type==="dd").forEach(q=>initDD(q));
+}
+
+function renderSR(q){
+  let h=`<ul class="options-list">`;
+  q.options.forEach((o,i)=>{
+    const l=["A","B","C","D"][i];
+    h+=`<li><button class="option-btn" id="opt-${q.id}-${i}" onclick="selectSR('${q.id}',${i})"><span class="opt-letter">${l}</span>${o.text}</button></li>`;
+  });
+  return h+`</ul>`;
+}
+
+function renderMS(q){
+  let h=`<div class="multiselect-note">📌 Select ${q.correctCount} answers</div>`;
+  q.options.forEach((o,i)=>{
+    h+=`<button class="option-check" id="opt-${q.id}-${i}" onclick="toggleMS('${q.id}',${i})"><span class="check-box"></span>${o.text}</button>`;
+  });
+  return h;
+}
+
+function renderDropdown(q){
+  let opts=`<option value="">— select —</option>`;
+  q.options.forEach((o,i)=>{ opts+=`<option value="${i}">${o.text}</option>`; });
+  return `<p class="inline-sentence">${q.prefix} <span class="inline-dropdown"><select id="dd-sel-${q.id}" onchange="selectDropdown('${q.id}')">${opts}</select><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--navy)">▾</span></span></p>`;
+}
+
+function renderMatch(q){
+  let h=`<div style="overflow-x:auto"><table class="match-table"><thead><tr><th>Revision</th>`;
+  q.columns.forEach(c=>{h+=`<th>${c}</th>`;});
+  h+=`</tr></thead><tbody>`;
+  q.rows.forEach((row,ri)=>{
+    h+=`<tr id="match-row-${q.id}-${ri}"><td>${row.label}</td>`;
+    q.columns.forEach((col,ci)=>{
+      h+=`<td><input type="radio" class="match-radio" name="match-${q.id}-${ri}" value="${ci}" onchange="selectMatch('${q.id}',${ri},${ci})"></td>`;
+    });
+    h+=`</tr>`;
+  });
+  return h+`</tbody></table></div>`;
+}
+
+function renderDD(q){
+  ddData[q.id]={placed:{}};
+  const items=q.items.map(item=>`<div class="drag-item" draggable="true" id="drag-${q.id}-${item.replace(/\s/g,'-')}" ondragstart="onDragStart(event,'${q.id}','${item}')">${item}</div>`).join("");
+  const slots=q.slots.map((s,i)=>`<div class="drop-slot-wrap"><span class="slot-label">${s.label}</span><div class="drop-slot" id="slot-${q.id}-${i}" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="onDrop(event,'${q.id}',${i})">Drop here</div></div>`).join("");
+  return `<p style="font-size:.78rem;color:var(--gray-400);font-style:italic;margin-bottom:10px">Drag each item from the bank to the correct slot.</p><div class="drag-bank" id="bank-${q.id}">${items}</div><div class="drop-slots-grid">${slots}</div>`;
+}
+
+// ─── INTERACTION ──────────────────────────────────────────────
+function selectSR(qid,idx){
+  if(answers[qid]) return;
+  srSel[qid]=idx;
+  const q=QUESTIONS.find(x=>x.id===qid);
+  q.options.forEach((_,i)=>document.getElementById(`opt-${qid}-${i}`).classList.toggle("selected",i===idx));
+  markAnswered(qid);
+}
+
+function toggleMS(qid,idx){
+  if(answers[qid]) return;
+  if(!msSel[qid]) msSel[qid]=new Set();
+  const s=msSel[qid];
+  const btn=document.getElementById(`opt-${qid}-${idx}`);
+  const q=QUESTIONS.find(x=>x.id===qid);
+  if(s.has(idx)){s.delete(idx);btn.classList.remove("checked");btn.querySelector(".check-box").textContent="";}
+  else{
+    if(s.size>=q.correctCount){
+      // deselect oldest
+      const oldest=[...s][0];
+      s.delete(oldest);
+      document.getElementById(`opt-${qid}-${oldest}`).classList.remove("checked");
+      document.getElementById(`opt-${qid}-${oldest}`).querySelector(".check-box").textContent="";
+    }
+    s.add(idx);btn.classList.add("checked");btn.querySelector(".check-box").textContent="✓";
+  }
+  if(s.size===q.correctCount) markAnswered(qid);
+  else unmarkAnswered(qid);
+}
+
+function selectDropdown(qid){
+  const val=document.getElementById(`dd-sel-${qid}`).value;
+  if(val==="") return;
+  ddSel[qid]=parseInt(val);
+  markAnswered(qid);
+}
+
+function selectMatch(qid,rowIdx,colIdx){
+  if(!matchSel[qid]) matchSel[qid]={};
+  matchSel[qid][rowIdx]=colIdx;
+  document.getElementById(`match-row-${qid}-${rowIdx}`).classList.add("row-answered");
+  const q=QUESTIONS.find(x=>x.id===qid);
+  if(Object.keys(matchSel[qid]).length===q.rows.length) markAnswered(qid);
+}
+
+let currentDrag=null;
+function onDragStart(e,qid,item){currentDrag={qid,item};}
+function onDrop(e,qid,slotIdx){
+  e.preventDefault();
+  document.getElementById(`slot-${qid}-${slotIdx}`).classList.remove("drag-over");
+  if(!currentDrag||currentDrag.qid!==qid) return;
+  const item=currentDrag.item;
+  // remove from previous slot
+  const prev=Object.entries(ddData[qid].placed).find(([s,v])=>v===item);
+  if(prev){delete ddData[qid].placed[prev[0]];const ps=document.getElementById(`slot-${qid}-${prev[0]}`);ps.textContent="Drop here";ps.classList.remove("filled");}
+  // clear existing occupant
+  if(ddData[qid].placed[slotIdx]){
+    const old=ddData[qid].placed[slotIdx];
+    document.getElementById(`drag-${qid}-${old.replace(/\s/g,'-')}`).classList.remove("placed");
+  }
+  ddData[qid].placed[slotIdx]=item;
+  const slot=document.getElementById(`slot-${qid}-${slotIdx}`);
+  slot.textContent=item;slot.classList.add("filled");
+  document.getElementById(`drag-${qid}-${item.replace(/\s/g,'-')}`).classList.add("placed");
+  const q=QUESTIONS.find(x=>x.id===qid);
+  if(Object.keys(ddData[qid].placed).length===q.slots.length) markAnswered(qid);
+}
+function initDD(q){}
+
+function markAnswered(qid){
+  if(answers[qid]) return;
+  answers[qid]=true;
+  document.getElementById("block-"+qid).classList.add("answered");
+  document.getElementById("check-"+qid).style.opacity="1";
+  updateProgress();
+}
+function unmarkAnswered(qid){
+  if(answers[qid]) return;
+  document.getElementById("block-"+qid).classList.remove("answered");
+  document.getElementById("check-"+qid).style.opacity="0";
+}
+
+function toggleFlag(qid){
+  const btn=document.getElementById(`flag-${qid}`);
+  if(vocabFlags.has(qid)){vocabFlags.delete(qid);btn.innerHTML="🏳 Flag Vocabulary";btn.classList.remove("flagged");}
+  else{vocabFlags.add(qid);btn.innerHTML="🚩 Vocabulary Flagged";btn.classList.add("flagged");}
+}
+
+function updateProgress(){
+  const done=Object.keys(answers).length;
+  document.getElementById("progress-bar").style.width=(done/20*100)+"%";
+  document.getElementById("progress-label").textContent=`${done} / 20`;
+  document.getElementById("answered-count").textContent=done;
+  document.getElementById("btn-finish").disabled=done<20;
+}
+
+// ─── SCORE ────────────────────────────────────────────────────
+function scoreQuestion(q){
+  if(q.type==="sr") return srSel[q.id]!==undefined && q.options[srSel[q.id]].correct;
+  if(q.type==="ms"){
+    const s=msSel[q.id]||new Set();
+    const correct=new Set(q.options.map((o,i)=>o.correct?i:-1).filter(i=>i>=0));
+    return s.size===correct.size&&[...s].every(i=>correct.has(i));
+  }
+  if(q.type==="dropdown") return ddSel[q.id]!==undefined && q.options[ddSel[q.id]].correct;
+  if(q.type==="match"){
+    const sel=matchSel[q.id]||{};
+    return q.rows.every((row,ri)=>{
+      const colIdx=sel[ri];
+      return colIdx!==undefined && q.columns[colIdx]===row.correct;
+    });
+  }
+  if(q.type==="dd"){
+    const p=ddData[q.id]?.placed||{};
+    return q.slots.every((s,i)=>p[i]===s.correct);
+  }
+  return false;
+}
+
+// ─── FINISH ───────────────────────────────────────────────────
+function finishSim(){
+  let totalScore=0;
+  const domains={techniques:{correct:0,possible:0},structureStyle:{correct:0,possible:0},argumentative:{correct:0,possible:0},languageVocab:{correct:0,possible:0}};
+  const dok={dok1:{correct:0,possible:0},dok2:{correct:0,possible:0},dok3:{correct:0,possible:0}};
+  const correctItems=[],incorrectItems=[];
+
+  QUESTIONS.forEach(q=>{
+    const domKey={tech:"techniques",struct:"structureStyle",arg:"argumentative",lang:"languageVocab"}[q.domain];
+    const dokKey=`dok${q.dok}`;
+    domains[domKey].possible++;dok[dokKey].possible++;
+    if(scoreQuestion(q)){totalScore++;domains[domKey].correct++;dok[dokKey].correct++;correctItems.push(q.id);}
+    else incorrectItems.push(q.id);
+  });
+
+  const pct=Math.round(totalScore/20*100);
+  let level="Beginning";
+  if(pct>=90)level="Distinguished";else if(pct>=70)level="Proficient";else if(pct>=50)level="Developing";
+
+  document.getElementById("result-name").textContent=studentName+" · Period "+studentPeriod;
+  document.getElementById("result-pct").textContent=pct+"%";
+  document.getElementById("result-raw").textContent=`${totalScore} / 20`;
+  const bc={Distinguished:"badge-distinguished",Proficient:"badge-proficient",Developing:"badge-developing",Beginning:"badge-beginning"}[level];
+  document.getElementById("result-badge").innerHTML=`<span class="achievement-badge ${bc}">${level} Learner</span>`;
+
+  const domLabels={techniques:"Techniques",structureStyle:"Structure & Style",argumentative:"Argumentative",languageVocab:"Language & Vocab"};
+  const domColors={techniques:"#7c3aed",structureStyle:"#0891b2",argumentative:"#d97706",languageVocab:"#059669"};
+  let dg="";
+  Object.entries(domains).forEach(([k,v])=>{
+    const p=v.possible>0?Math.round(v.correct/v.possible*100):0;
+    dg+=`<div class="domain-card"><div class="d-label">${domLabels[k]}</div><div class="domain-bar-outer"><div class="domain-bar-inner" style="width:${p}%;background:${domColors[k]}"></div></div><div class="d-score">${v.correct} / ${v.possible} (${p}%)</div></div>`;
+  });
+  document.getElementById("domain-grid").innerHTML=dg;
+
+  let dh="";
+  Object.entries(dok).forEach(([k,v])=>{
+    const p=v.possible>0?Math.round(v.correct/v.possible*100):0;
+    dh+=`<div class="dok-row"><span class="dok-label">${k.replace("dok","DOK ")}</span><div class="dok-bar-outer"><div class="dok-bar-inner" style="width:${p}%"></div></div><span class="dok-score">${v.correct}/${v.possible}</span></div>`;
+  });
+  document.getElementById("dok-breakdown").innerHTML=dh;
+
+  const fl=document.getElementById("vocab-flag-summary");
+  if(vocabFlags.size===0){fl.innerHTML=`<div class="no-flags">No vocabulary flags raised.</div>`;}
+  else{
+    fl.innerHTML=`<div class="vocab-flags-list">`+[...vocabFlags].map(id=>{
+      const q=QUESTIONS.find(x=>x.id===id);
+      return `<div class="vocab-flag-chip">Q${QUESTIONS.indexOf(q)+1} — ${q.vocabTerm.split("—")[0].trim()}</div>`;
+    }).join("")+`</div>`;
+  }
+
+  showScreen("screen-results");
+  window.scrollTo(0,0);
+
+  const payload={
+    studentName,period:studentPeriod,totalScore,totalPossible:20,achievementLevel:level,
+    domainBreakdown:domains,dokBreakdown:dok,correctItems,incorrectItems,vocabFlags:[...vocabFlags]
+  };
+
+  const msgEl=document.getElementById("submit-msg");
+  msgEl.className="submit-msg sending";
+  msgEl.textContent="Sending results to your teacher…";
+
+  const form=document.createElement("form");
+  form.method="POST";
+  form.action=SCRIPT_URL;
+  form.target="submit-iframe";
+  form.style.display="none";
+  const inp=document.createElement("input");
+  inp.type="hidden";inp.name="payload";inp.value=JSON.stringify(payload);
+  form.appendChild(inp);
+  document.body.appendChild(form);
+  const iframe=document.createElement("iframe");
+  iframe.name="submit-iframe";iframe.style.display="none";
+  document.body.appendChild(iframe);
+  iframe.onload=()=>{msgEl.className="submit-msg success";msgEl.textContent="✓ Results submitted! Your teacher has received your score.";};
+  setTimeout(()=>{if(msgEl.className.includes("sending")){msgEl.className="submit-msg error";msgEl.textContent="⚠ Could not submit automatically. Please show your teacher this screen.";}},8000);
+
+  // Also try fetch no-cors as backup
+  fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
+    .then(()=>{msgEl.className="submit-msg success";msgEl.textContent="✓ Results submitted! Your teacher has received your score.";})
+    .catch(()=>{});
+
+  form.submit();
+}
+</script>
+</body>
+</html>
