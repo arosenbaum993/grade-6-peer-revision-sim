@@ -55,6 +55,8 @@ button{font-family:inherit;}
 .btn-start:hover{background:#0f2540;}
 .note-box{margin-top:14px;padding:11px 13px;background:#fff8e6;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:.78rem;line-height:1.55;color:#5a4010;}
 .note-box.grey{background:var(--gray-100);border-left-color:var(--gray-400);color:var(--gray-700);}
+#setup-warning{display:none;margin-bottom:16px;padding:12px 14px;background:#fdecea;border:1px solid #f5b3ae;border-radius:8px;font-size:.82rem;color:#7a1f1f;line-height:1.55;}
+#setup-warning code{background:rgba(0,0,0,.06);padding:1px 5px;border-radius:3px;font-size:.9em;}
 #resume-banner{display:none;margin-bottom:16px;padding:12px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:.82rem;color:#1e40af;line-height:1.5;}
 #resume-banner button{margin-top:8px;margin-right:8px;padding:7px 14px;border-radius:6px;border:none;cursor:pointer;font-size:.8rem;font-weight:600;}
 .btn-resume{background:var(--navy);color:white;}
@@ -237,6 +239,14 @@ button{font-family:inherit;}
 <!-- ══════════ INTRO ══════════ -->
 <div id="screen-intro" class="screen active">
   <div class="wrap">
+    <div id="setup-warning">
+      <strong>⚠ Not connected to a results sheet.</strong>
+      This copy has no <code>SCRIPT_URL</code> set, so scores will <strong>not</strong> reach a teacher's
+      spreadsheet. Students can still take the practice and download their results as a CSV.
+      <br><span style="font-size:.78rem">Teacher: open this file in a text editor, find
+      <code>SCRIPT_URL</code> near the top of the script block, and paste in your Apps Script
+      <em>Deploy → Manage deployments</em> Web app URL.</span>
+    </div>
     <div id="resume-banner">
       <strong>You have unfinished work saved on this device.</strong>
       <div id="resume-detail" style="margin-top:4px"></div>
@@ -452,7 +462,12 @@ button{font-family:inherit;}
    as append-only and review it for junk rows periodically.
    ═══════════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbx5Lnma0nsVruhq1gsEGjtnGN582xOcNXP0ycn6o6e3sPqGBAkzpwJGLOzFemPoy03J/exec",
+  // ⬇⬇⬇  PASTE YOUR OWN /exec URL BETWEEN THE QUOTES  ⬇⬇⬇
+  // Apps Script → Deploy → Manage deployments → copy the Web app URL.
+  // Deliberately left empty: a URL belonging to some OTHER Apps Script project
+  // fails silently — students see "submitted" while nothing reaches your sheet.
+  // An empty value fails loudly instead, before a class period is wasted.
+  SCRIPT_URL: "",
   FORM_ID: "GR6-PRT-RECYCLING",
   // Bumped from 2026.1: items 8 and 23 were rewritten to remove cross-item
   // answer leakage, so scores on those items are not comparable across versions.
@@ -790,6 +805,8 @@ window.addEventListener("DOMContentLoaded", ()=>{
     `Form <b>${CONFIG.FORM_ID}</b> &middot; version <b>${CONFIG.FORM_VERSION}</b> &middot; ` +
     `${TOTAL_ITEMS} items / ${TOTAL_POINTS} points &middot; ` +
     `answer key ${CONFIG.REVIEW.showCorrectAnswer ? "shown to" : "hidden from"} students`;
+  // Fail loudly if results have nowhere to go, before a class period is spent.
+  if(!CONFIG.SCRIPT_URL){ document.getElementById("setup-warning").style.display="block"; }
   const saved = loadState();
   if(saved && saved.responses && Object.keys(saved.responses).length){
     const n = countAnswered(saved.responses);
@@ -1414,7 +1431,7 @@ function submitResults(){
   iframe.onload = ()=>{
     if(settled) return; settled = true;
     msg.className = "submit-msg success";
-    msg.textContent = "✓ Results sent. Your teacher has received your score.";
+    msg.textContent = "✓ Submitted. If your teacher does not see your score, show them this screen.";
     cleanup();
   };
   const timeout = setTimeout(()=>{
