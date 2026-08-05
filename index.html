@@ -3,210 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grade 6 ELA | Peer Revision Practice | Georgia Milestones</title>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Grade 6 ELA | Peer Revision Task Practice | Georgia Milestones</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --navy:#1a3a5c; --gold:#c8973a; --gold-light:#f0d28a;
-  --green:#1a7a4a; --blue:#2563a8; --purple:#6d28d9; --teal:#0891b2;
+  --green:#1a7a4a; --blue:#2563a8; --red:#b3261e;
+  --t1:#0891b2; --t2:#d97706; --t3:#059669; --vocab:#7c3aed;
   --gray-100:#f4f6f9; --gray-200:#e2e8f0; --gray-400:#94a3b8;
-  --gray-700:#334155; --white:#ffffff; --passage-bg:#fefdf8; --passage-border:#d4c89a;
+  --gray-700:#334155; --white:#ffffff; --draft-bg:#fefdf8; --draft-border:#d4c89a;
   --header-h:66px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{font-family:'DM Sans',sans-serif;background:var(--gray-100);color:var(--gray-700);}
+button{font-family:inherit;}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
 /* HEADER */
 .sim-header{background:var(--navy);border-bottom:4px solid var(--gold);position:sticky;top:0;z-index:100;}
-.header-inner{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.header-title{font-family:'Libre Baskerville',serif;font-size:1.05rem;font-weight:700;color:white;line-height:1.3;}
-.header-title span{display:block;font-size:.72rem;font-weight:400;font-family:'DM Sans',sans-serif;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase;}
+.header-inner{max-width:1180px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.header-title{font-family:'Libre Baskerville',serif;font-size:1rem;font-weight:700;color:white;line-height:1.3;}
+.header-title span{display:block;font-size:.7rem;font-weight:400;font-family:'DM Sans',sans-serif;color:var(--gold-light);letter-spacing:.06em;text-transform:uppercase;}
+.header-right{display:flex;align-items:center;gap:14px;}
 .progress-wrap{display:flex;align-items:center;gap:10px;}
-.progress-bar-outer{width:160px;height:8px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;}
+.progress-bar-outer{width:150px;height:8px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;}
 .progress-bar-inner{height:100%;background:var(--gold);border-radius:4px;transition:width .4s ease;width:0%;}
-#progress-label{color:var(--gold-light);font-size:.78rem;white-space:nowrap;}
+#progress-label,#timer-label{color:var(--gold-light);font-size:.76rem;white-space:nowrap;font-variant-numeric:tabular-nums;}
 
-/* SCREENS */
 .screen{display:none;}
 .screen.active{display:block;}
-#screen-sim.active{display:block;}
 
 /* INTRO */
-#screen-intro{max-width:620px;margin:60px auto;padding:0 20px;}
+#screen-intro .wrap{max-width:660px;margin:48px auto;padding:0 20px 60px;}
 .intro-card{background:white;border-radius:12px;border:1px solid var(--gray-200);box-shadow:0 4px 24px rgba(0,0,0,.08);overflow:hidden;}
-.intro-hero{background:var(--navy);padding:32px 36px 28px;color:white;}
-.intro-hero h1{font-family:'Libre Baskerville',serif;font-size:1.5rem;line-height:1.35;margin-bottom:6px;}
-.intro-hero p{font-size:.85rem;color:var(--gold-light);letter-spacing:.04em;text-transform:uppercase;}
-.intro-body{padding:32px 36px;}
-.intro-body h2{font-family:'Libre Baskerville',serif;font-size:1rem;color:var(--navy);margin-bottom:16px;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
-.info-chip{background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:12px 14px;font-size:.82rem;}
-.info-chip strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:3px;}
-.form-group{margin-bottom:18px;}
-.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--navy);margin-bottom:6px;}
-.form-group input,.form-group select{width:100%;padding:11px 14px;border:2px solid var(--gray-200);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--gray-700);background:white;transition:border-color .2s;outline:none;}
+.intro-hero{background:var(--navy);padding:30px 34px 26px;color:white;}
+.intro-hero h1{font-family:'Libre Baskerville',serif;font-size:1.45rem;line-height:1.35;margin-bottom:6px;}
+.intro-hero p{font-size:.82rem;color:var(--gold-light);letter-spacing:.04em;text-transform:uppercase;}
+.intro-body{padding:28px 34px 32px;}
+.intro-body h2{font-family:'Libre Baskerville',serif;font-size:1rem;color:var(--navy);margin-bottom:14px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+.info-chip{background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:11px 13px;font-size:.8rem;line-height:1.45;}
+.info-chip strong{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:3px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--navy);margin-bottom:5px;}
+.form-group input,.form-group select{width:100%;padding:10px 13px;border:2px solid var(--gray-200);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--gray-700);background:white;outline:none;}
 .form-group input:focus,.form-group select:focus{border-color:var(--navy);}
-.btn-start{width:100%;padding:14px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s;}
+.btn-start{width:100%;padding:14px;background:var(--navy);color:white;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;}
 .btn-start:hover{background:#0f2540;}
-.vocab-note{margin-top:16px;padding:12px 14px;background:#fff8e6;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:.8rem;line-height:1.5;color:#5a4010;}
+.note-box{margin-top:14px;padding:11px 13px;background:#fff8e6;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:.78rem;line-height:1.55;color:#5a4010;}
+.note-box.grey{background:var(--gray-100);border-left-color:var(--gray-400);color:var(--gray-700);}
+#resume-banner{display:none;margin-bottom:16px;padding:12px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:.82rem;color:#1e40af;line-height:1.5;}
+#resume-banner button{margin-top:8px;margin-right:8px;padding:7px 14px;border-radius:6px;border:none;cursor:pointer;font-size:.8rem;font-weight:600;}
+.btn-resume{background:var(--navy);color:white;}
+.btn-fresh{background:white;color:var(--gray-700);border:1px solid var(--gray-400)!important;}
 
 /* SIM LAYOUT */
-#screen-sim{display:block;}
-.sim-layout{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:0;
-  height:calc(100vh - var(--header-h));
-  overflow:hidden;
-  max-width:1100px;
-  margin:0 auto;
-}
-
-/* PASSAGE */
-.passage-panel{
-  background:var(--passage-bg);
-  border-right:1px solid var(--passage-border);
-  border-radius:0;
-  padding:28px;
-  overflow-y:auto;
-  height:100%;
-}
-.passage-panel::-webkit-scrollbar{width:5px;}
-.passage-panel::-webkit-scrollbar-thumb{background:var(--passage-border);border-radius:4px;}
-
-/* QUESTIONS COLUMN */
-#questions-container{
-  overflow-y:auto;
-  height:100%;
-  padding:24px 20px 100px;
-}
-.passage-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;}
-.passage-scenario{background:white;border:1px solid var(--passage-border);border-radius:8px;padding:14px 16px;margin-bottom:18px;font-size:.82rem;line-height:1.6;color:#4a3c10;}
-.passage-scenario strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:5px;}
-.passage-title{font-family:'Libre Baskerville',serif;font-size:1.05rem;color:var(--navy);margin-bottom:6px;line-height:1.3;}
-.source-tag{display:inline-block;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:white;background:var(--navy);padding:2px 8px;border-radius:10px;margin-bottom:12px;}
-.passage-text{font-size:.87rem;line-height:1.75;color:#333;}
-.passage-text p{margin-bottom:12px;}
-.passage-divider{border:none;border-top:2px dashed var(--passage-border);margin:18px 0;}
-.model-essay{font-family:'Libre Baskerville',serif;font-size:.85rem;line-height:1.8;color:#333;}
-.model-essay p{margin-bottom:14px;}
+.sim-layout{display:grid;grid-template-columns:1fr 1fr;height:calc(100vh - var(--header-h));overflow:hidden;max-width:1180px;margin:0 auto;}
+.draft-panel{background:var(--draft-bg);border-right:1px solid var(--draft-border);padding:24px 26px 60px;overflow-y:auto;height:100%;}
+#questions-container{overflow-y:auto;height:100%;padding:22px 20px 110px;}
+.panel-label{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px;}
+.tabs{display:flex;gap:6px;margin-bottom:14px;border-bottom:2px solid var(--draft-border);}
+.tab{padding:8px 14px;border:none;background:none;font-size:.8rem;font-weight:600;color:var(--gray-400);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+.tab.active{color:var(--navy);border-bottom-color:var(--navy);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.scenario-box{background:white;border:1px solid var(--draft-border);border-radius:8px;padding:13px 15px;margin-bottom:16px;font-size:.8rem;line-height:1.6;color:#4a3c10;}
+.scenario-box strong{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:5px;}
+.doc-title{font-family:'Libre Baskerville',serif;font-size:1rem;color:var(--navy);margin-bottom:5px;line-height:1.3;}
+.source-tag{display:inline-block;font-size:.65rem;text-transform:uppercase;letter-spacing:.07em;color:white;background:var(--navy);padding:2px 8px;border-radius:10px;margin-bottom:10px;}
+.src-text{font-size:.85rem;line-height:1.7;color:#333;}
+.src-text li{margin-bottom:9px;margin-left:18px;}
+.src-text p{margin-bottom:11px;}
+.divider{border:none;border-top:2px dashed var(--draft-border);margin:20px 0;}
+.draft-para{margin-bottom:14px;font-size:.9rem;line-height:2;color:#2b2b2b;font-family:'Libre Baskerville',serif;}
+.para-tag{display:inline-block;font-family:'DM Sans',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:#fff8e6;border:1px solid var(--draft-border);padding:1px 7px;border-radius:9px;margin-bottom:4px;}
+.snum{font-family:'DM Sans',sans-serif;font-size:.62rem;font-weight:700;color:white;background:var(--navy);border-radius:3px;padding:1px 4px;margin-right:3px;vertical-align:.15em;}
+.draft-byline{font-size:.76rem;color:var(--gray-400);font-style:italic;margin-bottom:14px;}
 
 /* QUESTIONS */
-.question-block{background:white;border:1px solid var(--gray-200);border-radius:10px;padding:22px 24px;margin-bottom:16px;transition:box-shadow .2s;}
-.question-block:hover{box-shadow:0 2px 12px rgba(0,0,0,.07);}
+.question-block{background:white;border:1px solid var(--gray-200);border-radius:10px;padding:20px 22px;margin-bottom:15px;scroll-margin-top:12px;}
 .question-block.answered{border-left:4px solid var(--navy);}
-.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
-.q-num{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);background:var(--gray-100);padding:2px 8px;border-radius:10px;}
-.q-domain{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:white;padding:2px 8px;border-radius:10px;}
-.domain-tech{background:#7c3aed;} .domain-struct{background:#0891b2;} .domain-arg{background:#d97706;} .domain-lang{background:#059669;}
-.q-dok{font-size:.66rem;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-left:auto;}
-.q-stem{font-size:.9rem;line-height:1.55;color:var(--gray-700);margin-bottom:14px;font-weight:500;}
+.q-meta{display:flex;align-items:center;gap:7px;margin-bottom:9px;flex-wrap:wrap;}
+.q-num{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);background:var(--gray-100);padding:2px 8px;border-radius:10px;}
+.q-trait{font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;color:white;padding:2px 8px;border-radius:10px;font-weight:600;}
+.trait-t1{background:var(--t1);} .trait-t2{background:var(--t2);} .trait-t3{background:var(--t3);}
+.q-pts{font-size:.64rem;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-left:auto;}
+.q-stem{font-size:.89rem;line-height:1.6;color:var(--gray-700);margin-bottom:13px;font-weight:500;}
+.q-stem em{color:#5a4010;background:#fff8e6;padding:1px 4px;border-radius:3px;font-style:normal;}
 
-/* SELECTED RESPONSE */
 .options-list{list-style:none;}
-.options-list li{margin-bottom:8px;}
-.option-btn{width:100%;text-align:left;padding:10px 14px;border:2px solid var(--gray-200);border-radius:8px;background:white;font-family:'DM Sans',sans-serif;font-size:.87rem;color:var(--gray-700);cursor:pointer;line-height:1.45;transition:border-color .15s,background .15s;display:flex;align-items:flex-start;gap:10px;}
+.options-list li{margin-bottom:7px;}
+.option-btn{width:100%;text-align:left;padding:10px 13px;border:2px solid var(--gray-200);border-radius:8px;background:white;font-size:.86rem;color:var(--gray-700);cursor:pointer;line-height:1.5;display:flex;align-items:flex-start;gap:10px;}
 .option-btn:hover{border-color:var(--navy);background:var(--gray-100);}
 .option-btn.selected{border-color:var(--navy);background:#eef3fb;}
-.opt-letter{font-weight:700;font-size:.78rem;min-width:20px;height:20px;border-radius:50%;background:var(--gray-200);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.opt-letter{font-weight:700;font-size:.76rem;min-width:20px;height:20px;border-radius:50%;background:var(--gray-200);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
 .option-btn.selected .opt-letter{background:var(--navy);color:white;}
 
-/* MULTI-SELECT */
-.multiselect-note{font-size:.75rem;color:var(--blue);font-weight:600;margin-bottom:10px;padding:6px 10px;background:#eff6ff;border-radius:6px;border-left:3px solid var(--blue);}
-.option-check{width:100%;text-align:left;padding:9px 14px;border:2px solid var(--gray-200);border-radius:8px;background:white;font-family:'DM Sans',sans-serif;font-size:.87rem;color:var(--gray-700);cursor:pointer;line-height:1.45;transition:all .15s;display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.ms-note{font-size:.74rem;color:var(--blue);font-weight:600;margin-bottom:9px;padding:6px 10px;background:#eff6ff;border-radius:6px;border-left:3px solid var(--blue);}
+.option-check{width:100%;text-align:left;padding:9px 13px;border:2px solid var(--gray-200);border-radius:8px;background:white;font-size:.86rem;color:var(--gray-700);cursor:pointer;line-height:1.5;display:flex;align-items:flex-start;gap:10px;margin-bottom:7px;}
 .option-check:hover{border-color:var(--navy);}
 .option-check.checked{border-color:var(--navy);background:#eef3fb;}
-.check-box{width:18px;height:18px;border:2px solid var(--gray-400);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;}
+.check-box{width:18px;height:18px;border:2px solid var(--gray-400);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:2px;}
 .option-check.checked .check-box{border-color:var(--navy);background:var(--navy);color:white;}
 
-/* INLINE DROPDOWN */
-.inline-sentence{font-size:.9rem;line-height:1.7;color:var(--gray-700);margin-bottom:10px;}
-.inline-dropdown{display:inline-block;position:relative;}
-.inline-dropdown select{appearance:none;-webkit-appearance:none;padding:4px 28px 4px 10px;border:2px solid var(--navy);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--navy);background:#eef3fb;cursor:pointer;outline:none;min-width:200px;}
-.inline-dropdown::after{content:"▾";position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--navy);font-size:.8rem;}
-.dropdown-selected{border-color:var(--navy) !important;background:#eef3fb !important;}
+.part-block{margin-bottom:12px;}
+.part-label{font-size:.76rem;font-weight:700;color:var(--navy);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;}
+.part-select{width:100%;padding:9px 12px;border:2px solid var(--gray-200);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.84rem;color:var(--gray-700);background:white;cursor:pointer;outline:none;}
+.part-select.chosen{border-color:var(--navy);background:#eef3fb;}
 
-/* MATCHING TABLE */
-.match-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:6px;}
-.match-table th{background:var(--navy);color:white;padding:9px 10px;text-align:center;font-weight:600;font-size:.76rem;border:1px solid #2a4a6c;}
-.match-table th:first-child{text-align:left;min-width:180px;}
-.match-table td{padding:9px 10px;border:1px solid var(--gray-200);vertical-align:middle;}
-.match-table td:first-child{font-size:.84rem;color:var(--gray-700);background:var(--gray-100);}
+.match-wrap{overflow-x:auto;}
+.match-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:4px;min-width:520px;}
+.match-table th{background:var(--navy);color:white;padding:8px 9px;text-align:center;font-weight:600;font-size:.72rem;border:1px solid #2a4a6c;}
+.match-table th:first-child{text-align:left;min-width:190px;}
+.match-table td{padding:8px 9px;border:1px solid var(--gray-200);vertical-align:middle;background:white;}
+.match-table td:first-child{font-size:.82rem;color:var(--gray-700);background:var(--gray-100);line-height:1.45;}
 .match-table td:not(:first-child){text-align:center;}
-.match-table tr:nth-child(even) td{background:white;}
-.match-table tr:nth-child(odd) td{background:#fafbfc;}
-.match-table tr:nth-child(even) td:first-child{background:var(--gray-100);}
 .match-radio{width:18px;height:18px;cursor:pointer;accent-color:var(--navy);}
 .match-table tr.row-answered td:first-child{font-weight:600;color:var(--navy);}
 
-/* DRAG & DROP */
-.drag-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
-.drag-item{padding:7px 14px;background:var(--navy);color:white;border-radius:20px;font-size:.82rem;cursor:grab;user-select:none;transition:transform .15s,opacity .15s;}
-.drag-item:active{cursor:grabbing;transform:scale(1.05);}
-.drag-item.placed{opacity:.35;pointer-events:none;}
-.drop-slots-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
-.drop-slot-wrap .slot-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-400);margin-bottom:4px;display:block;}
-.drop-slot{min-height:36px;border:2px dashed var(--gray-400);border-radius:6px;padding:5px 10px;font-size:.82rem;color:var(--gray-400);background:var(--gray-100);transition:all .15s;display:flex;align-items:center;}
+.dd-hint{font-size:.76rem;color:var(--gray-400);font-style:italic;margin-bottom:9px;}
+.drag-bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;}
+.drag-item{padding:8px 13px;background:var(--navy);color:white;border:2px solid var(--navy);border-radius:18px;font-size:.8rem;cursor:pointer;text-align:left;line-height:1.4;}
+.drag-item.armed{background:var(--gold);border-color:#8a6520;color:#3a2a00;}
+.drag-item.placed{opacity:.3;pointer-events:none;}
+.drop-slots{display:grid;gap:9px;margin-top:4px;}
+.slot-label{font-size:.72rem;font-weight:600;color:var(--navy);margin-bottom:4px;display:block;}
+.drop-slot{width:100%;text-align:left;min-height:40px;border:2px dashed var(--gray-400);border-radius:6px;padding:8px 11px;font-size:.8rem;color:var(--gray-400);background:var(--gray-100);display:flex;align-items:center;cursor:pointer;line-height:1.4;}
 .drop-slot.filled{border-style:solid;border-color:var(--navy);background:white;color:var(--gray-700);}
 .drop-slot.drag-over{border-color:var(--blue);background:#eff6ff;}
 
-/* VOCAB FLAG */
-.q-actions{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--gray-100);}
-.btn-vocab-flag{padding:7px 14px;border:2px solid var(--gold);background:white;color:#7a5a00;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.q-actions{display:flex;align-items:center;gap:10px;margin-top:13px;padding-top:12px;border-top:1px solid var(--gray-100);}
+.btn-vocab-flag{padding:6px 13px;border:2px solid var(--gold);background:white;color:#7a5a00;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;}
 .btn-vocab-flag:hover{background:#fff8e6;}
 .btn-vocab-flag.flagged{background:#fff8e6;border-color:#b8860b;}
-.answered-check{font-size:.78rem;color:var(--navy);font-weight:600;margin-left:auto;opacity:0;}
+.btn-clear{padding:6px 11px;border:1px solid var(--gray-200);background:white;color:var(--gray-400);border-radius:6px;font-size:.76rem;cursor:pointer;}
+.btn-clear:hover{color:var(--gray-700);border-color:var(--gray-400);}
+.answered-check{font-size:.76rem;color:var(--navy);font-weight:600;margin-left:auto;opacity:0;}
 .question-block.answered .answered-check{opacity:1;}
 
-/* BOTTOM BAR */
-.submit-all-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:2px solid var(--gray-200);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;box-shadow:0 -4px 16px rgba(0,0,0,.08);}
-.submit-status{font-size:.84rem;color:var(--gray-400);}
+.submit-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:2px solid var(--gray-200);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:100;box-shadow:0 -4px 16px rgba(0,0,0,.08);flex-wrap:wrap;}
+.submit-status{font-size:.82rem;color:var(--gray-400);}
 .submit-status strong{color:var(--navy);}
-.btn-finish{padding:12px 32px;background:var(--green);color:white;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s;}
+.btn-finish{padding:11px 28px;background:var(--green);color:white;border:none;border-radius:8px;font-size:.94rem;font-weight:700;cursor:pointer;}
 .btn-finish:hover:not(:disabled){background:#125e38;}
 .btn-finish:disabled{background:var(--gray-400);cursor:default;}
 
 /* RESULTS */
-#screen-results{max-width:760px;margin:40px auto;padding:0 20px 60px;}
-.results-hero{background:var(--navy);border-radius:12px 12px 0 0;padding:32px 36px;color:white;text-align:center;border-bottom:4px solid var(--gold);}
-.results-hero h2{font-family:'Libre Baskerville',serif;font-size:1.5rem;margin-bottom:4px;}
-.student-name-result{font-size:1rem;color:var(--gold-light);margin-bottom:24px;}
-.score-circle{width:130px;height:130px;border-radius:50%;border:6px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px;background:rgba(255,255,255,.08);}
-.score-pct{font-size:2.2rem;font-weight:700;line-height:1;}
-.score-raw{font-size:.8rem;color:var(--gold-light);margin-top:4px;}
-.achievement-badge{display:inline-block;padding:6px 20px;border-radius:20px;font-size:.9rem;font-weight:700;letter-spacing:.04em;}
-.badge-distinguished{background:#1a8c4e;color:white;} .badge-proficient{background:#2e7bbf;color:white;}
-.badge-developing{background:#e0a800;color:#000;} .badge-beginning{background:#c0392b;color:white;}
-.results-body{background:white;border:1px solid var(--gray-200);border-top:none;border-radius:0 0 12px 12px;padding:32px 36px;}
-.results-section{margin-bottom:28px;}
-.results-section h3{font-family:'Libre Baskerville',serif;font-size:1rem;color:var(--navy);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--gray-200);}
-.domain-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.domain-card{background:var(--gray-100);border-radius:8px;padding:14px 16px;}
-.domain-card .d-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin-bottom:8px;}
-.domain-bar-outer{height:8px;background:var(--gray-200);border-radius:4px;overflow:hidden;margin-bottom:6px;}
-.domain-bar-inner{height:100%;border-radius:4px;}
-.domain-card .d-score{font-size:.8rem;color:var(--gray-700);}
-.dok-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:.85rem;}
-.dok-label{width:60px;font-weight:600;color:var(--navy);flex-shrink:0;}
-.dok-bar-outer{flex:1;height:10px;background:var(--gray-200);border-radius:5px;overflow:hidden;}
-.dok-bar-inner{height:100%;border-radius:5px;background:var(--navy);}
-.dok-score{width:55px;text-align:right;color:var(--gray-400);flex-shrink:0;}
-.vocab-flags-list{display:flex;flex-wrap:wrap;gap:8px;}
-.vocab-flag-chip{padding:5px 12px;background:#fff8e6;border:1px solid var(--gold);border-radius:16px;font-size:.8rem;color:#7a5a00;}
-.no-flags{font-size:.85rem;color:var(--gray-400);font-style:italic;}
-.results-note{padding:14px 16px;background:#fff8e6;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.6;color:#5a4010;margin-top:16px;}
-.submit-msg{padding:12px 16px;border-radius:8px;font-size:.84rem;margin-top:20px;text-align:center;}
+#screen-results .wrap{max-width:840px;margin:36px auto;padding:0 20px 70px;}
+.results-hero{background:var(--navy);border-radius:12px 12px 0 0;padding:30px 34px;color:white;text-align:center;border-bottom:4px solid var(--gold);}
+.results-hero h2{font-family:'Libre Baskerville',serif;font-size:1.4rem;margin-bottom:4px;}
+.student-line{font-size:.95rem;color:var(--gold-light);margin-bottom:20px;}
+.score-circle{width:126px;height:126px;border-radius:50%;border:6px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 18px;background:rgba(255,255,255,.08);}
+.score-pct{font-size:2.1rem;font-weight:700;line-height:1;}
+.score-raw{font-size:.78rem;color:var(--gold-light);margin-top:4px;}
+.band-badge{display:inline-block;padding:6px 20px;border-radius:20px;font-size:.88rem;font-weight:700;letter-spacing:.03em;}
+.band-4{background:#1a8c4e;color:white;} .band-3{background:#2e7bbf;color:white;}
+.band-2{background:#e0a800;color:#3a2a00;} .band-1{background:#c0392b;color:white;}
+.results-body{background:white;border:1px solid var(--gray-200);border-top:none;border-radius:0 0 12px 12px;padding:28px 34px 34px;}
+.results-section{margin-bottom:26px;}
+.results-section h3{font-family:'Libre Baskerville',serif;font-size:.98rem;color:var(--navy);margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--gray-200);}
+.results-section h3 small{font-family:'DM Sans',sans-serif;font-weight:400;font-size:.75rem;color:var(--gray-400);text-transform:none;}
+.bar-row{display:flex;align-items:center;gap:11px;margin-bottom:11px;font-size:.83rem;}
+.bar-label{width:190px;flex-shrink:0;font-weight:600;color:var(--navy);line-height:1.3;}
+.bar-label small{display:block;font-weight:400;font-size:.7rem;color:var(--gray-400);}
+.bar-outer{flex:1;height:11px;background:var(--gray-200);border-radius:6px;overflow:hidden;min-width:60px;}
+.bar-inner{height:100%;border-radius:6px;}
+.bar-score{width:78px;text-align:right;color:var(--gray-700);flex-shrink:0;font-variant-numeric:tabular-nums;font-size:.8rem;}
+.chip-list{display:flex;flex-wrap:wrap;gap:7px;}
+.vocab-chip{padding:5px 12px;background:#f5f0ff;border:1px solid var(--vocab);border-radius:16px;font-size:.78rem;color:#4c1d95;}
+.muted{font-size:.83rem;color:var(--gray-400);font-style:italic;}
+.disclaimer{padding:13px 15px;background:#fff8e6;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:.79rem;line-height:1.6;color:#5a4010;margin-bottom:20px;}
+.submit-msg{padding:11px 15px;border-radius:8px;font-size:.82rem;margin-top:16px;text-align:center;}
 .submit-msg.success{background:#e8f7ee;color:#155a35;border:1px solid #a8d5bb;}
 .submit-msg.error{background:#fdecea;color:#7a1f1f;border:1px solid #f5b3ae;}
 .submit-msg.sending{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;}
+.btn-secondary{padding:9px 18px;background:white;border:2px solid var(--navy);color:var(--navy);border-radius:8px;font-size:.84rem;font-weight:600;cursor:pointer;margin:4px 6px 0 0;}
+.btn-secondary:hover{background:var(--gray-100);}
 
-@media(max-width:768px){
+/* REVIEW */
+.review-item{border:1px solid var(--gray-200);border-radius:9px;padding:15px 17px;margin-bottom:11px;border-left:4px solid var(--gray-400);}
+.review-item.full{border-left-color:var(--green);background:#fbfefc;}
+.review-item.partial{border-left-color:#e0a800;background:#fffdf5;}
+.review-item.zero{border-left-color:var(--red);background:#fffbfb;}
+.rv-head{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap;}
+.rv-num{font-size:.72rem;font-weight:700;color:var(--navy);}
+.rv-mark{font-size:.74rem;font-weight:700;padding:1px 8px;border-radius:9px;}
+.rv-mark.full{background:#e8f7ee;color:#155a35;} .rv-mark.partial{background:#fff6dd;color:#7a5a00;} .rv-mark.zero{background:#fdecea;color:#7a1f1f;}
+.rv-std{font-size:.68rem;color:var(--gray-400);margin-left:auto;letter-spacing:.03em;}
+.rv-stem{font-size:.83rem;line-height:1.55;margin-bottom:9px;color:var(--gray-700);}
+.rv-ans{font-size:.8rem;line-height:1.55;margin-bottom:4px;}
+.rv-ans b{color:var(--navy);}
+.rv-yours{color:#7a1f1f;} .rv-key{color:#155a35;}
+.rv-why{font-size:.79rem;line-height:1.6;color:var(--gray-700);margin-top:8px;padding:9px 11px;background:var(--gray-100);border-radius:6px;}
+
+@media(max-width:820px){
   .sim-layout{grid-template-columns:1fr;height:auto;overflow:visible;}
-  .passage-panel{height:50vh;border-right:none;border-bottom:1px solid var(--passage-border);border-radius:10px 10px 0 0;}
-  #questions-container{height:auto;overflow:visible;padding:16px 12px 100px;}
-  .domain-grid{grid-template-columns:1fr;}
-  .info-grid{grid-template-columns:1fr;}
+  .draft-panel{height:56vh;border-right:none;border-bottom:2px solid var(--draft-border);}
+  #questions-container{height:auto;overflow:visible;padding:16px 12px 130px;}
+  .info-grid,.form-row{grid-template-columns:1fr;}
+  .bar-label{width:118px;}
+  #screen-results .wrap,.results-body{padding-left:16px;padding-right:16px;}
+}
+@media print{
+  .sim-header,.submit-bar,.btn-secondary,#submit-msg{display:none!important;}
+  body{background:white;}
+  .review-item{page-break-inside:avoid;}
 }
 </style>
 </head>
@@ -216,622 +220,1210 @@ body{font-family:'DM Sans',sans-serif;background:var(--gray-100);color:var(--gra
   <div class="header-inner">
     <div class="header-title">
       <span>Georgia Milestones EOG Practice</span>
-      Grade 6 ELA · Peer Revision Task
+      Grade 6 ELA &middot; Peer Revision Task
     </div>
-    <div class="progress-wrap">
-      <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar"></div></div>
-      <span id="progress-label">0 / 20</span>
+    <div class="header-right">
+      <span id="timer-label">00:00</span>
+      <div class="progress-wrap">
+        <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar"></div></div>
+        <span id="progress-label" role="status" aria-live="polite">0 / 23</span>
+      </div>
     </div>
   </div>
 </header>
 
-<!-- INTRO -->
+<!-- ══════════ INTRO ══════════ -->
 <div id="screen-intro" class="screen active">
-  <div style="max-width:620px;margin:60px auto;padding:0 20px;">
+  <div class="wrap">
+    <div id="resume-banner">
+      <strong>You have unfinished work saved on this device.</strong>
+      <div id="resume-detail" style="margin-top:4px"></div>
+      <button class="btn-resume" onclick="resumeSaved()">Resume where I left off</button>
+      <button class="btn-fresh" onclick="discardSaved()">Start over</button>
+    </div>
     <div class="intro-card">
       <div class="intro-hero">
-        <h1>ELA Peer Revision<br>Practice Simulation</h1>
-        <p>Grade 6 · Georgia Milestones EOG Format</p>
+        <h1>Peer Revision Task<br>Practice Simulation</h1>
+        <p>Grade 6 ELA &middot; Georgia Milestones EOG Format</p>
       </div>
       <div class="intro-body">
         <h2>About This Practice</h2>
         <div class="info-grid">
-          <div class="info-chip"><strong>Questions</strong>20 items</div>
-          <div class="info-chip"><strong>Format</strong>Selected Response, Multi-Select, Dropdown, Matching, Drag &amp; Drop</div>
-          <div class="info-chip"><strong>Topic</strong>Peer Revision — Argumentative Writing</div>
-          <div class="info-chip"><strong>Standards</strong>6.T.T.3, 6.T.SS.1–2, 6.L.V.1–3, 6.L.GC.2</div>
+          <div class="info-chip"><strong>Your Job</strong>Read another student's draft article and decide how to make it better.</div>
+          <div class="info-chip"><strong>Length</strong>23 items &middot; 30 points &middot; about 45 minutes</div>
+          <div class="info-chip"><strong>Item Types</strong>Selected response, multi-select, drop-down, matching, drag &amp; drop</div>
+          <div class="info-chip"><strong>Scored On</strong>All three traits of the Georgia Milestones writing rubric</div>
         </div>
-        <div class="form-group">
-          <label for="student-name">Your Full Name</label>
-          <input type="text" id="student-name" placeholder="First Last" autocomplete="name">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="student-name">Your Full Name</label>
+            <input type="text" id="student-name" placeholder="First Last" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="student-id">Student ID <span style="font-weight:400;color:var(--gray-400)">(optional)</span></label>
+            <input type="text" id="student-id" placeholder="e.g. 100482" inputmode="numeric">
+          </div>
         </div>
         <div class="form-group">
           <label for="student-period">Class Period</label>
           <select id="student-period">
-            <option value="">— Select Period —</option>
-            <option>1st</option><option>2nd</option><option>3rd</option>
-            <option>4th</option><option>5th</option><option>6th</option><option>7th</option>
+            <option value="">&mdash; Select Period &mdash;</option>
+            <option>1st</option><option>2nd</option><option>3rd</option><option>4th</option>
+            <option>5th</option><option>6th</option><option>7th</option><option>8th</option>
           </select>
         </div>
-        <button class="btn-start" onclick="startSim()">Begin Practice →</button>
-        <div class="vocab-note">🏳 <strong>Vocabulary Flag:</strong> If a question is hard because of a word you don't know, tap the flag. Your teacher uses this to plan vocabulary lessons.</div>
+        <button class="btn-start" onclick="startSim()">Begin Practice &rarr;</button>
+        <div class="note-box">🏳 <strong>Vocabulary Flag:</strong> If a question is hard because of a word you don't know, tap the flag on that question. Your teacher uses these flags to plan vocabulary lessons &mdash; flagging does not count against your score.</div>
+        <div class="note-box grey">Your answers save automatically on this device. You can change any answer before you submit.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SIM -->
+<!-- ══════════ SIMULATION ══════════ -->
 <div id="screen-sim" class="screen">
   <div class="sim-layout">
-    <div class="passage-panel">
-      <div class="passage-label">📄 Read — Then Answer the Questions</div>
-      <div class="passage-scenario"><strong>Scenario</strong>You are a student reporter for your school newspaper. Research whether young people should take action to protect the environment and write an article convincing other students why it matters.</div>
-
-      <div class="passage-title">Source 1: "What Is Climate Change — and Why It Matters"</div>
-      <span class="source-tag">Informational Text</span>
-      <div class="passage-text">
-        <p>Climate change refers to long-term shifts in the Earth's average weather patterns — including temperature, rainfall, seasons, and other climate conditions. Unlike weather (which changes day to day), climate describes what is typical over decades or more.</p>
-        <p>Scientists have observed that the Earth is warming. Data collected by satellites, weather stations, ice measurements, and ocean monitoring all show increases in global average temperature, melting glaciers and sea ice, rising sea levels, and changes in precipitation patterns.</p>
-        <p>A major reason for this change is the increase of "greenhouse gases" in Earth's atmosphere — gases like carbon dioxide (CO₂), methane (CH₄), nitrous oxide (N₂O), and certain industrial gases. These gases act like a blanket around the Earth: when sunlight reaches Earth it warms the surface, and normally some of that heat would radiate back to space. But greenhouse gases absorb and trap part of the heat, preventing it from escaping, which keeps the planet warmer.</p>
-        <p>Human activities over the past 150–200 years — especially since the Industrial Revolution — have greatly increased emissions of greenhouse gases. Because of this extra heat, the Earth's climate is changing faster than natural cycles would, with serious consequences including stronger storms, rising sea levels, and threats to wildlife and human health.</p>
+    <div class="draft-panel">
+      <div class="panel-label">📄 Read &mdash; Then Answer the Questions</div>
+      <div class="scenario-box"><strong>Peer Revision Scenario</strong>
+        A student named Marcus is writing an article for the school newspaper. His research question is: <em>Should our school start a recycling program?</em> He is writing to persuade other students and the school principal. Marcus has finished his first draft and asked you to be his peer reviewer. Read his two sources and his draft, then answer the questions about how to revise it.
       </div>
-      <hr class="passage-divider">
 
-      <div class="passage-title">Source 2: "Why Reducing Waste and Recycling Helps Our Planet"</div>
-      <span class="source-tag">Informational Text</span>
-      <div class="passage-text">
-        <p>Every day, people use lots of materials — paper, plastic, metal, glass — and many of these become waste when we throw them away. But recycling and reducing waste can make a big difference. When we recycle, we reuse materials instead of extracting new ones, conserving natural resources and protecting forests, water supplies, and minerals.</p>
-        <p>Recycling also reduces greenhouse-gas emissions. The process of creating new products from virgin raw materials often consumes lots of energy and releases carbon dioxide. By contrast, recycling usually uses less energy — which helps lower pollution and slow down climate change.</p>
-        <p>Finally, recycling supports a more sustainable way of living: a "circular economy," where materials are reused rather than wasted. This not only helps the environment but can also support jobs in recycling and manufacturing, and encourage responsible use of resources so future generations can continue to live on a healthy planet.</p>
+      <div class="tabs" role="tablist">
+        <button class="tab active" role="tab" id="tab-draft" aria-selected="true" aria-controls="panel-draft" onclick="showTab('draft')">Marcus's Draft</button>
+        <button class="tab" role="tab" id="tab-s1" aria-selected="false" aria-controls="panel-s1" onclick="showTab('s1')">Source 1</button>
+        <button class="tab" role="tab" id="tab-s2" aria-selected="false" aria-controls="panel-s2" onclick="showTab('s2')">Source 2</button>
       </div>
-      <hr class="passage-divider">
 
-      <div class="passage-title">Model Essay — Student Reporter Response</div>
-      <span class="source-tag">Argumentative Writing Sample</span>
-      <div class="model-essay">
-        <p>As our world changes, it is more important than ever for young people — and especially students — to take action to protect the environment. Climate change is not a distant problem for adults only; it affects all of us, and we have the power to help.</p>
-        <p>According to environmental scientists, rising global temperatures are caused largely by human emissions of greenhouse gases from burning fossil fuels and other harmful activities. (Source 1) This warming leads to severe weather, rising sea levels, and threats to wildlife and human health. If we do nothing, future generations may face much worse conditions.</p>
-        <p>But we don't have to wait for someone else to fix things. Simple everyday actions can make a real difference. Recycling paper, plastic, and glass; reducing waste by reusing items; and conserving energy by turning off lights when not in use are effective steps that everyone can do — even students. (Source 2) Families who recycle, reduce waste, and conserve energy help lower pollution and lessen environmental impact.</p>
-        <p>Moreover, planting trees, using less energy at home, and choosing more eco-friendly transportation — like walking or biking when possible — are all practical ways we can help right now. By doing these things, we show we care about our planet — and we help make it healthier for everyone.</p>
-        <p>Because we all share this Earth, students and families should act now. Even small steps — recycling, conserving energy, planting trees — add up to big changes over time. If each of us does our part, we can help prevent worse effects of climate change, protect wildlife, and secure a safer, cleaner future. Let's make a difference — starting today.</p>
+      <div class="tab-panel active" id="panel-draft" role="tabpanel" aria-labelledby="tab-draft">
+        <div class="doc-title">Our School Needs Recycling</div>
+        <div class="draft-byline">First draft by Marcus &middot; sentences are numbered for peer review</div>
+
+        <div class="draft-para"><span class="para-tag">Paragraph 1</span><br>
+          <span class="snum">1</span>Recycling is a thing that a lot of people talk about these days.
+          <span class="snum">2</span>There are many opinions about recycling in schools.
+          <span class="snum">3</span>Our school should probably think about starting a recycling program.
+        </div>
+
+        <div class="draft-para"><span class="para-tag">Paragraph 2</span><br>
+          <span class="snum">4</span>One reason is that Americans throw away a huge amount of trash every single day.
+          <span class="snum">5</span>Most of that trash goes to landfills.
+          <span class="snum">6</span>It sits there for a very long time.
+          <span class="snum">7</span>They say landfills make gases that are bad for the air.
+          <span class="snum">8</span>That is a big problem.
+        </div>
+
+        <div class="draft-para"><span class="para-tag">Paragraph 3</span><br>
+          <span class="snum">9</span>Schools can make recycling work when students are in charge of the program.
+          <span class="snum">10</span>At one school in Ohio, students ran the program and the trash going to the landfill went down a lot.
+          <span class="snum">11</span>They also collect cans and bottles and sold them to a recycling center.
+          <span class="snum">12</span>The students at that school was really proud of what they did.
+          <span class="snum">13</span>My cousin goes to a school in another state and she says the lunches there are terrible.
+          <span class="snum">14</span>Programs like this saves the district money too.
+        </div>
+
+        <div class="draft-para"><span class="para-tag">Paragraph 4</span><br>
+          <span class="snum">15</span>Also, recycling saves natural resources.
+          <span class="snum">16</span>Trees water and minerals are all protected when we recycle.
+          <span class="snum">17</span>Trees are saved when paper is recycled by people.
+          <span class="snum">18</span>Honestly, it's kinda a no-brainer if you think about it.
+          <span class="snum">19</span>Anybody who doesn't want to recycle is just being lazy.
+        </div>
+
+        <div class="draft-para"><span class="para-tag">Paragraph 5</span><br>
+          <span class="snum">20</span>So that is why I think recycling at school is a good idea.
+          <span class="snum">21</span>Thank you for reading my article.
+        </div>
       </div>
+
+      <div class="tab-panel" id="panel-s1" role="tabpanel" aria-labelledby="tab-s1">
+        <div class="doc-title">Source 1: "What Happens to What We Throw Away"</div>
+        <span class="source-tag">Informational Text</span>
+        <div class="src-text">
+          <p>Every year, people in the United States generate about 292 million tons of municipal solid waste &mdash; roughly <strong>4.9 pounds per person every day</strong>. That includes paper, food scraps, plastic containers, yard trimmings, metal, and glass.</p>
+          <ul>
+            <li>Only about <strong>32%</strong> of that waste is recycled or composted. Close to half of it is buried in landfills.</li>
+            <li>As buried waste breaks down, it releases <strong>methane</strong>, a greenhouse gas that traps heat in the atmosphere. Landfills are the <strong>third-largest source of human-related methane emissions</strong> in the United States.</li>
+            <li>Recycling one ton of paper saves about <strong>17 trees</strong> and roughly <strong>7,000 gallons of water</strong>.</li>
+            <li>Aluminum can be recycled again and again without losing quality. Recycling a single aluminum can saves enough energy to run a television for about <strong>three hours</strong>.</li>
+          </ul>
+          <p>Reducing what we send to landfills conserves natural resources and keeps greenhouse gases out of the air.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="panel-s2" role="tabpanel" aria-labelledby="tab-s2">
+        <div class="doc-title">Source 2: "Schools That Made Recycling Work"</div>
+        <span class="source-tag">Informational Text</span>
+        <div class="src-text">
+          <ul>
+            <li>Ridgeview Middle School in Ohio cut the waste it sent to landfills by <strong>41% in a single year</strong> after students designed and ran their own recycling program.</li>
+            <li>The district spent about <strong>$1,200</strong> on collection bins and saved about <strong>$3,400</strong> in trash-hauling fees during the first year.</li>
+            <li>Researchers who studied 60 schools found that schools where <strong>students ran the program recycled about twice as much</strong> as schools where only custodians handled recycling.</li>
+            <li>Some schools report that collecting and sorting takes <strong>10 to 15 minutes of class time per week</strong>.</li>
+          </ul>
+          <p><strong>Not everyone is convinced.</strong> Dr. Elena Ruiz, a waste-management researcher, points out that about <strong>25% of what people put in recycling bins is contaminated</strong> with food or the wrong kinds of plastic, and badly contaminated loads are sometimes sent to a landfill anyway. She argues that schools should teach students what belongs in each bin <em>before</em> the bins arrive.</p>
+        </div>
+      </div>
+      <div class="note-box grey" style="margin-top:18px;font-size:.72rem">Sources are instructional texts written for this practice task. Figures in Source 1 reflect published national waste data; the school in Source 2 is a composite example.</div>
     </div>
 
     <div id="questions-container"></div>
   </div>
 
-  <div class="submit-all-bar">
-    <div class="submit-status">Answered: <strong id="answered-count">0</strong> of <strong>20</strong></div>
-    <button class="btn-finish" id="btn-finish" onclick="finishSim()" disabled>Submit &amp; See Results →</button>
+  <div class="submit-bar">
+    <div class="submit-status">Answered: <strong id="answered-count">0</strong> of <strong id="total-count">23</strong> &nbsp;·&nbsp; <span id="unanswered-hint"></span></div>
+    <div>
+      <button class="btn-secondary" onclick="jumpToUnanswered()" id="btn-jump" style="display:none">Go to next unanswered</button>
+      <button class="btn-finish" id="btn-finish" onclick="finishSim()" disabled>Submit &amp; See Results &rarr;</button>
+    </div>
   </div>
 </div>
 
-<!-- RESULTS -->
+<!-- ══════════ RESULTS ══════════ -->
 <div id="screen-results" class="screen">
-  <div class="results-hero">
-    <h2>Practice Complete!</h2>
-    <div class="student-name-result" id="result-name"></div>
-    <div class="score-circle">
-      <div class="score-pct" id="result-pct">--</div>
-      <div class="score-raw" id="result-raw">-- / --</div>
+  <div class="wrap">
+    <div class="results-hero">
+      <h2>Practice Complete</h2>
+      <div class="student-line" id="result-name"></div>
+      <div class="score-circle">
+        <div class="score-pct" id="result-pct">--</div>
+        <div class="score-raw" id="result-raw">-- / --</div>
+      </div>
+      <div id="result-band"></div>
     </div>
-    <div id="result-badge"></div>
-  </div>
-  <div class="results-body">
-    <div class="results-section"><h3>Performance by Domain</h3><div class="domain-grid" id="domain-grid"></div></div>
-    <div class="results-section"><h3>Performance by DOK Level</h3><div id="dok-breakdown"></div></div>
-    <div class="results-section"><h3>🚩 Vocabulary Flags</h3><div id="vocab-flag-summary"></div></div>
-    <div id="submit-msg" class="submit-msg sending">Sending results to your teacher…</div>
-    <div class="results-note"><strong>What's next?</strong> Review any missed questions. Pay attention to vocabulary flags — those words will appear on the real EOG.</div>
+    <div class="results-body">
+      <div class="disclaimer">
+        <strong>About this score.</strong> This is a classroom practice activity, not the Georgia Milestones assessment.
+        The band above is a <em>practice</em> indicator set by your teacher &mdash; it is <strong>not</strong> a Georgia Milestones
+        achievement level and it does not predict one. Official Milestones achievement levels are based on scale scores set
+        through GaDOE's standard-setting process. Use the trait breakdown below to decide what to work on next.
+      </div>
+
+      <div class="results-section">
+        <h3>Performance by Rubric Trait <small>&mdash; the 3-trait Georgia Milestones writing rubric</small></h3>
+        <div id="trait-breakdown"></div>
+      </div>
+
+      <div class="results-section">
+        <h3>Performance by Standard Group <small>&mdash; Georgia Milestones blueprint reporting categories</small></h3>
+        <div id="bigidea-breakdown"></div>
+      </div>
+
+      <div class="results-section">
+        <h3>Performance by Depth of Knowledge</h3>
+        <div id="dok-breakdown"></div>
+      </div>
+
+      <div class="results-section">
+        <h3>🏳 Vocabulary Flags</h3>
+        <div id="vocab-summary"></div>
+      </div>
+
+      <div class="results-section">
+        <h3>Answer Review <small>&mdash; every item, with the reasoning</small></h3>
+        <div id="review-list"></div>
+      </div>
+
+      <div id="submit-msg" class="submit-msg sending">Sending results to your teacher…</div>
+      <div style="margin-top:12px">
+        <button class="btn-secondary" onclick="downloadCSV()">⬇ Download my results (CSV)</button>
+        <button class="btn-secondary" onclick="window.print()">🖨 Print / Save as PDF</button>
+        <button class="btn-secondary" onclick="retrySubmit()" id="btn-retry" style="display:none">↻ Try sending again</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5Lnma0nsVruhq1gsEGjtnGN582xOcNXP0ycn6o6e3sPqGBAkzpwJGLOzFemPoy03J/exec";
+/* ═══════════════════════════════════════════════════════════════════
+   CONFIGURATION
+   ───────────────────────────────────────────────────────────────────
+   SCRIPT_URL must point at the Apps Script Web App deployed from
+   apps-script/Code.gs in this repository. See README.md → "Teacher setup".
+   NOTE: this URL is public in the repo, so treat the destination sheet
+   as append-only and review it for junk rows periodically.
+   ═══════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbx5Lnma0nsVruhq1gsEGjtnGN582xOcNXP0ycn6o6e3sPqGBAkzpwJGLOzFemPoy03J/exec",
+  FORM_ID: "GR6-PRT-RECYCLING",
+  FORM_VERSION: "2026.1",
+  STORAGE_KEY: "gr6-prt-recycling-v2026.1",
+  // Practice bands (percent of total points). NOT Georgia Milestones cut scores.
+  BANDS: [
+    {min:80, code:4, label:"On Track",                 cls:"band-4"},
+    {min:65, code:3, label:"Approaching",              cls:"band-3"},
+    {min:50, code:2, label:"Needs Support",            cls:"band-2"},
+    {min:0,  code:1, label:"Needs Substantial Support",cls:"band-1"}
+  ]
+};
 
-// ─── QUESTION BANK ────────────────────────────────────────────
-// Types: sr=selected response, ms=multi-select, dd=drag-drop, dropdown=inline dropdown, match=matching table
+const TRAITS = {
+  t1:{label:"Purpose & Organization",   cls:"trait-t1", color:"#0891b2"},
+  t2:{label:"Evidence & Elaboration",   cls:"trait-t2", color:"#d97706"},
+  t3:{label:"Language Usage & Conventions", cls:"trait-t3", color:"#059669"}
+};
+const BIG_IDEAS = {
+  ss:{label:"Structure & Style",   color:"#0891b2"},
+  tt:{label:"Techniques",          color:"#7c3aed"},
+  ra:{label:"Research & Analysis", color:"#d97706"},
+  gc:{label:"Grammar Conventions", color:"#059669"},
+  vo:{label:"Vocabulary",          color:"#be185d"}
+};
+
+/* ═══════════════════════════════════════════════════════════════════
+   ITEM BANK — 23 items / 30 points
+   Blueprint targets (by points):  DOK1 3–10% · DOK2 45–60% · DOK3 35–50%
+   Actual:                          DOK1 2pts 6.7% · DOK2 16pts 53.3% · DOK3 12pts 40%
+   Item mix: 16 one-point + 7 two-point (partial credit), mirroring the
+   Georgia Milestones 1-point / 2-point technology-enhanced ratio.
+   ═══════════════════════════════════════════════════════════════════ */
 const QUESTIONS = [
-  // DOK 1
-  {id:"Q1",dok:1,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"sr",
-   stem:"Which sentence from the model essay states the author's <strong>claim</strong>?",
-   options:[
-     {text:"Simple everyday actions can make a real difference.",correct:false},
-     {text:"As our world changes, it is more important than ever for young people to take action to protect the environment.",correct:true},
-     {text:"Because we all share this Earth, students and families should act now.",correct:false},
-     {text:"If each of us does our part, we can help prevent worse effects of climate change.",correct:false}
-   ],
-   vocabTerm:"claim — the writer's main argument or position"},
 
-  {id:"Q2",dok:1,domain:"lang",domainLabel:"Language & Vocab",domainClass:"domain-lang",type:"sr",
-   stem:"Read this sentence from Source 1:<br><em>\"These gases act like a blanket around the Earth.\"</em><br><br>What type of figurative language is used?",
-   options:[
-     {text:"Personification",correct:false},
-     {text:"Hyperbole",correct:false},
-     {text:"Simile",correct:true},
-     {text:"Alliteration",correct:false}
-   ],
-   vocabTerm:"simile — a comparison using 'like' or 'as'"},
+/* ───────── TRAIT 1 · PURPOSE & ORGANIZATION (10 pts) ───────── */
+{id:"Q1", type:"sr", points:1, dok:2, trait:"t1", bigIdea:"ss", std:"6.T.SS.1.d",
+ stem:"Which sentence should be added to the <em>beginning of Paragraph 1</em> to engage the audience and introduce the topic?",
+ options:[
+  {text:"Every day, the average American throws away about five pounds of trash — and most of it is never used again.", correct:true},
+  {text:"Recycling has been around for a long time in many different countries all over the world.", correct:false},
+  {text:"This article will explain my opinion about recycling and why our school should care about it.", correct:false},
+  {text:"There are three important reasons why school recycling programs have become popular lately.", correct:false}],
+ why:"The correct choice opens with a concrete, source-based fact that pulls the reader in and points straight at the topic. “Recycling has been around a long time” is vague background; “This article will explain…” announces the essay instead of engaging the reader; and the “three reasons” sentence promises a structure the draft does not actually use.",
+ vocabTerm:"hook — an engaging opening that draws the reader into a text"},
 
-  // DOK 2
-  {id:"Q3",dok:2,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"sr",
-   stem:"Which revision would <strong>best strengthen</strong> the model essay's second body paragraph?",
-   options:[
-     {text:"Add a new paragraph about the history of recycling.",correct:false},
-     {text:"Include a specific statistic from Source 2 about how much energy recycling saves.",correct:true},
-     {text:"Remove the citation (Source 2) so the paragraph flows better.",correct:false},
-     {text:"Replace the paragraph with a poem about recycling.",correct:false}
-   ],
-   vocabTerm:"evidence — specific facts, details, or data used to support a claim"},
+{id:"Q2", type:"sr", points:1, dok:1, trait:"t1", bigIdea:"tt", std:"6.T.T.3.a",
+ stem:"Which sentence in Paragraph 1 is meant to present Marcus's <em>claim</em>?",
+ options:[
+  {text:"Sentence 1", correct:false},
+  {text:"Sentence 2", correct:false},
+  {text:"Sentence 3", correct:true},
+  {text:"Paragraph 1 does not contain a sentence meant to present a claim.", correct:false}],
+ why:"Sentence 3 is the one that names Marcus's position on the research question. It is worded weakly (“should probably think about”), but it is still the claim sentence. Sentences 1 and 2 only introduce the topic and note that opinions exist.",
+ vocabTerm:"claim — the position a writer takes on a topic"},
 
-  {id:"Q4",dok:2,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"sr",
-   stem:"The word <strong>\"Moreover\"</strong> begins the fourth paragraph of the model essay. What is its purpose?",
-   options:[
-     {text:"To introduce a counterclaim",correct:false},
-     {text:"To signal a contrasting idea",correct:false},
-     {text:"To add an additional supporting point",correct:true},
-     {text:"To signal the conclusion is beginning",correct:false}
-   ],
-   vocabTerm:"transition — a word or phrase that connects ideas between sentences or paragraphs"},
+{id:"Q3", type:"sr", points:1, dok:3, trait:"t1", bigIdea:"tt", std:"6.T.T.3.c",
+ stem:"Which revision of <em>Sentence 3</em> BEST presents a clear claim for this purpose and audience?",
+ options:[
+  {text:"Our school should probably start a recycling program at some point.", correct:false},
+  {text:"Our school should start a student-led recycling program this year.", correct:true},
+  {text:"Recycling programs are something that many schools have started.", correct:false},
+  {text:"I am going to tell you about why recycling programs are important.", correct:false}],
+ why:"A strong claim takes a definite position and says exactly what should happen. The key names <em>what</em> (a student-led recycling program) and <em>when</em> (this year). Option A keeps the hedging words that made the original weak, option C states a fact rather than a position, and option D announces the article instead of making a claim.",
+ vocabTerm:"claim — a clear, arguable position a writer commits to"},
 
-  {id:"Q5",dok:2,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"sr",
-   stem:"A peer reviewer says the model essay needs a <strong>counterclaim</strong>. Which option best fits that role?",
-   options:[
-     {text:"Some people argue that individual actions are too small to make a meaningful difference against climate change.",correct:true},
-     {text:"Climate change is caused by greenhouse gases.",correct:false},
-     {text:"Students should recycle more often.",correct:false},
-     {text:"The planet is getting warmer every year.",correct:false}
-   ],
-   vocabTerm:"counterclaim — an opposing argument the writer then addresses and refutes"},
+{id:"Q4", type:"sr", points:1, dok:2, trait:"t1", bigIdea:"ss", std:"6.T.SS.1.c",
+ stem:"Which sentence should be <em>removed</em> from Paragraph 3 so that all the information is relevant and connected to the claim?",
+ options:[
+  {text:"Sentence 11", correct:false},
+  {text:"Sentence 12", correct:false},
+  {text:"Sentence 13", correct:true},
+  {text:"Sentence 14", correct:false}],
+ why:"Sentence 13 is about a cousin's school lunches. It has nothing to do with recycling or with the claim, so it breaks the focus of the paragraph. Sentences 11, 12, and 14 all still belong to the Ohio recycling example, even though some of them need other kinds of repair.",
+ vocabTerm:"relevant — directly connected to the topic and the claim"},
 
-  {id:"Q6",dok:2,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"sr",
-   stem:"Which sentence from the model essay <strong>best</strong> serves as the concluding statement?",
-   options:[
-     {text:"Even small steps — recycling, conserving energy, planting trees — add up to big changes over time.",correct:false},
-     {text:"Let's make a difference — starting today.",correct:true},
-     {text:"Because we all share this Earth, students and families should act now.",correct:false},
-     {text:"By doing these things, we show we care about our planet.",correct:false}
-   ],
-   vocabTerm:"conclusion — the ending section of a text that wraps up the argument"},
+{id:"Q5", type:"sr", points:1, dok:2, trait:"t1", bigIdea:"ss", std:"6.T.SS.1.c",
+ stem:"Paragraph 4 begins with the transition <em>“Also,”</em> in Sentence 15. Which transition should replace it to BEST connect this reason to the reason before it?",
+ options:[
+  {text:"However, unlike the cost savings,", correct:false},
+  {text:"For example, at the Ohio school,", correct:false},
+  {text:"In addition to saving money,", correct:true},
+  {text:"In conclusion, for these reasons,", correct:false}],
+ why:"Paragraph 3 ends by saying recycling programs save the district money, and Paragraph 4 adds a second, different benefit. The key signals addition <em>and</em> names the specific idea it is building on, which is what creates cohesion between paragraphs. “However” signals a contrast that is not there — saving resources does not conflict with saving money. “For example” signals an illustration of the previous point rather than a new reason. And “In conclusion” signals an ending in the middle of the argument.",
+ vocabTerm:"transition — a word or phrase that shows how ideas are related"},
 
-  // Inline Dropdown
-  {id:"Q7",dok:2,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"dropdown",
-   stem:"Select the best revision to make the introduction more engaging:",
-   prefix:'Replace "As our world changes, it is more important than ever …" with',
-   options:[
-     {text:"Every day, we see changes in Earth's weather — hotter summers, stronger storms, melting ice caps. Could that be your future if we don't act now?",correct:true},
-     {text:"Climate change is a serious issue that needs to be addressed by everyone.",correct:false},
-     {text:"Many people are talking about climate change these days.",correct:false},
-     {text:"In conclusion, we must all try to help the environment.",correct:false}
-   ],
-   vocabTerm:"hook — an engaging opening that draws the reader into the text"},
+{id:"Q6", type:"ms", points:2, dok:3, trait:"t1", bigIdea:"ss", std:"6.T.SS.2.c", correctCount:2,
+ stem:"Select <strong>TWO</strong> sentences from the draft that should be revised to maintain a style appropriate for the purpose and audience.",
+ options:[
+  {text:"Sentence 4: “One reason is that Americans throw away a huge amount of trash every single day.”", correct:false},
+  {text:"Sentence 9: “Schools can make recycling work when students are in charge of the program.”", correct:false},
+  {text:"Sentence 18: “Honestly, it's kinda a no-brainer if you think about it.”", correct:true},
+  {text:"Sentence 19: “Anybody who doesn't want to recycle is just being lazy.”", correct:true},
+  {text:"Sentence 15: “Also, recycling saves natural resources.”", correct:false}],
+ why:"Marcus is writing for other students <em>and</em> the principal, so the style should stay formal and respectful. Sentence 18 uses slang (“kinda,” “no-brainer”) and a contraction. Sentence 19 insults anyone who disagrees, which is both too casual and bad argument strategy. The other sentences are plain but appropriately formal — they have different problems (vague evidence, weak transition), not style problems.",
+ vocabTerm:"formal style — writing that avoids slang, contractions, and casual phrasing"},
 
-  // Matching Table
-  {id:"Q8",dok:2,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"match",
-   stem:"Match each suggested revision with the purpose it serves:",
-   rows:[
-     {label:"Add a statistic about rising temperatures",correct:"Adds supporting facts/details"},
-     {label:"Use a personal anecdote — e.g., a student planting a tree",correct:"Hooks the reader; makes it personal"},
-     {label:"Insert a transition phrase \"However, ...\" before the counterargument",correct:"Improves the flow & readability"},
-     {label:"Add a sentence crediting sources when using facts or quotes",correct:"Improves credibility"}
-   ],
-   columns:["Hooks the reader; makes it personal","Improves credibility","Improves the flow & readability","Adds supporting facts/details"],
-   vocabTerm:"revision — a change made to a draft to improve its clarity, structure, or support"},
+{id:"Q7", type:"sr", points:1, dok:2, trait:"t1", bigIdea:"tt", std:"6.T.T.3.c",
+ stem:"Which sentence should be added to the end of Paragraph 5 to provide the BEST conclusion?",
+ options:[
+  {text:"Recycling is important for many different reasons, and I have explained several of those reasons in the paragraphs above.", correct:false},
+  {text:"If every student brings one recyclable item to a bin each day, our school can cut what it sends to the landfill this year — so let's begin now.", correct:true},
+  {text:"Some people still believe that recycling does not matter very much, and they may have reasons of their own for thinking that.", correct:false},
+  {text:"In the future, scientists and engineers may discover much better ways to deal with all of the trash that people throw away.", correct:false}],
+ why:"A strong conclusion finalizes the response, and one good way to do that is a call to action tied directly to the claim. The key tells the audience exactly what to do and connects it back to the school. Option A only restates weakly, option C raises a brand-new objection at the very end, and option D drifts to a different topic.",
+ vocabTerm:"call to action — an ending that asks the audience to do something"},
 
-  {id:"Q9",dok:2,domain:"lang",domainLabel:"Language & Vocab",domainClass:"domain-lang",type:"sr",
-   stem:"The word <strong>\"emissions\"</strong> in Source 1 refers to:",
-   options:[
-     {text:"Gases or pollutants released into the atmosphere",correct:true},
-     {text:"Government rules about pollution",correct:false},
-     {text:"The removal of harmful gases from the air",correct:false},
-     {text:"Natural weather patterns",correct:false}
-   ],
-   vocabTerm:"emissions — gases or pollutants released into the air from human activities"},
+{id:"Q8", type:"match", points:2, dok:3, trait:"t1", bigIdea:"ss", std:"6.T.SS.1.a",
+ stem:"Match each proposed revision with the part of <em>Trait 1: Purpose &amp; Organization</em> it would improve.",
+ columns:["Strengthens the introduction","Improves transitions and cohesion","Makes the style appropriate","Strengthens the conclusion"],
+ rows:[
+  {label:"Add a surprising fact about trash before Sentence 1", correct:"Strengthens the introduction"},
+  {label:"Replace “Also” in Sentence 15 with “In addition to saving money,”", correct:"Improves transitions and cohesion"},
+  {label:"Rewrite Sentence 18 without slang", correct:"Makes the style appropriate"},
+  {label:"Add a call to action after Sentence 21", correct:"Strengthens the conclusion"}],
+ why:"Each revision targets a different bullet of Trait 1. A hook belongs to the introduction; a connecting phrase between paragraphs belongs to transitions and cohesion; removing slang belongs to style; and a call to action belongs to the conclusion. Being able to name <em>which</em> part of the rubric a revision serves is what makes peer feedback useful instead of vague.",
+ vocabTerm:"cohesion — the quality of writing where ideas connect smoothly"},
 
-  {id:"Q10",dok:2,domain:"tech",domainLabel:"Techniques",domainClass:"domain-tech",type:"sr",
-   stem:"Which revision would <strong>best improve the introduction</strong> of the model essay?",
-   options:[
-     {text:"Start with the conclusion instead of an introduction.",correct:false},
-     {text:"Add a surprising fact about climate change before stating the claim.",correct:true},
-     {text:"Remove the claim from the introduction entirely.",correct:false},
-     {text:"Replace the introduction with a bulleted list of facts.",correct:false}
-   ],
-   vocabTerm:"hook — an opening that grabs the reader's attention before the claim"},
+{id:"Q9", type:"sr", points:1, dok:2, trait:"t1", bigIdea:"vo", std:"6.L.V.1.b",
+ stem:"Sentence 1 calls recycling <em>“a thing that a lot of people talk about.”</em> Which revision uses more precise, academic language?",
+ options:[
+  {text:"Recycling is something that people discuss.", correct:false},
+  {text:"Recycling is a widely debated environmental issue.", correct:true},
+  {text:"Recycling is a very, very popular topic.", correct:false},
+  {text:"Recycling is a thing people argue about a lot.", correct:false}],
+ why:"“A thing that a lot of people talk about” is imprecise. The key replaces it with specific academic vocabulary: “widely debated” names the kind of discussion, and “environmental issue” names the category. The other options simply swap one vague phrase for another, and “very, very” adds repetition instead of precision.",
+ vocabTerm:"precise language — specific word choices that say exactly what is meant"},
 
-  {id:"Q11",dok:2,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"sr",
-   stem:"A peer reviewer notices one sentence in the model essay shifts to <strong>informal style</strong>. Which sentence is it?",
-   options:[
-     {text:"According to environmental scientists, rising global temperatures are caused largely by human emissions.",correct:false},
-     {text:"But we don't have to wait for someone else to fix things.",correct:true},
-     {text:"Recycling paper, plastic, and glass are effective steps that everyone can do.",correct:false},
-     {text:"Simple everyday actions can make a real difference.",correct:false}
-   ],
-   vocabTerm:"formal style — writing that avoids contractions, slang, and informal phrases"},
+/* ───────── TRAIT 2 · EVIDENCE & ELABORATION (10 pts) ───────── */
+{id:"Q10", type:"sr", points:1, dok:2, trait:"t2", bigIdea:"tt", std:"6.T.T.3.c",
+ stem:"Sentence 4 says Americans throw away <em>“a huge amount of trash.”</em> Which evidence from Source 1 would BEST replace this general statement?",
+ options:[
+  {text:"Americans throw away about 4.9 pounds of trash per person every day.", correct:true},
+  {text:"Landfills are the third-largest source of human-related methane emissions.", correct:false},
+  {text:"Aluminum can be recycled again and again without losing quality.", correct:false},
+  {text:"Recycling one ton of paper saves about 17 trees.", correct:false}],
+ why:"Sentence 4 is making a claim about <em>how much</em> trash Americans throw away, so the evidence that replaces “a huge amount” has to be a quantity of trash. The other three facts are all true and all come from Source 1, but they support different points — methane supports Paragraph 2's next idea, and the paper and aluminum facts support Paragraph 4.",
+ vocabTerm:"evidence — specific facts or data from a source used to support a point"},
 
-  {id:"Q12",dok:2,domain:"lang",domainLabel:"Language & Vocab",domainClass:"domain-lang",type:"sr",
-   stem:"Which word from Source 2 is closest in meaning to <strong>\"sustainable\"</strong>?",
-   options:[
-     {text:"Harmful",correct:false},
-     {text:"Responsible",correct:true},
-     {text:"Excessive",correct:false},
-     {text:"Temporary",correct:false}
-   ],
-   vocabTerm:"sustainable — able to continue without using up resources or harming the environment"},
+{id:"Q11", type:"multipart", points:2, dok:3, trait:"t2", bigIdea:"ra", std:"6.T.RA.2.b",
+ stem:"Marcus needs evidence from <strong>BOTH</strong> sources to support the claim that a <em>student-led</em> recycling program would work at this school. Choose ONE piece of evidence from EACH source.",
+ parts:[
+  {label:"Part A — from Source 1", options:[
+    {text:"Only about 32% of U.S. waste is recycled or composted; close to half is buried in landfills.", correct:true},
+    {text:"Aluminum cans can be recycled again and again without ever losing their original quality.", correct:false},
+    {text:"Buried waste in landfills breaks down slowly over very long periods of time.", correct:false}]},
+  {label:"Part B — from Source 2", options:[
+    {text:"Schools where students ran the program recycled about twice as much as schools where only custodians handled it.", correct:true},
+    {text:"Some schools report that the recycling program takes 10 to 15 minutes of class time each week.", correct:false},
+    {text:"About 25% of what people put into recycling bins is contaminated with food or the wrong plastics.", correct:false}]}],
+ why:"The claim has two parts — that a recycling program is <em>needed</em> and that a <em>student-led</em> one would work. Part A's key establishes the need by showing how little is currently recycled. Part B's key is the only option that supports the student-led part specifically. The class-time and contamination facts are real and from the source, but they are evidence <em>against</em> the claim, so they belong in a counterclaim, not in support.",
+ vocabTerm:"credible evidence — support drawn from a reliable source rather than opinion"},
 
-  {id:"Q13",dok:2,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"sr",
-   stem:"Which detail provides the <strong>strongest evidence</strong> for the claim that students should take action?",
-   options:[
-     {text:"Climate change refers to long-term shifts in the Earth's average weather patterns.",correct:false},
-     {text:"The Industrial Revolution began 150–200 years ago.",correct:false},
-     {text:"Recycling usually uses less energy than producing from scratch, which helps lower pollution.",correct:true},
-     {text:"Materials like paper, plastic, and metal become waste when thrown away.",correct:false}
-   ],
-   vocabTerm:"relevant evidence — details that directly connect to and support the main claim"},
+{id:"Q12", type:"sr", points:1, dok:2, trait:"t2", bigIdea:"tt", std:"6.T.T.2.d",
+ stem:"Which sentence should be added to the <em>end of Paragraph 2</em> (after Sentence 8) to BEST elaborate on the ideas in that paragraph?",
+ options:[
+  {text:"Trash is a serious problem in many different places all around the world, and it has been that way for a very long time now.", correct:false},
+  {text:"Because that methane traps heat in the atmosphere, every ton of trash our school keeps out of a landfill also keeps greenhouse gases out of the air (Source 1).", correct:true},
+  {text:"Landfills are usually built pretty far away from the neighborhoods where most people in a community live and go to school.", correct:false},
+  {text:"Our school throws away a lot of paper in every single classroom, especially near the end of the school year in the spring.", correct:false}],
+ why:"Elaboration explains <em>why</em> the evidence matters and ties it back to the argument. The key does three jobs at once: it explains what methane actually does, it connects the national problem to Marcus's school, and it credits the source. Option A is a vague generalization, option C is an unrelated fact, and option D is a guess about the school that no source supports.",
+ vocabTerm:"elaborate — to explain evidence further and connect it to the point"},
 
-  {id:"Q14",dok:2,domain:"tech",domainLabel:"Techniques",domainClass:"domain-tech",type:"sr",
-   stem:"What is the <strong>purpose</strong> of the model essay?",
-   options:[
-     {text:"To inform readers about what greenhouse gases are",correct:false},
-     {text:"To entertain readers with a story about a student reporter",correct:false},
-     {text:"To persuade readers that young people should take action to protect the environment",correct:true},
-     {text:"To explain the history of the recycling movement",correct:false}
-   ],
-   vocabTerm:"purpose — the reason an author writes a text (to inform, persuade, or entertain)"},
+{id:"Q13", type:"sr", points:1, dok:2, trait:"t2", bigIdea:"ra", std:"6.T.RA.2.b",
+ stem:"Sentence 10 says the trash going to the landfill <em>“went down a lot.”</em> Which revision BEST integrates specific evidence <strong>and</strong> credits the source?",
+ options:[
+  {text:"…the trash going to the landfill went down by a large amount, according to experts.", correct:false},
+  {text:"…the trash going to the landfill went down by 41% in a single year (Source 2).", correct:true},
+  {text:"…the trash going to the landfill went down, which everybody already knows.", correct:false},
+  {text:"…the trash going to the landfill went down by 41% in a single year.", correct:false}],
+ why:"This item asks for two things at once. Only the key does both: it gives the exact figure <em>and</em> names where the figure came from. Option D has the number but no credit, option A has a vague attribution (“some experts” is not a source) and no number, and option C has neither.",
+ vocabTerm:"credit a source — showing readers where a fact or quotation came from"},
 
-  // DOK 3
-  {id:"Q15",dok:3,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"ms",correctCount:2,
-   stem:"Select <strong>TWO</strong> revisions that would <strong>most effectively</strong> strengthen the model essay's argument.",
-   options:[
-     {text:"Add a specific statistic from Source 1 about rising global temperatures.",correct:true},
-     {text:"Replace all citations with the phrase 'experts say.'",correct:false},
-     {text:"Include a counterclaim and a rebuttal before the conclusion.",correct:true},
-     {text:"Change the conclusion to introduce a new topic about ocean pollution.",correct:false},
-     {text:"Remove the body paragraphs and only keep the introduction.",correct:false}
-   ],
-   vocabTerm:"rebuttal — the writer's response to a counterclaim showing why the original argument is stronger"},
+{id:"Q14", type:"sr", points:1, dok:3, trait:"t2", bigIdea:"tt", std:"6.T.T.3.c",
+ stem:"Sentence 19 attacks people who disagree instead of answering them. Which sentence should <em>replace</em> Sentence 19 to address a counterclaim and strengthen the argument?",
+ options:[
+  {text:"People who refuse to recycle should have to pay a fine at school, because a penalty is really the only thing that will ever make students change the way they behave.", correct:false},
+  {text:"Some people argue that recycling bins do not help because about 25% of what goes into them is contaminated; our program can answer that by teaching students what belongs in each bin before the bins arrive (Source 2).", correct:true},
+  {text:"Not everyone agrees with me about starting recycling at school, and I understand that some students and teachers in our building may feel very differently than I do.", correct:false},
+  {text:"Recycling is still the best thing that anyone can possibly do to help protect the environment, no matter what other people might try to argue about it later.", correct:false}],
+ why:"A counterclaim does two jobs: it states the strongest opposing point fairly, and then it answers that point. Only the key does both, and it draws the objection straight from Dr. Ruiz in Source 2. Option C names that disagreement exists but never answers it. Options A and D ignore the opposing view entirely — option D just restates the claim more loudly.",
+ vocabTerm:"counterclaim — an opposing argument the writer states and then answers"},
 
-  {id:"Q16",dok:3,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"ms",correctCount:2,
-   stem:"Select <strong>TWO</strong> organizational features the model essay uses effectively.",
-   options:[
-     {text:"A clearly stated claim in the introduction",correct:true},
-     {text:"Body paragraphs organized by chronological order",correct:false},
-     {text:"Transition words that connect ideas between paragraphs",correct:true},
-     {text:"A bulleted list of reasons instead of paragraphs",correct:false},
-     {text:"A separate glossary defining all difficult words",correct:false}
-   ],
-   vocabTerm:"coherence — the quality of writing where all parts connect logically and smoothly"},
+{id:"Q15", type:"ms", points:2, dok:3, trait:"t2", bigIdea:"ra", std:"6.T.RA.2.a", correctCount:2,
+ stem:"Select <strong>TWO</strong> pieces of credible information that could be added to the draft to support the reasons and help develop the claim.",
+ options:[
+  {text:"Ridgeview Middle School cut its landfill waste by 41% in one year after students led a recycling program (Source 2).", correct:true},
+  {text:"The district spent about $1,200 on bins and saved about $3,400 in hauling fees the first year (Source 2).", correct:true},
+  {text:"Most students at our school would probably like the idea of having recycling bins in the cafeteria.", correct:false},
+  {text:"Recycling has been a popular thing for people to do since a long time ago in many places.", correct:false},
+  {text:"My cousin's school in another state has a recycling program that seems to work pretty well.", correct:false}],
+ why:"Credible information is specific, comes from a source, and supports a reason already in the draft. Both keys do that — one supports the “student-led programs work” reason, the other supports the “saves the district money” reason. “Most students probably like” is a guess with no source, “since a long time ago” is vague and unsourced, and a cousin's school is a personal anecdote rather than credible evidence.",
+ vocabTerm:"credible — trustworthy; able to be believed because it comes from a reliable source"},
 
-  {id:"Q17",dok:3,domain:"tech",domainLabel:"Techniques",domainClass:"domain-tech",type:"dd",
-   stem:"Drag each element to its correct place in the <strong>argumentative essay structure</strong>.",
-   slots:[{label:"Introduction",correct:"Claim"},{label:"1st Body",correct:"Evidence"},{label:"2nd Body",correct:"Counterclaim"},{label:"Conclusion",correct:"Call to Action"}],
-   items:["Evidence","Call to Action","Claim","Counterclaim"],
-   vocabTerm:"argumentative structure — the organized arrangement of claim, evidence, counterclaim, and conclusion"},
+{id:"Q16", type:"dd", points:2, dok:2, trait:"t2", bigIdea:"ra", std:"6.T.RA.2.a",
+ stem:"Place each piece of source evidence in the paragraph where it would BEST strengthen the draft. <em>One piece of evidence will not be used.</em>",
+ items:[
+  "About 4.9 pounds of trash per person per day (Source 1)",
+  "Student-led schools recycled about twice as much (Source 2)",
+  "Recycling one ton of paper saves about 17 trees (Source 1)",
+  "About 25% of recycling-bin contents is contaminated (Source 2)"],
+ slots:[
+  {label:"Paragraph 2 — how much we throw away", correct:"About 4.9 pounds of trash per person per day (Source 1)"},
+  {label:"Paragraph 3 — student-led programs work", correct:"Student-led schools recycled about twice as much (Source 2)"},
+  {label:"Paragraph 4 — recycling saves natural resources", correct:"Recycling one ton of paper saves about 17 trees (Source 1)"}],
+ why:"Evidence belongs with the reason it actually supports. The trash-per-day figure matches Paragraph 2's point about how much we throw away; the twice-as-much finding matches Paragraph 3's point about student-led programs; and the 17-trees figure matches Paragraph 4's point about natural resources. The contamination statistic is left over on purpose — it is evidence for the <em>counterclaim</em>, not for any of these three reasons.",
+ vocabTerm:"relevant evidence — support that directly matches the reason it is placed with"},
 
-  {id:"Q18",dok:3,domain:"lang",domainLabel:"Language & Vocab",domainClass:"domain-lang",type:"sr",
-   stem:"Based on context clues, what does <strong>\"circular economy\"</strong> mean in Source 2?",
-   options:[
-     {text:"An economy based on buying new products to grow the market",correct:false},
-     {text:"A system where materials are continually reused rather than discarded",correct:true},
-     {text:"A type of government program that pays people to recycle",correct:false},
-     {text:"A scientific model for measuring greenhouse gas emissions",correct:false}
-   ],
-   vocabTerm:"context clues — words or phrases near an unknown word that help reveal its meaning"},
+/* ───────── TRAIT 3 · LANGUAGE USAGE & CONVENTIONS (9 pts) ───────── */
+{id:"Q17", type:"ms", points:2, dok:2, trait:"t3", bigIdea:"gc", std:"6.L.GC.2.c", correctCount:2,
+ stem:"Select <strong>TWO</strong> sentences from the draft that should be revised to correct errors in <em>subject-verb agreement</em>.",
+ options:[
+  {text:"Sentence 5: “Most of that trash goes to landfills.”", correct:false},
+  {text:"Sentence 12: “The students at that school was really proud of what they did.”", correct:true},
+  {text:"Sentence 14: “Programs like this saves the district money too.”", correct:true},
+  {text:"Sentence 9: “Schools can make recycling work when students are in charge of the program.”", correct:false},
+  {text:"Sentence 20: “So that is why I think recycling at school is a good idea.”", correct:false}],
+ why:"In Sentence 12 the subject is the plural “students,” so the verb must be “were,” not “was.” In Sentence 14 the subject is the plural “Programs,” so the verb must be “save,” not “saves.” Both errors are easy to miss because a phrase (“at that school,” “like this”) sits between the subject and the verb. Read past the phrase to find the real subject.",
+ vocabTerm:"subject-verb agreement — matching a verb to whether its subject is singular or plural"},
 
-  {id:"Q19",dok:3,domain:"arg",domainLabel:"Argumentative",domainClass:"domain-arg",type:"ms",correctCount:2,
-   stem:"A peer reviewer evaluates the model essay using the Milestones rubric. Select <strong>TWO</strong> accurate statements about the essay's strengths.",
-   options:[
-     {text:"The essay presents a clear claim and supports it with evidence from two sources.",correct:true},
-     {text:"The essay uses varied sentence structures and maintains mostly formal style.",correct:true},
-     {text:"The essay includes a fully developed counterclaim and rebuttal.",correct:false},
-     {text:"The essay copies large sections of text directly from the sources.",correct:false},
-     {text:"The essay has no transitions between paragraphs.",correct:false}
-   ],
-   vocabTerm:"rubric — a scoring guide that describes what quality looks like at each level"},
+{id:"Q18", type:"sr", points:1, dok:2, trait:"t3", bigIdea:"gc", std:"6.L.GC.2.b",
+ stem:"Sentence 11 shifts verb tense: <em>“They also collect cans and bottles and sold them to a recycling center.”</em> Which revision corrects the error?",
+ options:[
+  {text:"They also collect cans and bottles and sell them to a recycling center.", correct:false},
+  {text:"They also collected cans and bottles and sold them to a recycling center.", correct:true},
+  {text:"They also collect cans and bottles and will sell them to a recycling center.", correct:false},
+  {text:"They also had collected cans and bottles and sold them to a recycling center.", correct:false}],
+ why:"Paragraph 3 describes something that <em>already happened</em> at the Ohio school — Sentence 10 uses “ran” and “went.” So both verbs in Sentence 11 should be past tense. Option A is internally consistent but wrongly moves a finished event into the present, option C mixes present and future, and option D shifts into a past-perfect form that does not match the sentences around it.",
+ vocabTerm:"verb tense — the form of a verb that shows when an action happened"},
 
-  {id:"Q20",dok:3,domain:"struct",domainLabel:"Structure & Style",domainClass:"domain-struct",type:"dd",
-   stem:"Drag each transition to the purpose it <strong>best</strong> serves in argumentative writing.",
-   slots:[{label:"Add a point",correct:"Moreover"},{label:"Show contrast",correct:"However"},{label:"Show cause/effect",correct:"Therefore"},{label:"Conclude",correct:"In conclusion"}],
-   items:["However","Therefore","In conclusion","Moreover"],
-   vocabTerm:"transitions — signal words that show the relationship between ideas"}
+{id:"Q19", type:"sr", points:1, dok:2, trait:"t3", bigIdea:"gc", std:"6.L.GC.2.c",
+ stem:"Which revision of <em>Sentence 17</em> (“Trees are saved when paper is recycled by people.”) BEST rewrites it in <em>active voice</em>?",
+ options:[
+  {text:"Trees can be saved by the recycling of paper.", correct:false},
+  {text:"When people recycle paper, they save trees — about 17 trees for every ton (Source 1).", correct:true},
+  {text:"Paper that is recycled saves trees.", correct:false},
+  {text:"Trees, which are saved by recycled paper, are important to the environment.", correct:false}],
+ why:"Active voice puts the <em>doer</em> in front of the action. The key makes “people” the subject doing the recycling and the saving, and it adds a specific figure while it is at it. Option A is still passive (“can be saved by”). Option C hides the doer behind “Paper that is recycled.” Option D is passive inside the middle clause and drifts away from the point.",
+ vocabTerm:"active voice — a sentence in which the subject performs the action"},
+
+{id:"Q20", type:"sr", points:1, dok:2, trait:"t3", bigIdea:"gc", std:"6.L.GC.2.b",
+ stem:"Sentences 5 and 6 are short and choppy: <em>“Most of that trash goes to landfills. It sits there for a very long time.”</em> Which revision BEST combines them?",
+ options:[
+  {text:"Most of that trash goes to landfills, it sits there for a very long time.", correct:false},
+  {text:"Most of that trash goes to landfills and sits there for a very long time.", correct:true},
+  {text:"Most of that trash goes to landfills but it sits there for a very long time.", correct:false},
+  {text:"Most of that trash goes to landfills. Sitting there for a very long time.", correct:false}],
+ why:"The two ideas add to each other, so the conjunction <em>and</em> is the right choice — it joins them into one smooth sentence with no repeated subject. Option A is a comma splice (two complete sentences joined by only a comma). Option C uses “but,” which signals a contrast that does not exist between these ideas. Option D creates a sentence fragment because “Sitting there for a very long time” has no subject or complete verb.",
+ vocabTerm:"conjunction — a word such as and, but, or so that joins ideas"},
+
+{id:"Q21", type:"sr", points:1, dok:2, trait:"t3", bigIdea:"gc", std:"6.L.GC.1",
+ stem:"Sentence 7 begins <em>“They say landfills make gases that are bad for the air.”</em> Which revision BEST corrects the vague pronoun reference?",
+ options:[
+  {text:"People everywhere say that landfills make gases that end up being bad for the air that we all breathe.", correct:false},
+  {text:"Source 1 reports that landfills are the third-largest source of human-related methane emissions in the United States.", correct:true},
+  {text:"It says that landfills make gases that are bad for the air in the areas surrounding them.", correct:false},
+  {text:"They say that landfills, which make gases, are bad for the air in many different communities.", correct:false}],
+ why:"“They” has no antecedent — there is no earlier noun it can refer to, so the reader cannot tell who “they” are. The key replaces the pronoun with the actual source and adds the specific fact. Option A trades one vague word for another (“People” is just as unclear), option C swaps in an equally empty “It,” and option D keeps “They” entirely.",
+ vocabTerm:"vague pronoun reference — a pronoun with no clear noun it stands for"},
+
+{id:"Q22", type:"sr", points:1, dok:1, trait:"t3", bigIdea:"gc", std:"6.L.GC.1",
+ stem:"Which punctuation change is needed in <em>Sentence 16</em> (“Trees water and minerals are all protected when we recycle.”)?",
+ options:[
+  {text:"Add commas to separate the items in the series: “Trees, water, and minerals…”", correct:true},
+  {text:"Add a comma after the word “protected” to separate the two parts of the sentence.", correct:false},
+  {text:"Change the period at the end of the sentence to a question mark instead.", correct:false},
+  {text:"Add an apostrophe to “Trees” so that it shows possession of the water.", correct:false}],
+ why:"“Trees water and minerals” is a series of three items, and items in a series are separated by commas. Without them the sentence can be misread as though someone waters trees. There is no reason for a comma after “protected,” the sentence is a statement rather than a question, and “Trees” is a plural noun here, not a possessive.",
+ vocabTerm:"series — three or more items listed in a row, separated by commas"},
+
+{id:"Q23", type:"match", points:2, dok:3, trait:"t3", bigIdea:"gc", std:"6.L.GC.1",
+ stem:"Match each sentence from the draft with the kind of error it contains.",
+ columns:["Vague pronoun reference","Subject-verb agreement","Missing commas in a series","Passive voice"],
+ rows:[
+  {label:"Sentence 7: “They say landfills make gases…”", correct:"Vague pronoun reference"},
+  {label:"Sentence 12: “The students at that school was really proud…”", correct:"Subject-verb agreement"},
+  {label:"Sentence 16: “Trees water and minerals are all protected…”", correct:"Missing commas in a series"},
+  {label:"Sentence 17: “Trees are saved when paper is recycled by people.”", correct:"Passive voice"}],
+ why:"Naming the error is what lets a peer reviewer give feedback a writer can actually act on. “They” with no antecedent is a vague pronoun reference. Plural “students” with singular “was” is subject-verb disagreement. Three listed items with no commas is a series error. And a sentence where the action is done <em>to</em> the subject (“Trees are saved…by people”) is passive voice.",
+ vocabTerm:"convention — an agreed-upon rule of grammar, usage, or punctuation"}
 ];
 
-// ─── STATE ────────────────────────────────────────────────────
-let studentName="", studentPeriod="";
-let answers={};
-let vocabFlags=new Set();
-let srSel={}, msSel={}, ddData={}, ddSel={}, matchSel={};
+const TOTAL_POINTS = QUESTIONS.reduce((s,q)=>s+q.points,0);
+const TOTAL_ITEMS  = QUESTIONS.length;
 
-// ─── START ────────────────────────────────────────────────────
-function startSim(){
-  studentName=document.getElementById("student-name").value.trim();
-  studentPeriod=document.getElementById("student-period").value;
-  if(!studentName||!studentPeriod){alert("Please enter your name and select your class period.");return;}
-  showScreen("screen-sim");
-  renderQuestions();
+/* ═══════════════════════════════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════════════════════════════ */
+let student = {name:"", id:"", period:""};
+let responses = {};          // qid -> response payload (shape varies by type)
+let vocabFlags = new Set();
+let answeredAt = {};         // qid -> seconds from start when first completed
+let startedAt = null;
+let timerHandle = null;
+let armedDrag = null;        // {qid,item} for tap-to-place
+let lastPayload = null;
+let submissionId = null;
+
+/* ═══════════════════════════════════════════════════════════════════
+   PERSISTENCE
+   ═══════════════════════════════════════════════════════════════════ */
+function saveState(){
+  try{
+    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({
+      student, responses, answeredAt, startedAt,
+      vocabFlags:[...vocabFlags], savedAt:new Date().toISOString()
+    }));
+  }catch(e){ /* storage unavailable — practice still works, just no resume */ }
 }
-function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");}
+function loadState(){
+  try{ return JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)||"null"); }catch(e){ return null; }
+}
+function clearState(){ try{ localStorage.removeItem(CONFIG.STORAGE_KEY); }catch(e){} }
 
+window.addEventListener("DOMContentLoaded", ()=>{
+  document.getElementById("total-count").textContent = TOTAL_ITEMS;
+  document.getElementById("progress-label").textContent = "0 / "+TOTAL_ITEMS;
+  const saved = loadState();
+  if(saved && saved.responses && Object.keys(saved.responses).length){
+    const n = countAnswered(saved.responses);
+    document.getElementById("resume-detail").textContent =
+      `${saved.student.name||"Unsaved student"} — ${n} of ${TOTAL_ITEMS} questions answered.`;
+    document.getElementById("resume-banner").style.display="block";
+  }
+  setHeaderHeight();
+});
+window.addEventListener("resize", setHeaderHeight);
 function setHeaderHeight(){
   const h=document.querySelector(".sim-header");
   if(h) document.documentElement.style.setProperty("--header-h", h.offsetHeight+"px");
 }
-window.addEventListener("load", setHeaderHeight);
-window.addEventListener("resize", setHeaderHeight);
 
-// ─── RENDER ───────────────────────────────────────────────────
+function resumeSaved(){
+  const s = loadState(); if(!s) return;
+  student = s.student; responses = s.responses||{}; answeredAt = s.answeredAt||{};
+  startedAt = s.startedAt || new Date().toISOString();
+  vocabFlags = new Set(s.vocabFlags||[]);
+  document.getElementById("resume-banner").style.display="none";
+  enterSim();
+}
+function discardSaved(){
+  clearState();
+  document.getElementById("resume-banner").style.display="none";
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   START
+   ═══════════════════════════════════════════════════════════════════ */
+function startSim(){
+  const name = document.getElementById("student-name").value.trim();
+  const period = document.getElementById("student-period").value;
+  if(!name || !period){ alert("Please enter your name and select your class period."); return; }
+  student = {name, id: document.getElementById("student-id").value.trim(), period};
+  startedAt = new Date().toISOString();
+  responses = {}; answeredAt = {}; vocabFlags = new Set();
+  enterSim();
+}
+function enterSim(){
+  showScreen("screen-sim");
+  renderQuestions();
+  updateProgress();
+  startTimer();
+  saveState();
+}
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+function startTimer(){
+  if(timerHandle) clearInterval(timerHandle);
+  timerHandle = setInterval(()=>{
+    const el = elapsedSeconds();
+    document.getElementById("timer-label").textContent =
+      String(Math.floor(el/60)).padStart(2,"0")+":"+String(el%60).padStart(2,"0");
+  }, 1000);
+}
+function elapsedSeconds(){
+  return startedAt ? Math.max(0, Math.round((Date.now()-new Date(startedAt).getTime())/1000)) : 0;
+}
+function showTab(which){
+  ["draft","s1","s2"].forEach(k=>{
+    const on = k===which;
+    document.getElementById("panel-"+k).classList.toggle("active", on);
+    const t=document.getElementById("tab-"+k);
+    t.classList.toggle("active", on);
+    t.setAttribute("aria-selected", on?"true":"false");
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RENDER
+   ═══════════════════════════════════════════════════════════════════ */
 function renderQuestions(){
-  const c=document.getElementById("questions-container");
-  c.innerHTML="";
+  const c = document.getElementById("questions-container");
+  c.innerHTML = "";
   QUESTIONS.forEach((q,i)=>{
-    const b=document.createElement("div");
-    b.className="question-block";b.id="block-"+q.id;
-    let h=`<div class="q-meta">
-      <span class="q-num">Question ${i+1}</span>
-      <span class="q-domain ${q.domainClass}">${q.domainLabel}</span>
-      <span class="q-dok">DOK ${q.dok}</span>
-    </div>
-    <div class="q-stem">${q.stem}</div>`;
-    if(q.type==="sr") h+=renderSR(q);
-    else if(q.type==="ms") h+=renderMS(q);
-    else if(q.type==="dd") h+=renderDD(q);
-    else if(q.type==="dropdown") h+=renderDropdown(q);
-    else if(q.type==="match") h+=renderMatch(q);
-    h+=`<div class="q-actions">
-      <button class="btn-vocab-flag" id="flag-${q.id}" onclick="toggleFlag('${q.id}')">🏳 Flag Vocabulary</button>
-      <span class="answered-check" id="check-${q.id}">✓ Answered</span>
-    </div>`;
-    b.innerHTML=h;
+    const b = document.createElement("div");
+    b.className = "question-block";
+    b.id = "block-"+q.id;
+    const tr = TRAITS[q.trait];
+    let h = `<div class="q-meta">
+        <span class="q-num">Question ${i+1}</span>
+        <span class="q-trait ${tr.cls}">${tr.label}</span>
+        <span class="q-pts">${q.points} pt${q.points>1?"s":""} · DOK ${q.dok}</span>
+      </div>
+      <div class="q-stem">${q.stem}</div>`;
+    if(q.type==="sr")             h += renderSR(q);
+    else if(q.type==="ms")        h += renderMS(q);
+    else if(q.type==="multipart") h += renderMultipart(q);
+    else if(q.type==="match")     h += renderMatch(q);
+    else if(q.type==="dd")        h += renderDD(q);
+    h += `<div class="q-actions">
+        <button class="btn-vocab-flag" id="flag-${q.id}" aria-pressed="false" onclick="toggleFlag('${q.id}')">🏳 Flag Vocabulary</button>
+        <button class="btn-clear" onclick="clearAnswer('${q.id}')">Clear</button>
+        <span class="answered-check" id="check-${q.id}">✓ Answered</span>
+      </div>`;
+    b.innerHTML = h;
     c.appendChild(b);
   });
-  QUESTIONS.filter(q=>q.type==="dd").forEach(q=>initDD(q));
+  // restore any saved responses into the DOM
+  QUESTIONS.forEach(q=>{ if(responses[q.id]!==undefined) restoreResponse(q); });
+  vocabFlags.forEach(id=>{
+    const btn=document.getElementById("flag-"+id);
+    if(btn){ btn.innerHTML="🚩 Vocabulary Flagged"; btn.classList.add("flagged"); btn.setAttribute("aria-pressed","true"); }
+  });
+  QUESTIONS.forEach(q=>refreshAnsweredUI(q));
 }
 
 function renderSR(q){
-  let h=`<ul class="options-list">`;
+  let h = `<ul class="options-list" role="radiogroup" aria-label="Answer choices">`;
   q.options.forEach((o,i)=>{
-    const l=["A","B","C","D"][i];
-    h+=`<li><button class="option-btn" id="opt-${q.id}-${i}" onclick="selectSR('${q.id}',${i})"><span class="opt-letter">${l}</span>${o.text}</button></li>`;
+    const l = String.fromCharCode(65+i);
+    h += `<li><button class="option-btn" id="opt-${q.id}-${i}" role="radio" aria-checked="false"
+      onclick="selectSR('${q.id}',${i})"><span class="opt-letter" aria-hidden="true">${l}</span><span>${o.text}</span></button></li>`;
   });
-  return h+`</ul>`;
+  return h + `</ul>`;
 }
 
 function renderMS(q){
-  let h=`<div class="multiselect-note">📌 Select ${q.correctCount} answers</div>`;
+  let h = `<div class="ms-note">📌 Select exactly ${q.correctCount} answers. Partial credit is available.</div>`;
   q.options.forEach((o,i)=>{
-    h+=`<button class="option-check" id="opt-${q.id}-${i}" onclick="toggleMS('${q.id}',${i})"><span class="check-box"></span>${o.text}</button>`;
+    h += `<button class="option-check" id="opt-${q.id}-${i}" role="checkbox" aria-checked="false"
+      onclick="toggleMS('${q.id}',${i})"><span class="check-box" aria-hidden="true"></span><span>${o.text}</span></button>`;
   });
   return h;
 }
 
-function renderDropdown(q){
-  let opts=`<option value="">— select —</option>`;
-  q.options.forEach((o,i)=>{ opts+=`<option value="${i}">${o.text}</option>`; });
-  return `<p class="inline-sentence">${q.prefix} <span class="inline-dropdown"><select id="dd-sel-${q.id}" onchange="selectDropdown('${q.id}')">${opts}</select><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--navy)">▾</span></span></p>`;
+function renderMultipart(q){
+  let h = `<div class="ms-note">📌 Answer both parts. Each part is worth 1 point.</div>`;
+  q.parts.forEach((p,pi)=>{
+    let opts = `<option value="">— select —</option>`;
+    p.options.forEach((o,oi)=>{ opts += `<option value="${oi}">${escapeAttr(o.text)}</option>`; });
+    h += `<div class="part-block">
+        <label class="part-label" for="mp-${q.id}-${pi}">${p.label}</label>
+        <select class="part-select" id="mp-${q.id}-${pi}" onchange="selectPart('${q.id}',${pi})">${opts}</select>
+      </div>`;
+  });
+  return h;
 }
 
 function renderMatch(q){
-  let h=`<div style="overflow-x:auto"><table class="match-table"><thead><tr><th>Revision</th>`;
-  q.columns.forEach(c=>{h+=`<th>${c}</th>`;});
-  h+=`</tr></thead><tbody>`;
+  let h = `<div class="match-wrap"><table class="match-table"><thead><tr><th>Revision / Sentence</th>`;
+  q.columns.forEach(c=>{ h += `<th>${c}</th>`; });
+  h += `</tr></thead><tbody>`;
   q.rows.forEach((row,ri)=>{
-    h+=`<tr id="match-row-${q.id}-${ri}"><td>${row.label}</td>`;
+    h += `<tr id="mrow-${q.id}-${ri}"><td>${row.label}</td>`;
     q.columns.forEach((col,ci)=>{
-      h+=`<td><input type="radio" class="match-radio" name="match-${q.id}-${ri}" value="${ci}" onchange="selectMatch('${q.id}',${ri},${ci})"></td>`;
+      h += `<td><input type="radio" class="match-radio" name="m-${q.id}-${ri}" id="m-${q.id}-${ri}-${ci}"
+        aria-label="${escapeAttr(row.label)} — ${escapeAttr(col)}" onchange="selectMatch('${q.id}',${ri},${ci})"></td>`;
     });
-    h+=`</tr>`;
+    h += `</tr>`;
   });
-  return h+`</tbody></table></div>`;
+  return h + `</tbody></table></div>
+    <div class="dd-hint" style="margin-top:8px">Each column may be used only once.</div>`;
 }
 
 function renderDD(q){
-  ddData[q.id]={placed:{}};
-  const items=q.items.map(item=>`<div class="drag-item" draggable="true" id="drag-${q.id}-${item.replace(/\s/g,'-')}" ondragstart="onDragStart(event,'${q.id}','${item}')">${item}</div>`).join("");
-  const slots=q.slots.map((s,i)=>`<div class="drop-slot-wrap"><span class="slot-label">${s.label}</span><div class="drop-slot" id="slot-${q.id}-${i}" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="onDrop(event,'${q.id}',${i})">Drop here</div></div>`).join("");
-  return `<p style="font-size:.78rem;color:var(--gray-400);font-style:italic;margin-bottom:10px">Drag each item from the bank to the correct slot.</p><div class="drag-bank" id="bank-${q.id}">${items}</div><div class="drop-slots-grid">${slots}</div>`;
+  const items = q.items.map((item,ii)=>
+    `<button class="drag-item" id="di-${q.id}-${ii}" draggable="true"
+       ondragstart="onDragStart(event,'${q.id}',${ii})"
+       onclick="armDrag('${q.id}',${ii})">${item}</button>`).join("");
+  const slots = q.slots.map((s,si)=>
+    `<div><span class="slot-label">${s.label}</span>
+      <button class="drop-slot" id="slot-${q.id}-${si}"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="onDrop(event,'${q.id}',${si})"
+        onclick="placeArmed('${q.id}',${si})">Tap an item above, then tap here</button></div>`).join("");
+  return `<p class="dd-hint">Tap an item to pick it up, then tap a box to place it. You can also drag with a mouse. Tap a filled box to send that item back.</p>
+    <div class="drag-bank" id="bank-${q.id}">${items}</div>
+    <div class="drop-slots">${slots}</div>`;
 }
 
-// ─── INTERACTION ──────────────────────────────────────────────
-function selectSR(qid,idx){
-  if(answers[qid]) return;
-  srSel[qid]=idx;
-  const q=QUESTIONS.find(x=>x.id===qid);
-  q.options.forEach((_,i)=>document.getElementById(`opt-${qid}-${i}`).classList.toggle("selected",i===idx));
-  markAnswered(qid);
+function escapeAttr(s){ return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+function stripTags(s){ return String(s).replace(/<[^>]*>/g,""); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   INTERACTION  (all answers are freely changeable)
+   ═══════════════════════════════════════════════════════════════════ */
+function selectSR(qid, idx){
+  responses[qid] = {type:"sr", choice:idx};
+  const q = getQ(qid);
+  q.options.forEach((_,i)=>{
+    const el = document.getElementById(`opt-${qid}-${i}`);
+    el.classList.toggle("selected", i===idx);
+    el.setAttribute("aria-checked", i===idx ? "true":"false");
+  });
+  afterChange(qid);
 }
 
-function toggleMS(qid,idx){
-  if(answers[qid]) return;
-  if(!msSel[qid]) msSel[qid]=new Set();
-  const s=msSel[qid];
-  const btn=document.getElementById(`opt-${qid}-${idx}`);
-  const q=QUESTIONS.find(x=>x.id===qid);
-  if(s.has(idx)){s.delete(idx);btn.classList.remove("checked");btn.querySelector(".check-box").textContent="";}
-  else{
-    if(s.size>=q.correctCount){
-      // deselect oldest
-      const oldest=[...s][0];
-      s.delete(oldest);
-      document.getElementById(`opt-${qid}-${oldest}`).classList.remove("checked");
-      document.getElementById(`opt-${qid}-${oldest}`).querySelector(".check-box").textContent="";
+function toggleMS(qid, idx){
+  const q = getQ(qid);
+  const cur = new Set((responses[qid] && responses[qid].choices) || []);
+  if(cur.has(idx)) cur.delete(idx);
+  else {
+    if(cur.size >= q.correctCount){
+      // At the limit: tell the student rather than silently dropping a choice.
+      const el=document.getElementById(`opt-${qid}-${idx}`);
+      el.animate([{transform:"translateX(0)"},{transform:"translateX(-4px)"},{transform:"translateX(4px)"},{transform:"translateX(0)"}],{duration:220});
+      announce(`You may select only ${q.correctCount}. Unselect one first.`);
+      return;
     }
-    s.add(idx);btn.classList.add("checked");btn.querySelector(".check-box").textContent="✓";
+    cur.add(idx);
   }
-  if(s.size===q.correctCount) markAnswered(qid);
-  else unmarkAnswered(qid);
+  responses[qid] = {type:"ms", choices:[...cur].sort((a,b)=>a-b)};
+  q.options.forEach((_,i)=>{
+    const el = document.getElementById(`opt-${qid}-${i}`);
+    const on = cur.has(i);
+    el.classList.toggle("checked", on);
+    el.setAttribute("aria-checked", on?"true":"false");
+    el.querySelector(".check-box").textContent = on ? "✓" : "";
+  });
+  afterChange(qid);
 }
 
-function selectDropdown(qid){
-  const val=document.getElementById(`dd-sel-${qid}`).value;
-  if(val==="") return;
-  ddSel[qid]=parseInt(val);
-  markAnswered(qid);
+function selectPart(qid, pi){
+  const sel = document.getElementById(`mp-${qid}-${pi}`);
+  const cur = (responses[qid] && responses[qid].parts) ? responses[qid].parts.slice() : [];
+  cur[pi] = sel.value === "" ? null : parseInt(sel.value,10);
+  responses[qid] = {type:"multipart", parts:cur};
+  sel.classList.toggle("chosen", sel.value !== "");
+  afterChange(qid);
 }
 
-function selectMatch(qid,rowIdx,colIdx){
-  if(!matchSel[qid]) matchSel[qid]={};
-  matchSel[qid][rowIdx]=colIdx;
-  document.getElementById(`match-row-${qid}-${rowIdx}`).classList.add("row-answered");
-  const q=QUESTIONS.find(x=>x.id===qid);
-  if(Object.keys(matchSel[qid]).length===q.rows.length) markAnswered(qid);
+function selectMatch(qid, rowIdx, colIdx){
+  const q = getQ(qid);
+  const cur = (responses[qid] && responses[qid].rows) ? responses[qid].rows.slice() : new Array(q.rows.length).fill(null);
+  // enforce 1:1 — a column may be used by only one row
+  for(let r=0; r<cur.length; r++){
+    if(r!==rowIdx && cur[r]===colIdx){
+      cur[r] = null;
+      const other = document.getElementById(`m-${qid}-${r}-${colIdx}`);
+      if(other) other.checked = false;
+      document.getElementById(`mrow-${qid}-${r}`).classList.remove("row-answered");
+    }
+  }
+  cur[rowIdx] = colIdx;
+  responses[qid] = {type:"match", rows:cur};
+  document.getElementById(`mrow-${qid}-${rowIdx}`).classList.add("row-answered");
+  afterChange(qid);
 }
 
-let currentDrag=null;
-function onDragStart(e,qid,item){currentDrag={qid,item};}
-function onDrop(e,qid,slotIdx){
+/* — drag & drop: pointer, touch, and keyboard all supported — */
+function onDragStart(e, qid, itemIdx){ armedDrag = {qid, itemIdx}; }
+function onDrop(e, qid, slotIdx){
   e.preventDefault();
   document.getElementById(`slot-${qid}-${slotIdx}`).classList.remove("drag-over");
-  if(!currentDrag||currentDrag.qid!==qid) return;
-  const item=currentDrag.item;
-  // remove from previous slot
-  const prev=Object.entries(ddData[qid].placed).find(([s,v])=>v===item);
-  if(prev){delete ddData[qid].placed[prev[0]];const ps=document.getElementById(`slot-${qid}-${prev[0]}`);ps.textContent="Drop here";ps.classList.remove("filled");}
-  // clear existing occupant
-  if(ddData[qid].placed[slotIdx]){
-    const old=ddData[qid].placed[slotIdx];
-    document.getElementById(`drag-${qid}-${old.replace(/\s/g,'-')}`).classList.remove("placed");
+  if(armedDrag && armedDrag.qid === qid) placeArmed(qid, slotIdx);
+}
+function armDrag(qid, itemIdx){
+  const q = getQ(qid);
+  document.querySelectorAll(`#bank-${qid} .drag-item`).forEach(el=>el.classList.remove("armed"));
+  armedDrag = {qid, itemIdx};
+  document.getElementById(`di-${qid}-${itemIdx}`).classList.add("armed");
+  announce(`${q.items[itemIdx]} picked up. Now choose a box.`);
+}
+function placeArmed(qid, slotIdx){
+  const q = getQ(qid);
+  const cur = (responses[qid] && responses[qid].slots) ? responses[qid].slots.slice() : new Array(q.slots.length).fill(null);
+  if(!armedDrag || armedDrag.qid !== qid){
+    // tapping a filled slot with nothing armed returns that item to the bank
+    if(cur[slotIdx] !== null && cur[slotIdx] !== undefined){
+      cur[slotIdx] = null;
+      responses[qid] = {type:"dd", slots:cur};
+      paintDD(q, cur); afterChange(qid);
+    }
+    return;
   }
-  ddData[qid].placed[slotIdx]=item;
-  const slot=document.getElementById(`slot-${qid}-${slotIdx}`);
-  slot.textContent=item;slot.classList.add("filled");
-  document.getElementById(`drag-${qid}-${item.replace(/\s/g,'-')}`).classList.add("placed");
-  const q=QUESTIONS.find(x=>x.id===qid);
-  if(Object.keys(ddData[qid].placed).length===q.slots.length) markAnswered(qid);
+  const itemIdx = armedDrag.itemIdx;
+  for(let s=0; s<cur.length; s++) if(cur[s]===itemIdx) cur[s]=null;  // move, don't duplicate
+  cur[slotIdx] = itemIdx;
+  responses[qid] = {type:"dd", slots:cur};
+  armedDrag = null;
+  paintDD(q, cur);
+  afterChange(qid);
 }
-function initDD(q){}
+function paintDD(q, slots){
+  const used = new Set(slots.filter(v=>v!==null && v!==undefined));
+  q.items.forEach((item,ii)=>{
+    const el = document.getElementById(`di-${q.id}-${ii}`);
+    el.classList.toggle("placed", used.has(ii));
+    el.classList.remove("armed");
+  });
+  q.slots.forEach((s,si)=>{
+    const el = document.getElementById(`slot-${q.id}-${si}`);
+    const v = slots[si];
+    const filled = v!==null && v!==undefined;
+    el.textContent = filled ? q.items[v] : "Tap an item above, then tap here";
+    el.classList.toggle("filled", filled);
+    el.classList.remove("drag-over");
+  });
+}
 
-function markAnswered(qid){
-  if(answers[qid]) return;
-  answers[qid]=true;
-  document.getElementById("block-"+qid).classList.add("answered");
-  document.getElementById("check-"+qid).style.opacity="1";
+function clearAnswer(qid){
+  delete responses[qid];
+  delete answeredAt[qid];
+  const q = getQ(qid);
+  if(q.type==="sr") q.options.forEach((_,i)=>{
+    const el=document.getElementById(`opt-${qid}-${i}`); el.classList.remove("selected"); el.setAttribute("aria-checked","false");
+  });
+  if(q.type==="ms") q.options.forEach((_,i)=>{
+    const el=document.getElementById(`opt-${qid}-${i}`); el.classList.remove("checked"); el.setAttribute("aria-checked","false");
+    el.querySelector(".check-box").textContent="";
+  });
+  if(q.type==="multipart") q.parts.forEach((_,pi)=>{
+    const el=document.getElementById(`mp-${qid}-${pi}`); el.value=""; el.classList.remove("chosen");
+  });
+  if(q.type==="match") q.rows.forEach((_,ri)=>{
+    q.columns.forEach((_,ci)=>{ const el=document.getElementById(`m-${qid}-${ri}-${ci}`); if(el) el.checked=false; });
+    document.getElementById(`mrow-${qid}-${ri}`).classList.remove("row-answered");
+  });
+  if(q.type==="dd") paintDD(q, new Array(q.slots.length).fill(null));
+  afterChange(qid);
+}
+
+function restoreResponse(q){
+  const r = responses[q.id]; if(!r) return;
+  if(q.type==="sr" && r.choice!==undefined && r.choice!==null){
+    const el=document.getElementById(`opt-${q.id}-${r.choice}`);
+    if(el){ el.classList.add("selected"); el.setAttribute("aria-checked","true"); }
+  }
+  if(q.type==="ms") (r.choices||[]).forEach(i=>{
+    const el=document.getElementById(`opt-${q.id}-${i}`);
+    if(el){ el.classList.add("checked"); el.setAttribute("aria-checked","true"); el.querySelector(".check-box").textContent="✓"; }
+  });
+  if(q.type==="multipart") (r.parts||[]).forEach((v,pi)=>{
+    if(v===null||v===undefined) return;
+    const el=document.getElementById(`mp-${q.id}-${pi}`);
+    if(el){ el.value=String(v); el.classList.add("chosen"); }
+  });
+  if(q.type==="match") (r.rows||[]).forEach((ci,ri)=>{
+    if(ci===null||ci===undefined) return;
+    const el=document.getElementById(`m-${q.id}-${ri}-${ci}`);
+    if(el){ el.checked=true; document.getElementById(`mrow-${q.id}-${ri}`).classList.add("row-answered"); }
+  });
+  if(q.type==="dd") paintDD(q, r.slots||new Array(q.slots.length).fill(null));
+}
+
+function afterChange(qid){
+  refreshAnsweredUI(getQ(qid));
+  if(isComplete(getQ(qid)) && answeredAt[qid]===undefined) answeredAt[qid] = elapsedSeconds();
   updateProgress();
+  saveState();
 }
-function unmarkAnswered(qid){
-  if(answers[qid]) return;
-  document.getElementById("block-"+qid).classList.remove("answered");
-  document.getElementById("check-"+qid).style.opacity="0";
+function refreshAnsweredUI(q){
+  const done = isComplete(q);
+  const block = document.getElementById("block-"+q.id);
+  if(block) block.classList.toggle("answered", done);
 }
+function getQ(qid){ return QUESTIONS.find(x=>x.id===qid); }
 
-function toggleFlag(qid){
-  const btn=document.getElementById(`flag-${qid}`);
-  if(vocabFlags.has(qid)){vocabFlags.delete(qid);btn.innerHTML="🏳 Flag Vocabulary";btn.classList.remove("flagged");}
-  else{vocabFlags.add(qid);btn.innerHTML="🚩 Vocabulary Flagged";btn.classList.add("flagged");}
+/* An item counts as answered only when every required part is supplied. */
+function isComplete(q){
+  const r = responses[q.id];
+  if(!r) return false;
+  if(q.type==="sr")        return r.choice!==undefined && r.choice!==null;
+  if(q.type==="ms")        return (r.choices||[]).length === q.correctCount;
+  if(q.type==="multipart") return q.parts.every((_,i)=> r.parts && r.parts[i]!==null && r.parts[i]!==undefined);
+  if(q.type==="match")     return q.rows.every((_,i)=> r.rows && r.rows[i]!==null && r.rows[i]!==undefined);
+  if(q.type==="dd")        return q.slots.every((_,i)=> r.slots && r.slots[i]!==null && r.slots[i]!==undefined);
+  return false;
+}
+function countAnswered(resp){
+  const save = responses; responses = resp;
+  const n = QUESTIONS.filter(isComplete).length;
+  responses = save; return n;
 }
 
 function updateProgress(){
-  const done=Object.keys(answers).length;
-  document.getElementById("progress-bar").style.width=(done/20*100)+"%";
-  document.getElementById("progress-label").textContent=`${done} / 20`;
-  document.getElementById("answered-count").textContent=done;
-  document.getElementById("btn-finish").disabled=done<20;
+  const done = QUESTIONS.filter(isComplete).length;
+  document.getElementById("progress-bar").style.width = (done/TOTAL_ITEMS*100)+"%";
+  document.getElementById("progress-label").textContent = `${done} / ${TOTAL_ITEMS}`;
+  document.getElementById("answered-count").textContent = done;
+  const remaining = TOTAL_ITEMS - done;
+  document.getElementById("unanswered-hint").textContent = remaining ? `${remaining} left` : "All answered — ready to submit";
+  document.getElementById("btn-jump").style.display = remaining ? "inline-block" : "none";
+  document.getElementById("btn-finish").disabled = remaining > 0;
+}
+function jumpToUnanswered(){
+  const q = QUESTIONS.find(x=>!isComplete(x));
+  if(q) document.getElementById("block-"+q.id).scrollIntoView({behavior:"smooth", block:"start"});
+}
+function announce(msg){ document.getElementById("progress-label").setAttribute("aria-label", msg); }
+
+function toggleFlag(qid){
+  const btn = document.getElementById("flag-"+qid);
+  if(vocabFlags.has(qid)){
+    vocabFlags.delete(qid); btn.innerHTML="🏳 Flag Vocabulary";
+    btn.classList.remove("flagged"); btn.setAttribute("aria-pressed","false");
+  } else {
+    vocabFlags.add(qid); btn.innerHTML="🚩 Vocabulary Flagged";
+    btn.classList.add("flagged"); btn.setAttribute("aria-pressed","true");
+  }
+  saveState();
 }
 
-// ─── SCORE ────────────────────────────────────────────────────
-function scoreQuestion(q){
-  if(q.type==="sr") return srSel[q.id]!==undefined && q.options[srSel[q.id]].correct;
-  if(q.type==="ms"){
-    const s=msSel[q.id]||new Set();
-    const correct=new Set(q.options.map((o,i)=>o.correct?i:-1).filter(i=>i>=0));
-    return s.size===correct.size&&[...s].every(i=>correct.has(i));
+/* ═══════════════════════════════════════════════════════════════════
+   SCORING — partial credit on all 2-point items
+   ═══════════════════════════════════════════════════════════════════ */
+function scoreItem(q){
+  const r = responses[q.id];
+  const out = {earned:0, possible:q.points, responseLabel:"(no response)", keyLabel:""};
+
+  if(q.type==="sr"){
+    const keyIdx = q.options.findIndex(o=>o.correct);
+    out.keyLabel = letter(keyIdx)+". "+stripTags(q.options[keyIdx].text);
+    if(r && r.choice!==undefined && r.choice!==null){
+      out.responseLabel = letter(r.choice)+". "+stripTags(q.options[r.choice].text);
+      out.earned = q.options[r.choice].correct ? 1 : 0;
+    }
   }
-  if(q.type==="dropdown") return ddSel[q.id]!==undefined && q.options[ddSel[q.id]].correct;
-  if(q.type==="match"){
-    const sel=matchSel[q.id]||{};
-    return q.rows.every((row,ri)=>{
-      const colIdx=sel[ri];
-      return colIdx!==undefined && q.columns[colIdx]===row.correct;
+
+  else if(q.type==="ms"){
+    const key = q.options.map((o,i)=>o.correct?i:-1).filter(i=>i>=0);
+    out.keyLabel = key.map(i=>letter(i)).join(", ")+" — "+key.map(i=>stripTags(q.options[i].text)).join(" | ");
+    const sel = (r && r.choices) || [];
+    if(sel.length) out.responseLabel = sel.map(i=>letter(i)).join(", ")+" — "+sel.map(i=>stripTags(q.options[i].text)).join(" | ");
+    const hits = sel.filter(i=>key.includes(i)).length;
+    // 2 pts for the exact set; 1 pt for exactly one correct among the required number; else 0
+    if(sel.length===key.length && hits===key.length) out.earned = 2;
+    else if(hits===1 && sel.length===key.length)     out.earned = 1;
+    else                                             out.earned = 0;
+  }
+
+  else if(q.type==="multipart"){
+    out.keyLabel = q.parts.map(p=>stripTags(p.options.find(o=>o.correct).text)).join("  ||  ");
+    const sel = (r && r.parts) || [];
+    const labels = [];
+    q.parts.forEach((p,pi)=>{
+      const v = sel[pi];
+      if(v===null||v===undefined){ labels.push("(blank)"); return; }
+      labels.push(stripTags(p.options[v].text));
+      if(p.options[v].correct) out.earned += 1;   // 1 point per part
     });
+    if(labels.length) out.responseLabel = labels.join("  ||  ");
   }
-  if(q.type==="dd"){
-    const p=ddData[q.id]?.placed||{};
-    return q.slots.every((s,i)=>p[i]===s.correct);
+
+  else if(q.type==="match"){
+    out.keyLabel = q.rows.map(row=>stripTags(row.label)+" → "+row.correct).join(" | ");
+    const sel = (r && r.rows) || [];
+    let correct = 0; const labels = [];
+    q.rows.forEach((row,ri)=>{
+      const ci = sel[ri];
+      const chosen = (ci===null||ci===undefined) ? "(blank)" : q.columns[ci];
+      labels.push(stripTags(row.label)+" → "+chosen);
+      if(chosen === row.correct) correct++;
+    });
+    if(sel.length) out.responseLabel = labels.join(" | ");
+    out.earned = correct===q.rows.length ? 2 : (correct>=2 ? 1 : 0);
+    out.rowsCorrect = correct;
   }
-  return false;
+
+  else if(q.type==="dd"){
+    out.keyLabel = q.slots.map(s=>s.label+" → "+s.correct).join(" | ");
+    const sel = (r && r.slots) || [];
+    let correct = 0; const labels = [];
+    q.slots.forEach((s,si)=>{
+      const ii = sel[si];
+      const chosen = (ii===null||ii===undefined) ? "(blank)" : q.items[ii];
+      labels.push(s.label+" → "+chosen);
+      if(chosen === s.correct) correct++;
+    });
+    if(sel.length) out.responseLabel = labels.join(" | ");
+    out.earned = correct===q.slots.length ? 2 : (correct===q.slots.length-1 ? 1 : 0);
+    out.rowsCorrect = correct;
+  }
+
+  return out;
 }
+function letter(i){ return String.fromCharCode(65+i); }
 
-// ─── FINISH ───────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════════════════════
+   FINISH
+   ═══════════════════════════════════════════════════════════════════ */
 function finishSim(){
-  let totalScore=0;
-  const domains={techniques:{correct:0,possible:0},structureStyle:{correct:0,possible:0},argumentative:{correct:0,possible:0},languageVocab:{correct:0,possible:0}};
-  const dok={dok1:{correct:0,possible:0},dok2:{correct:0,possible:0},dok3:{correct:0,possible:0}};
-  const correctItems=[],incorrectItems=[];
+  if(timerHandle) clearInterval(timerHandle);
+  const elapsed = elapsedSeconds();
+  submissionId = `${CONFIG.FORM_ID}-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
 
-  QUESTIONS.forEach(q=>{
-    const domKey={tech:"techniques",struct:"structureStyle",arg:"argumentative",lang:"languageVocab"}[q.domain];
-    const dokKey=`dok${q.dok}`;
-    domains[domKey].possible++;dok[dokKey].possible++;
-    if(scoreQuestion(q)){totalScore++;domains[domKey].correct++;dok[dokKey].correct++;correctItems.push(q.id);}
-    else incorrectItems.push(q.id);
+  const traits   = {t1:{e:0,p:0}, t2:{e:0,p:0}, t3:{e:0,p:0}};
+  const bigIdeas = {ss:{e:0,p:0}, tt:{e:0,p:0}, ra:{e:0,p:0}, gc:{e:0,p:0}, vo:{e:0,p:0}};
+  const dok      = {1:{e:0,p:0}, 2:{e:0,p:0}, 3:{e:0,p:0}};
+  const items = [];
+  let earned = 0;
+
+  QUESTIONS.forEach((q,i)=>{
+    const s = scoreItem(q);
+    earned += s.earned;
+    traits[q.trait].e += s.earned;     traits[q.trait].p += s.possible;
+    bigIdeas[q.bigIdea].e += s.earned; bigIdeas[q.bigIdea].p += s.possible;
+    dok[q.dok].e += s.earned;          dok[q.dok].p += s.possible;
+    items.push({
+      id:q.id, n:i+1, type:q.type, trait:q.trait, traitLabel:TRAITS[q.trait].label,
+      bigIdea:q.bigIdea, bigIdeaLabel:BIG_IDEAS[q.bigIdea].label, standard:q.std, dok:q.dok,
+      pointsEarned:s.earned, pointsPossible:s.possible,
+      outcome: s.earned===s.possible ? "full" : (s.earned>0 ? "partial" : "zero"),
+      response:s.responseLabel, key:s.keyLabel,
+      vocabFlagged: vocabFlags.has(q.id),
+      secondsToAnswer: answeredAt[q.id]!==undefined ? answeredAt[q.id] : null,
+      _q:q, _s:s
+    });
   });
 
-  const pct=Math.round(totalScore/20*100);
-  let level="Beginning";
-  if(pct>=90)level="Distinguished";else if(pct>=70)level="Proficient";else if(pct>=50)level="Developing";
+  const pct = Math.round(earned/TOTAL_POINTS*100);
+  const band = CONFIG.BANDS.find(b=>pct>=b.min);
 
-  document.getElementById("result-name").textContent=studentName+" · Period "+studentPeriod;
-  document.getElementById("result-pct").textContent=pct+"%";
-  document.getElementById("result-raw").textContent=`${totalScore} / 20`;
-  const bc={Distinguished:"badge-distinguished",Proficient:"badge-proficient",Developing:"badge-developing",Beginning:"badge-beginning"}[level];
-  document.getElementById("result-badge").innerHTML=`<span class="achievement-badge ${bc}">${level} Learner</span>`;
+  // ── hero ──
+  document.getElementById("result-name").textContent =
+    student.name + " · Period " + student.period + (student.id ? " · ID "+student.id : "");
+  document.getElementById("result-pct").textContent = pct+"%";
+  document.getElementById("result-raw").textContent = `${earned} / ${TOTAL_POINTS} points`;
+  document.getElementById("result-band").innerHTML =
+    `<span class="band-badge ${band.cls}">${band.label}</span>`;
 
-  const domLabels={techniques:"Techniques",structureStyle:"Structure & Style",argumentative:"Argumentative",languageVocab:"Language & Vocab"};
-  const domColors={techniques:"#7c3aed",structureStyle:"#0891b2",argumentative:"#d97706",languageVocab:"#059669"};
-  let dg="";
-  Object.entries(domains).forEach(([k,v])=>{
-    const p=v.possible>0?Math.round(v.correct/v.possible*100):0;
-    dg+=`<div class="domain-card"><div class="d-label">${domLabels[k]}</div><div class="domain-bar-outer"><div class="domain-bar-inner" style="width:${p}%;background:${domColors[k]}"></div></div><div class="d-score">${v.correct} / ${v.possible} (${p}%)</div></div>`;
-  });
-  document.getElementById("domain-grid").innerHTML=dg;
+  // ── breakdowns ──
+  document.getElementById("trait-breakdown").innerHTML =
+    Object.entries(traits).map(([k,v])=>bar(TRAITS[k].label, v.e, v.p, TRAITS[k].color)).join("");
+  document.getElementById("bigidea-breakdown").innerHTML =
+    Object.entries(bigIdeas).filter(([,v])=>v.p>0)
+      .map(([k,v])=>bar(BIG_IDEAS[k].label, v.e, v.p, BIG_IDEAS[k].color)).join("");
+  document.getElementById("dok-breakdown").innerHTML =
+    Object.entries(dok).filter(([,v])=>v.p>0)
+      .map(([k,v])=>bar("DOK "+k, v.e, v.p, "#1a3a5c")).join("");
 
-  let dh="";
-  Object.entries(dok).forEach(([k,v])=>{
-    const p=v.possible>0?Math.round(v.correct/v.possible*100):0;
-    dh+=`<div class="dok-row"><span class="dok-label">${k.replace("dok","DOK ")}</span><div class="dok-bar-outer"><div class="dok-bar-inner" style="width:${p}%"></div></div><span class="dok-score">${v.correct}/${v.possible}</span></div>`;
-  });
-  document.getElementById("dok-breakdown").innerHTML=dh;
-
-  const fl=document.getElementById("vocab-flag-summary");
-  if(vocabFlags.size===0){fl.innerHTML=`<div class="no-flags">No vocabulary flags raised.</div>`;}
-  else{
-    fl.innerHTML=`<div class="vocab-flags-list">`+[...vocabFlags].map(id=>{
-      const q=QUESTIONS.find(x=>x.id===id);
-      return `<div class="vocab-flag-chip">Q${QUESTIONS.indexOf(q)+1} — ${q.vocabTerm.split("—")[0].trim()}</div>`;
-    }).join("")+`</div>`;
+  // ── vocabulary flags ──
+  const vf = document.getElementById("vocab-summary");
+  if(vocabFlags.size===0){
+    vf.innerHTML = `<div class="muted">No vocabulary flags raised.</div>`;
+  } else {
+    vf.innerHTML = `<div class="chip-list">` + [...vocabFlags].map(id=>{
+      const q = getQ(id);
+      const n = QUESTIONS.indexOf(q)+1;
+      return `<span class="vocab-chip">Q${n} — ${q.vocabTerm.split("—")[0].trim()}</span>`;
+    }).join("") + `</div>
+    <div class="muted" style="margin-top:9px">Your teacher receives this list to plan vocabulary instruction.</div>`;
   }
+
+  // ── answer review ──
+  document.getElementById("review-list").innerHTML = items.map(it=>{
+    const q = it._q, s = it._s;
+    return `<div class="review-item ${it.outcome}">
+      <div class="rv-head">
+        <span class="rv-num">Question ${it.n}</span>
+        <span class="rv-mark ${it.outcome}">${it.pointsEarned} / ${it.pointsPossible} pts</span>
+        <span class="q-trait ${TRAITS[q.trait].cls}">${TRAITS[q.trait].label}</span>
+        <span class="rv-std">${q.std} · DOK ${q.dok}</span>
+      </div>
+      <div class="rv-stem">${q.stem}</div>
+      <div class="rv-ans"><b>Your answer:</b> <span class="${it.outcome==='full'?'rv-key':'rv-yours'}">${escapeAttr(it.response)}</span></div>
+      ${it.outcome==='full' ? "" : `<div class="rv-ans"><b>Correct answer:</b> <span class="rv-key">${escapeAttr(it.key)}</span></div>`}
+      <div class="rv-why"><b>Why:</b> ${q.why}</div>
+    </div>`;
+  }).join("");
+
+  // ── payload for the teacher's results sheet ──
+  lastPayload = {
+    submissionId,
+    formId: CONFIG.FORM_ID, formVersion: CONFIG.FORM_VERSION,
+    studentName: student.name, studentId: student.id, period: student.period,
+    startedAt, submittedAt: new Date().toISOString(), elapsedSeconds: elapsed,
+    pointsEarned: earned, pointsPossible: TOTAL_POINTS, percent: pct,
+    bandCode: band.code, bandLabel: band.label,
+    traits: mapOut(traits), bigIdeas: mapOut(bigIdeas), dok: mapOut(dok),
+    vocabFlags: [...vocabFlags].map(id=>({item:id, term:getQ(id).vocabTerm})),
+    items: items.map(({_q,_s,...rest})=>rest)
+  };
 
   showScreen("screen-results");
   window.scrollTo(0,0);
+  clearState();              // finished — no half-done state to resume
+  submitResults();
+}
+function mapOut(o){
+  const r={}; Object.entries(o).forEach(([k,v])=>{ r[k]={earned:v.e, possible:v.p, percent: v.p? Math.round(v.e/v.p*100):null}; });
+  return r;
+}
+function bar(label, e, p, color){
+  const pct = p ? Math.round(e/p*100) : 0;
+  return `<div class="bar-row">
+    <div class="bar-label">${label}</div>
+    <div class="bar-outer"><div class="bar-inner" style="width:${pct}%;background:${color}"></div></div>
+    <div class="bar-score">${e}/${p} (${pct}%)</div>
+  </div>`;
+}
 
-  const payload={
-    studentName,period:studentPeriod,totalScore,totalPossible:20,achievementLevel:level,
-    domainBreakdown:domains,dokBreakdown:dok,correctItems,incorrectItems,vocabFlags:[...vocabFlags]
-  };
+/* ═══════════════════════════════════════════════════════════════════
+   SUBMISSION — single POST, honest status reporting
+   ═══════════════════════════════════════════════════════════════════ */
+function submitResults(){
+  const msg = document.getElementById("submit-msg");
+  if(!CONFIG.SCRIPT_URL){
+    msg.className="submit-msg error";
+    msg.textContent="⚠ No results endpoint is configured. Use “Download my results (CSV)” and give the file to your teacher.";
+    document.getElementById("btn-retry").style.display="none";
+    return;
+  }
+  msg.className="submit-msg sending";
+  msg.textContent="Sending results to your teacher…";
+  document.getElementById("btn-retry").style.display="none";
 
-  const msgEl=document.getElementById("submit-msg");
-  msgEl.className="submit-msg sending";
-  msgEl.textContent="Sending results to your teacher…";
-
-  const form=document.createElement("form");
-  form.method="POST";
-  form.action=SCRIPT_URL;
-  form.target="submit-iframe";
-  form.style.display="none";
-  const inp=document.createElement("input");
-  inp.type="hidden";inp.name="payload";inp.value=JSON.stringify(payload);
-  form.appendChild(inp);
-  document.body.appendChild(form);
-  const iframe=document.createElement("iframe");
-  iframe.name="submit-iframe";iframe.style.display="none";
+  // A hidden-iframe form POST is the only cross-origin method to Apps Script
+  // that returns a real load event, so we use it alone — no duplicate fetch.
+  const frameName = "submit-frame-"+Date.now();
+  const iframe = document.createElement("iframe");
+  iframe.name = frameName; iframe.style.display = "none";
   document.body.appendChild(iframe);
-  iframe.onload=()=>{msgEl.className="submit-msg success";msgEl.textContent="✓ Results submitted! Your teacher has received your score.";};
-  setTimeout(()=>{if(msgEl.className.includes("sending")){msgEl.className="submit-msg error";msgEl.textContent="⚠ Could not submit automatically. Please show your teacher this screen.";}},8000);
 
-  // Also try fetch no-cors as backup
-  fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
-    .then(()=>{msgEl.className="submit-msg success";msgEl.textContent="✓ Results submitted! Your teacher has received your score.";})
-    .catch(()=>{});
+  const form = document.createElement("form");
+  form.method = "POST"; form.action = CONFIG.SCRIPT_URL;
+  form.target = frameName; form.style.display = "none";
+  const input = document.createElement("input");
+  input.type = "hidden"; input.name = "payload"; input.value = JSON.stringify(lastPayload);
+  form.appendChild(input);
+  document.body.appendChild(form);
+
+  let settled = false;
+  iframe.onload = ()=>{
+    if(settled) return; settled = true;
+    msg.className = "submit-msg success";
+    msg.textContent = "✓ Results sent. Your teacher has received your score.";
+    cleanup();
+  };
+  const timeout = setTimeout(()=>{
+    if(settled) return; settled = true;
+    msg.className = "submit-msg error";
+    msg.textContent = "⚠ Could not send automatically. Download the CSV below and give it to your teacher, or tap “Try sending again.”";
+    document.getElementById("btn-retry").style.display = "inline-block";
+    cleanup();
+  }, 12000);
+  function cleanup(){ clearTimeout(timeout); setTimeout(()=>{ form.remove(); iframe.remove(); }, 500); }
 
   form.submit();
+}
+function retrySubmit(){ if(lastPayload) submitResults(); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   CSV FALLBACK — one row per item, same columns the Apps Script writes
+   ═══════════════════════════════════════════════════════════════════ */
+function downloadCSV(){
+  if(!lastPayload) return;
+  const p = lastPayload;
+  const head = ["submissionId","formId","formVersion","studentName","studentId","period",
+    "submittedAt","elapsedSeconds","totalEarned","totalPossible","percent","bandLabel",
+    "itemNumber","itemId","itemType","trait","bigIdea","standard","dok",
+    "pointsEarned","pointsPossible","outcome","response","correctAnswer","vocabFlagged","secondsToAnswer"];
+  const rows = p.items.map(it=>[
+    p.submissionId, p.formId, p.formVersion, p.studentName, p.studentId, p.period,
+    p.submittedAt, p.elapsedSeconds, p.pointsEarned, p.pointsPossible, p.percent, p.bandLabel,
+    it.n, it.id, it.type, it.traitLabel, it.bigIdeaLabel, it.standard, it.dok,
+    it.pointsEarned, it.pointsPossible, it.outcome, it.response, it.key,
+    it.vocabFlagged ? "YES":"", it.secondsToAnswer===null ? "" : it.secondsToAnswer
+  ]);
+  const esc = v => `"${String(v==null?"":v).replace(/"/g,'""')}"`;
+  const csv = [head, ...rows].map(r=>r.map(esc).join(",")).join("\r\n");
+  const blob = new Blob(["﻿"+csv], {type:"text/csv;charset=utf-8;"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `PRT_${(p.studentName||"student").replace(/[^a-z0-9]/gi,"_")}_P${p.period}.csv`;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
 }
 </script>
 </body>
