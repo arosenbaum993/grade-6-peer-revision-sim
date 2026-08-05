@@ -182,6 +182,8 @@ button{font-family:inherit;}
 .submit-msg.sending{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;}
 .btn-secondary{padding:9px 18px;background:white;border:2px solid var(--navy);color:var(--navy);border-radius:8px;font-size:.84rem;font-weight:600;cursor:pointer;margin:4px 6px 0 0;}
 .btn-secondary:hover{background:var(--gray-100);}
+.version-stamp{margin-top:14px;text-align:center;font-size:.7rem;color:var(--gray-400);letter-spacing:.03em;}
+.version-stamp b{color:var(--navy);font-weight:600;}
 
 /* REVIEW */
 .review-item{border:1px solid var(--gray-200);border-radius:9px;padding:15px 17px;margin-bottom:11px;border-left:4px solid var(--gray-400);}
@@ -275,6 +277,7 @@ button{font-family:inherit;}
         <button class="btn-start" onclick="startSim()">Begin Practice &rarr;</button>
         <div class="note-box">🏳 <strong>Vocabulary Flag:</strong> If a question is hard because of a word you don't know, tap the flag on that question. Your teacher uses these flags to plan vocabulary lessons &mdash; flagging does not count against your score.</div>
         <div class="note-box grey">Your answers save automatically on this device. You can change any answer before you submit.</div>
+        <div class="version-stamp" id="version-stamp"></div>
       </div>
     </div>
   </div>
@@ -451,8 +454,10 @@ button{font-family:inherit;}
 const CONFIG = {
   SCRIPT_URL: "https://script.google.com/macros/s/AKfycbx5Lnma0nsVruhq1gsEGjtnGN582xOcNXP0ycn6o6e3sPqGBAkzpwJGLOzFemPoy03J/exec",
   FORM_ID: "GR6-PRT-RECYCLING",
-  FORM_VERSION: "2026.1",
-  STORAGE_KEY: "gr6-prt-recycling-v2026.1",
+  // Bumped from 2026.1: items 8 and 23 were rewritten to remove cross-item
+  // answer leakage, so scores on those items are not comparable across versions.
+  FORM_VERSION: "2026.2",
+  STORAGE_KEY: "gr6-prt-recycling-v2026.2",
   // Achievement labels shown to students, by percent of total points.
   // These use the Georgia Milestones level NAMES, but the cut points below are
   // TEACHER-SET practice thresholds — they are not GaDOE cut scores and do not
@@ -780,6 +785,11 @@ function clearState(){ try{ localStorage.removeItem(CONFIG.STORAGE_KEY); }catch(
 window.addEventListener("DOMContentLoaded", ()=>{
   document.getElementById("total-count").textContent = TOTAL_ITEMS;
   document.getElementById("progress-label").textContent = "0 / "+TOTAL_ITEMS;
+  // Visible build stamp — lets a teacher confirm at a glance which file is live.
+  document.getElementById("version-stamp").innerHTML =
+    `Form <b>${CONFIG.FORM_ID}</b> &middot; version <b>${CONFIG.FORM_VERSION}</b> &middot; ` +
+    `${TOTAL_ITEMS} items / ${TOTAL_POINTS} points &middot; ` +
+    `answer key ${CONFIG.REVIEW.showCorrectAnswer ? "shown to" : "hidden from"} students`;
   const saved = loadState();
   if(saved && saved.responses && Object.keys(saved.responses).length){
     const n = countAnswered(saved.responses);
