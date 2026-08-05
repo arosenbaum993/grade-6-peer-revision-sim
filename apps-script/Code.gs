@@ -15,6 +15,37 @@
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
+/* ═══════════════════════════════════════════════════════════════════════
+   SPREADSHEET_ID
+   ───────────────────────────────────────────────────────────────────────
+   Leave this EMPTY if this script lives inside the spreadsheet itself
+   (you opened it with Extensions → Apps Script from within the Sheet).
+   That is the recommended setup.
+
+   If this is a STANDALONE script project, paste the destination
+   spreadsheet's ID here. It is the long string in the sheet's URL:
+   docs.google.com/spreadsheets/d/  ⟨THIS PART⟩  /edit
+   ═══════════════════════════════════════════════════════════════════════ */
+var SPREADSHEET_ID = '';
+
+/**
+ * Returns the workbook to write to, whether this script is bound to a
+ * spreadsheet or standalone. Throws a readable error instead of failing
+ * with "Cannot call method of null" if neither is available.
+ */
+function getSS_() {
+  if (SPREADSHEET_ID) return SpreadsheetApp.openById(SPREADSHEET_ID);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) {
+    throw new Error(
+      'No spreadsheet found. This looks like a standalone Apps Script project. ' +
+      'Open the destination Google Sheet, copy the ID from its URL ' +
+      '(docs.google.com/spreadsheets/d/THIS_PART/edit), and paste it into ' +
+      'the SPREADSHEET_ID variable at the top of this file.');
+  }
+  return ss;
+}
+
 /* ── Sheet names ───────────────────────────────────────────────────────── */
 var SH = {
   SUB:    'Submissions',
@@ -143,7 +174,7 @@ function doPost(e) {
     var p = JSON.parse(raw);
     if (!p || !p.submissionId || !p.items) return jsonOut({ok: false, error: 'malformed payload'});
 
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getSS_();
     ensureDataSheets_(ss);
 
     // Idempotency — a retry from the student's browser must not double-log.
@@ -242,7 +273,7 @@ function onOpen() {
 }
 
 function setupWorkbook() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSS_();
   ensureDataSheets_(ss);
   [SH.DASH, SH.ITEMAN, SH.MATRIX, SH.TRAIT, SH.GROUPS, SH.VOCAB, SH.PLAN, SH.STU].forEach(function (n) {
     if (!ss.getSheetByName(n)) ss.insertSheet(n);
@@ -265,7 +296,7 @@ function clearAllData() {
     'This permanently deletes every submission and item response in this workbook. ' +
     'Reports will be rebuilt empty. This cannot be undone.', ui.ButtonSet.YES_NO);
   if (r !== ui.Button.YES) return;
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSS_();
   [SH.SUB, SH.ITEMS].forEach(function (n) {
     var s = ss.getSheetByName(n);
     if (s && s.getLastRow() > 1) s.deleteRows(2, s.getLastRow() - 1);
@@ -278,7 +309,7 @@ function clearAllData() {
    REPORT BUILDER
    ═══════════════════════════════════════════════════════════════════════ */
 function rebuildReports() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSS_();
   ensureDataSheets_(ss);
   var data = readData_(ss);
   buildDashboard_(ss, data);
