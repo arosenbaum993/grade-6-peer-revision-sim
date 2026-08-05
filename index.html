@@ -394,9 +394,10 @@ button{font-family:inherit;}
     <div class="results-body">
       <div class="disclaimer">
         <strong>About this score.</strong> This is a classroom practice activity, not the Georgia Milestones assessment.
-        The band above is a <em>practice</em> indicator set by your teacher &mdash; it is <strong>not</strong> a Georgia Milestones
-        achievement level and it does not predict one. Official Milestones achievement levels are based on scale scores set
-        through GaDOE's standard-setting process. Use the trait breakdown below to decide what to work on next.
+        The level above uses the same names as Georgia Milestones, but it is based on a <em>practice</em> cut score set by your
+        teacher &mdash; it is <strong>not</strong> an official Georgia Milestones achievement level and it does not predict one.
+        Official Milestones levels are based on scale scores set through GaDOE's standard-setting process.
+        Use the trait breakdown below to decide what to work on next.
       </div>
 
       <div class="results-section">
@@ -420,7 +421,11 @@ button{font-family:inherit;}
       </div>
 
       <div class="results-section">
-        <h3>Answer Review <small>&mdash; every item, with the reasoning</small></h3>
+        <h3>Question Review <small>&mdash; how you did on each item</small></h3>
+        <div class="note-box" style="margin:0 0 14px">
+          This shows the points you earned on each question and what you chose.
+          Your teacher has the answer key and will go over the questions with you in class.
+        </div>
         <div id="review-list"></div>
       </div>
 
@@ -448,13 +453,27 @@ const CONFIG = {
   FORM_ID: "GR6-PRT-RECYCLING",
   FORM_VERSION: "2026.1",
   STORAGE_KEY: "gr6-prt-recycling-v2026.1",
-  // Practice bands (percent of total points). NOT Georgia Milestones cut scores.
+  // Achievement labels shown to students, by percent of total points.
+  // These use the Georgia Milestones level NAMES, but the cut points below are
+  // TEACHER-SET practice thresholds — they are not GaDOE cut scores and do not
+  // predict a Milestones level. Change the `min` values to recalibrate.
+  // If you change these, mirror them in BANDS in apps-script/Code.gs.
   BANDS: [
-    {min:80, code:4, label:"On Track",                 cls:"band-4"},
-    {min:65, code:3, label:"Approaching",              cls:"band-3"},
-    {min:50, code:2, label:"Needs Support",            cls:"band-2"},
-    {min:0,  code:1, label:"Needs Substantial Support",cls:"band-1"}
-  ]
+    {min:80, code:4, label:"Distinguished Learner", cls:"band-4"},
+    {min:65, code:3, label:"Proficient Learner",    cls:"band-3"},
+    {min:50, code:2, label:"Developing Learner",    cls:"band-2"},
+    {min:0,  code:1, label:"Beginning Learner",     cls:"band-1"}
+  ],
+
+  // What students see in the review section after submitting.
+  // Both are OFF so the answer key is not handed out — useful when the same
+  // form is reused across periods or years. Teachers always get the full key
+  // and every student response in the results workbook.
+  REVIEW: {
+    showCorrectAnswer: false,   // set true to show the key for missed items
+    showRationale:     false,   // set true to show the "Why" explanation
+    showOwnResponse:   true     // students see what they chose
+  }
 };
 
 const TRAITS = {
@@ -552,14 +571,14 @@ const QUESTIONS = [
  vocabTerm:"call to action — an ending that asks the audience to do something"},
 
 {id:"Q8", type:"match", points:2, dok:3, trait:"t1", bigIdea:"ss", std:"6.T.SS.1.a",
- stem:"Match each proposed revision with the part of <em>Trait 1: Purpose &amp; Organization</em> it would improve.",
- columns:["Strengthens the introduction","Improves transitions and cohesion","Makes the style appropriate","Strengthens the conclusion"],
+ stem:"Match each <em>Trait 1: Purpose &amp; Organization</em> problem with the paragraph of Marcus's draft where it appears.",
+ columns:["Paragraph 1","Paragraph 3","Paragraph 4","Paragraph 5"],
  rows:[
-  {label:"Add a surprising fact about trash before Sentence 1", correct:"Strengthens the introduction"},
-  {label:"Replace “Also” in Sentence 15 with “In addition to saving money,”", correct:"Improves transitions and cohesion"},
-  {label:"Rewrite Sentence 18 without slang", correct:"Makes the style appropriate"},
-  {label:"Add a call to action after Sentence 21", correct:"Strengthens the conclusion"}],
- why:"Each revision targets a different bullet of Trait 1. A hook belongs to the introduction; a connecting phrase between paragraphs belongs to transitions and cohesion; removing slang belongs to style; and a call to action belongs to the conclusion. Being able to name <em>which</em> part of the rubric a revision serves is what makes peer feedback useful instead of vague.",
+  {label:"The writer states a position, but hedges it so much that the claim is unclear.", correct:"Paragraph 1"},
+  {label:"One sentence wanders off topic and breaks the paragraph's focus.", correct:"Paragraph 3"},
+  {label:"The paragraph opens with a transition so vague it does not connect to the reason before it.", correct:"Paragraph 4"},
+  {label:"The response stops without finalizing the argument for the reader.", correct:"Paragraph 5"}],
+ why:"Each problem belongs to a different bullet of Trait 1, and each shows up in a different paragraph. Paragraph 1 takes a position but buries it in hedging (“should probably think about”). Paragraph 3 drifts to a cousin's school lunches, which has nothing to do with recycling. Paragraph 4 opens with “Also,” which signals that something is being added but never says what it is being added to. Paragraph 5 restates the idea and thanks the reader instead of finalizing the argument. Naming <em>where</em> a problem lives is the first thing that makes peer feedback usable instead of vague.",
  vocabTerm:"cohesion — the quality of writing where ideas connect smoothly"},
 
 {id:"Q9", type:"sr", points:1, dok:2, trait:"t1", bigIdea:"vo", std:"6.L.V.1.b",
@@ -716,13 +735,13 @@ const QUESTIONS = [
 
 {id:"Q23", type:"match", points:2, dok:3, trait:"t3", bigIdea:"gc", std:"6.L.GC.1",
  stem:"Match each sentence from the draft with the kind of error it contains.",
- columns:["Vague pronoun reference","Subject-verb agreement","Missing commas in a series","Passive voice"],
+ columns:["Vague pronoun reference","Verb tense shift","Missing commas in a series","Passive voice"],
  rows:[
   {label:"Sentence 7: “They say landfills make gases…”", correct:"Vague pronoun reference"},
-  {label:"Sentence 12: “The students at that school was really proud…”", correct:"Subject-verb agreement"},
+  {label:"Sentence 11: “They also collect cans and bottles and sold them…”", correct:"Verb tense shift"},
   {label:"Sentence 16: “Trees water and minerals are all protected…”", correct:"Missing commas in a series"},
   {label:"Sentence 17: “Trees are saved when paper is recycled by people.”", correct:"Passive voice"}],
- why:"Naming the error is what lets a peer reviewer give feedback a writer can actually act on. “They” with no antecedent is a vague pronoun reference. Plural “students” with singular “was” is subject-verb disagreement. Three listed items with no commas is a series error. And a sentence where the action is done <em>to</em> the subject (“Trees are saved…by people”) is passive voice.",
+ why:"Naming the error is what lets a peer reviewer give feedback a writer can actually act on. “They” with no earlier noun to point back to is a vague pronoun reference. “Collect” (present) beside “sold” (past) in one sentence is a verb tense shift. Three items listed with no commas between them is a series error. And a sentence where the action is done <em>to</em> the subject (“Trees are saved… by people”) is passive voice.",
  vocabTerm:"convention — an agreed-upon rule of grammar, usage, or punctuation"}
 ];
 
@@ -1301,9 +1320,11 @@ function finishSim(){
     <div class="muted" style="margin-top:9px">Your teacher receives this list to plan vocabulary instruction.</div>`;
   }
 
-  // ── answer review ──
+  // ── question review (answer key withheld unless CONFIG.REVIEW enables it) ──
+  const R = CONFIG.REVIEW;
   document.getElementById("review-list").innerHTML = items.map(it=>{
-    const q = it._q, s = it._s;
+    const q = it._q;
+    const showKey = R.showCorrectAnswer && it.outcome !== 'full';
     return `<div class="review-item ${it.outcome}">
       <div class="rv-head">
         <span class="rv-num">Question ${it.n}</span>
@@ -1312,9 +1333,9 @@ function finishSim(){
         <span class="rv-std">${q.std} · DOK ${q.dok}</span>
       </div>
       <div class="rv-stem">${q.stem}</div>
-      <div class="rv-ans"><b>Your answer:</b> <span class="${it.outcome==='full'?'rv-key':'rv-yours'}">${escapeAttr(it.response)}</span></div>
-      ${it.outcome==='full' ? "" : `<div class="rv-ans"><b>Correct answer:</b> <span class="rv-key">${escapeAttr(it.key)}</span></div>`}
-      <div class="rv-why"><b>Why:</b> ${q.why}</div>
+      ${R.showOwnResponse ? `<div class="rv-ans"><b>Your answer:</b> <span class="${it.outcome==='full'?'rv-key':'rv-yours'}">${escapeAttr(it.response)}</span></div>` : ""}
+      ${showKey ? `<div class="rv-ans"><b>Correct answer:</b> <span class="rv-key">${escapeAttr(it.key)}</span></div>` : ""}
+      ${R.showRationale ? `<div class="rv-why"><b>Why:</b> ${q.why}</div>` : ""}
     </div>`;
   }).join("");
 
@@ -1405,17 +1426,23 @@ function retrySubmit(){ if(lastPayload) submitResults(); }
 function downloadCSV(){
   if(!lastPayload) return;
   const p = lastPayload;
+  // The student-facing CSV omits the answer key unless CONFIG.REVIEW allows it,
+  // so downloading the file cannot be used to obtain the answers.
+  const withKey = CONFIG.REVIEW.showCorrectAnswer;
   const head = ["submissionId","formId","formVersion","studentName","studentId","period",
     "submittedAt","elapsedSeconds","totalEarned","totalPossible","percent","bandLabel",
     "itemNumber","itemId","itemType","trait","bigIdea","standard","dok",
-    "pointsEarned","pointsPossible","outcome","response","correctAnswer","vocabFlagged","secondsToAnswer"];
+    "pointsEarned","pointsPossible","outcome","response"]
+    .concat(withKey ? ["correctAnswer"] : [])
+    .concat(["vocabFlagged","secondsToAnswer"]);
   const rows = p.items.map(it=>[
     p.submissionId, p.formId, p.formVersion, p.studentName, p.studentId, p.period,
     p.submittedAt, p.elapsedSeconds, p.pointsEarned, p.pointsPossible, p.percent, p.bandLabel,
     it.n, it.id, it.type, it.traitLabel, it.bigIdeaLabel, it.standard, it.dok,
-    it.pointsEarned, it.pointsPossible, it.outcome, it.response, it.key,
-    it.vocabFlagged ? "YES":"", it.secondsToAnswer===null ? "" : it.secondsToAnswer
-  ]);
+    it.pointsEarned, it.pointsPossible, it.outcome, it.response]
+    .concat(withKey ? [it.key] : [])
+    .concat([it.vocabFlagged ? "YES":"", it.secondsToAnswer===null ? "" : it.secondsToAnswer])
+  );
   const esc = v => `"${String(v==null?"":v).replace(/"/g,'""')}"`;
   const csv = [head, ...rows].map(r=>r.map(esc).join(",")).join("\r\n");
   const blob = new Blob(["﻿"+csv], {type:"text/csv;charset=utf-8;"});

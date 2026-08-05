@@ -40,7 +40,7 @@ Built against five GaDOE documents: the Grade 6 ELA Standards, the Grade 6 ELA A
 
 ---
 
-## Scoring and achievement bands
+## Scoring and achievement levels
 
 Total: **30 points** across 23 items. Two-point items award partial credit:
 
@@ -51,13 +51,31 @@ Total: **30 points** across 23 items. Two-point items award partial credit:
 | Drag & drop (3 slots) | all 3 slots | 2 slots | 0–1 slots |
 | Two-part drop-down | both parts | one part | neither part |
 
-### ⚠️ The bands are not Georgia Milestones achievement levels
+### ⚠️ These use Milestones names but are not Milestones levels
 
-Results are reported as **practice bands** — *On Track / Approaching / Needs Support / Needs Substantial Support* — at 80/65/50%.
+Results are labeled **Distinguished / Proficient / Developing / Beginning Learner** at 80 / 65 / 50%.
 
-These are **teacher-set practice thresholds**. They are deliberately *not* labeled Distinguished / Proficient / Developing / Beginning Learner, because Georgia Milestones achievement levels are based on scale scores established through GaDOE's standard-setting process, which the ALD document notes occurs *after* the first administration of a new assessment. A percentage on a 30-point classroom practice cannot be mapped onto those levels. The disclaimer appears on the student results screen and on the Class Dashboard.
+The *names* match Georgia Milestones so they are familiar to students and families, but the **cut points are teacher-set practice thresholds**, not GaDOE cut scores. Official Milestones achievement levels come from scale scores set through standard setting, which the ALD document notes occurs *after* the first administration of a new assessment — so no percentage-to-level mapping exists to use. A disclaimer stating this appears on the student results screen and at the top of the Class Dashboard.
 
-Adjust the thresholds in `CONFIG.BANDS` in `index.html` — and mirror any change in `BANDS` in `apps-script/Code.gs`.
+Adjust the thresholds in `CONFIG.BANDS` in `index.html` — and mirror any change in `BANDS` in `apps-script/Code.gs`, or the workbook will disagree with what students saw.
+
+### Students do not see the answer key
+
+By default the results screen shows each student their score, trait breakdown, and **which questions they earned points on — but not the correct answers or the explanations.** This keeps the form reusable across periods and years. Teachers get the full key and every student response in the workbook.
+
+To change it, edit `CONFIG.REVIEW` in `index.html`:
+
+```js
+REVIEW: {
+  showCorrectAnswer: false,   // true = show the key for missed items
+  showRationale:     false,   // true = show the "Why" explanation
+  showOwnResponse:   true     // students see what they chose
+}
+```
+
+The student CSV download drops the `correctAnswer` column automatically whenever `showCorrectAnswer` is off, so downloading the file cannot be used to obtain the key.
+
+> **Limitation worth knowing.** The item bank lives in `index.html`, so a student who opens View Source can read the answers. This setting stops casual answer-sharing, not a determined student. If that matters for your use, host the form where students cannot easily view source, or ask and I can obfuscate the key.
 
 ---
 
@@ -83,7 +101,7 @@ Paste the `/exec` URL into `CONFIG.SCRIPT_URL` near the top of the `<script>` bl
 > **Security.** The `/exec` URL is public in this repository and is necessarily reachable by any student browser — that is how the submission works. Treat the destination sheet as append-only and glance at the `Submissions` tab occasionally for junk rows. The **Clear all student data** menu item resets both data tabs. Do not store anything sensitive in this workbook beyond names and periods.
 
 ### 4. Fallback if submission fails
-The results screen always offers **Download my results (CSV)** and **Print / Save as PDF**, so a network failure never costs a student their work. The CSV columns match the `Item Responses` tab exactly and can be pasted straight in.
+The results screen always offers **Download my results (CSV)** and **Print / Save as PDF**, so a network failure never costs a student their work. The CSV mirrors the `Item Responses` tab and can be pasted straight in — minus the `correctAnswer` column, which is withheld from students by default (see above).
 
 ---
 
@@ -93,7 +111,7 @@ The results screen always offers **Download my results (CSV)** and **Print / Sav
 
 | Tab | Use it to |
 |---|---|
-| **Class Dashboard** | See class mean/median, band distribution, and trait means with a recommended instructional tier for each. Start here. |
+| **Class Dashboard** | See class mean/median, achievement-level distribution, and trait means with a recommended instructional tier for each. Start here. |
 | **Trait Mastery** | Per-student percentages on the three rubric traits, color-banded, with each student's lowest trait identified. |
 | **Intervention Groups** | Students auto-grouped by lowest trait, each group paired with the **exact 3-part guided questions and item stems from the GaDOE Peer Revision Guidance** for that trait. This is your mini-lesson plan. |
 | **Item Analysis** | Difficulty (*p*), discrimination (*D*, upper vs. lower 27%), the **most common wrong answer** for each item, and quality flags. The most-common-wrong-answer column is the misconception to address first. |

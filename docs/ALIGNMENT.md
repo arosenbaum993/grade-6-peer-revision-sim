@@ -64,7 +64,7 @@ T1 = Purpose & Organization · T2 = Evidence & Elaboration · T3 = Language Usag
 | 5 | T1 | `6.T.SS.1.c` | Structure & Style | 2 | 1 | Selected response | Replace the weak transition in Sentence 15 |
 | 6 | T1 | `6.T.SS.2.c` | Structure & Style | 3 | 2 | Multi-select (2) | Select TWO sentences to revise for appropriate style |
 | 7 | T1 | `6.T.T.3.c` | Techniques | 2 | 1 | Selected response | Add a sentence for the BEST conclusion |
-| 8 | T1 | `6.T.SS.1.a` | Structure & Style | 3 | 2 | Matching (4×4, 1:1) | Match each revision to the Trait 1 criterion it improves |
+| 8 | T1 | `6.T.SS.1.a` | Structure & Style | 3 | 2 | Matching (4×4, 1:1) | Match each Trait 1 problem to the paragraph where it appears |
 | 9 | T1 | `6.L.V.1.b` | Vocabulary | 2 | 1 | Selected response | Replace vague wording with precise academic language |
 | 10 | T2 | `6.T.T.3.c` | Techniques | 2 | 1 | Selected response | Replace a vague quantity with evidence from Source 1 |
 | 11 | T2 | `6.T.RA.2.b` | Research & Analysis | 3 | 2 | Two-part drop-down | Choose ONE piece of evidence from EACH source |
@@ -105,6 +105,7 @@ T1 = Purpose & Organization · T2 = Evidence & Elaboration · T3 = Language Usag
 - **No length cues.** Every item was checked so the key is not the longest option by a wide margin — the automated threshold is a 1.35× ratio against the longest distractor. Several distractors were lengthened specifically to satisfy this.
 - **Plausible distractors.** Every distractor represents a real Grade 6 misconception (hedging mistaken for a claim, a specific figure with no attribution, a counterclaim named but never answered, a "consistent but wrong tense" revision), not filler.
 - **Verbatim quotation.** Any option quoting the draft quotes it exactly. Truncating a quotation can silently introduce a new grammatical error, which then contaminates the item.
+- **No cross-item leakage.** No item's stem or options reveal another item's key. This is checked automatically (see §7); two violations found by that check were rewritten — item 8 originally quoted item 5's correct transition verbatim, and item 23 originally named one of item 17's two keyed sentences.
 - **No internal contradictions.** No two items assert opposite things about the draft. The absence of a counterclaim, for example, is consistent across items 14, 15, and the drag-and-drop distractor in item 16.
 - **One-to-one matching is enforced in the UI**, so a matching item cannot be answered by assigning one column to every row.
 - **Partial credit on every 2-point item**, mirroring how Georgia Milestones scores 2-point technology-enhanced items.
@@ -142,7 +143,8 @@ The prior build was a 20-item, 20-point analysis quiz about a *polished model es
 | Reporting categories | Included "Argumentative," which is not a blueprint category; merged Grammar and Vocabulary | 3 rubric traits **and** 5 blueprint categories, reported separately |
 | DOK 3 | 30% as coded, ~15% as written — below the 35% floor | 40% ✓ |
 | Scoring | All items 1 point, all-or-nothing | 16×1pt + 7×2pt with partial credit |
-| Achievement levels | "Proficient Learner" at 70% | Practice bands with an explicit non-equivalence disclaimer |
+| Achievement levels | "Proficient Learner" at 70%, no caveat | Same Milestones level names, but with an explicit statement that the cut points are teacher-set and do not predict a Milestones level |
+| Answer key exposure | n/a (no review existed) | Students see per-item points but not the key or rationale; teacher-controlled via `CONFIG.REVIEW` |
 | Answer review | None | Every item with response, key, and rationale |
 
 **Item defects corrected.** Internal contradictions between the old Q17 and Q19 (whether the essay contained a counterclaim) and between the old Q6 and Q11 (whether an informal sentence was the *best* conclusion); a double-keyed conclusion item; a matching item with no 1:1 enforcement; a length-cued drop-down; a duplicate item pair split across two different reporting categories; a "which word from Source 2" item answerable by scanning for the only option word present in the source; and two options silently truncated from the passage, one of which introduced a subject-verb agreement error into a non-key.
@@ -157,6 +159,8 @@ Automated checks run against the built file, not against intent:
 
 - **Structural audit** — one key per SR item; `correctCount` matches keyed options; matching items are square with distinct per-row keys; drag-and-drop banks are at least as large as their slot count; every item carries a trait, standard group, standard, DOK, and rationale.
 - **Length-cue scan** — flags any item where the key is ≥1.35× the longest distractor.
+- **Cross-item leakage scan** — compares every item's key text against everything a student can read on every other item, flagging substantial verbatim overlap.
+- **Answer-key exposure test** — a browser run with every item answered incorrectly, asserting that no key text, and no correct row→column or slot→item pairing, appears anywhere on the results screen.
 - **Blueprint math** — DOK distribution by points recomputed from the bank and checked against the blueprint ranges.
 - **Browser end-to-end (Chromium)** — all-correct run scores 30/30; all-wrong run scores 0/30; partial credit verified on all seven 2-point items across every 2-point type; matching 1:1 exclusivity holds when a student tries to assign one column to every row; the multi-select cap refuses a third selection instead of silently dropping one; progress decrements when an answer is removed; autosave and resume survive a page reload; tap-to-place works under touch emulation at 390px with no horizontal page overflow.
 - **Reporting pipeline** — 25 synthetic submissions with a realistic ability spread were pushed through the Apps Script in a mocked Sheets environment: 25 submission rows, 575 item rows, all ten tabs populated, duplicate submission correctly rejected as idempotent.

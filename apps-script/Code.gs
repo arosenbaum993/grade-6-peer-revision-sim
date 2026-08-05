@@ -15,6 +15,37 @@
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
+/* ═══════════════════════════════════════════════════════════════════════
+   SPREADSHEET_ID
+   ───────────────────────────────────────────────────────────────────────
+   Leave this EMPTY if this script lives inside the spreadsheet itself
+   (you opened it with Extensions → Apps Script from within the Sheet).
+   That is the recommended setup.
+
+   If this is a STANDALONE script project, paste the destination
+   spreadsheet's ID here. It is the long string in the sheet's URL:
+   docs.google.com/spreadsheets/d/  ⟨THIS PART⟩  /edit
+   ═══════════════════════════════════════════════════════════════════════ */
+var SPREADSHEET_ID = '';
+
+/**
+ * Returns the workbook to write to, whether this script is bound to a
+ * spreadsheet or standalone. Throws a readable error instead of failing
+ * with "Cannot call method of null" if neither is available.
+ */
+function getSS_() {
+  if (SPREADSHEET_ID) return SpreadsheetApp.openById(SPREADSHEET_ID);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) {
+    throw new Error(
+      'No spreadsheet found. This looks like a standalone Apps Script project. ' +
+      'Open the destination Google Sheet, copy the ID from its URL ' +
+      '(docs.google.com/spreadsheets/d/THIS_PART/edit), and paste it into ' +
+      'the SPREADSHEET_ID variable at the top of this file.');
+  }
+  return ss;
+}
+
 /* ── Sheet names ───────────────────────────────────────────────────────── */
 var SH = {
   SUB:    'Submissions',
@@ -29,12 +60,14 @@ var SH = {
   STU:    'Student Report'
 };
 
-/* ── Practice bands (must mirror CONFIG.BANDS in index.html) ───────────── */
+/* ── Achievement labels (MUST mirror CONFIG.BANDS in index.html) ────────
+   These use the Georgia Milestones level names, but the cut points are
+   teacher-set practice thresholds — not GaDOE cut scores. ───────────── */
 var BANDS = [
-  {min: 80, label: 'On Track'},
-  {min: 65, label: 'Approaching'},
-  {min: 50, label: 'Needs Support'},
-  {min: 0,  label: 'Needs Substantial Support'}
+  {min: 80, label: 'Distinguished Learner'},
+  {min: 65, label: 'Proficient Learner'},
+  {min: 50, label: 'Developing Learner'},
+  {min: 0,  label: 'Beginning Learner'}
 ];
 
 /* ── Class-mastery tiers used by Item Analysis and Long-Range Planning ─── */
@@ -143,7 +176,7 @@ function doPost(e) {
     var p = JSON.parse(raw);
     if (!p || !p.submissionId || !p.items) return jsonOut({ok: false, error: 'malformed payload'});
 
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getSS_();
     ensureDataSheets_(ss);
 
     // Idempotency — a retry from the student's browser must not double-log.
@@ -242,7 +275,7 @@ function onOpen() {
 }
 
 function setupWorkbook() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSS_();
   ensureDataSheets_(ss);
   [SH.DASH, SH.ITEMAN, SH.MATRIX, SH.TRAIT, SH.GROUPS, SH.VOCAB, SH.PLAN, SH.STU].forEach(function (n) {
     if (!ss.getSheetByName(n)) ss.insertSheet(n);
@@ -265,7 +298,7 @@ function clearAllData() {
     'This permanently deletes every submission and item response in this workbook. ' +
     'Reports will be rebuilt empty. This cannot be undone.', ui.ButtonSet.YES_NO);
   if (r !== ui.Button.YES) return;
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSS_();
   [SH.SUB, SH.ITEMS].forEach(function (n) {
     var s = ss.getSheetByName(n);
     if (s && s.getLastRow() > 1) s.deleteRows(2, s.getLastRow() - 1);
@@ -278,7 +311,7 @@ function clearAllData() {
    REPORT BUILDER
    ═══════════════════════════════════════════════════════════════════════ */
 function rebuildReports() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSS_();
   ensureDataSheets_(ss);
   var data = readData_(ss);
   buildDashboard_(ss, data);
@@ -296,10 +329,15 @@ function readData_(ss) {
   var subs = [], items = [];
   if (subSh.getLastRow() > 1) {
     subSh.getRange(2, 1, subSh.getLastRow() - 1, SUB_HEAD.length).getValues().forEach(function (r) {
+      // The level is recomputed from the percentage rather than read from the
+      // stored column. That way rows logged under older labels or older cut
+      // scores are re-labeled under the current BANDS instead of silently
+      // dropping out of the distribution counts.
       subs.push({
         id: r[0], when: r[1], name: r[2], sid: r[3], period: r[4],
         minutes: r[7], earned: Number(r[8]) || 0, possible: Number(r[9]) || 0, pct: Number(r[10]) || 0,
-        band: r[11], t1: r[12], t2: r[13], t3: r[14], flags: Number(r[23]) || 0, terms: r[24]
+        band: bandFor_(Number(r[10]) || 0), bandAsLogged: r[11],
+        t1: r[12], t2: r[13], t3: r[14], flags: Number(r[23]) || 0, terms: r[24]
       });
     });
   }
@@ -384,7 +422,8 @@ function emptyNotice_(sh, cols) {
 function buildDashboard_(ss, d) {
   var sh = resetSheet_(ss, SH.DASH);
   titleRow_(sh, 'Class Dashboard — Grade 6 Peer Revision Task',
-    'PRACTICE DATA ONLY. The bands below are teacher-set practice thresholds, not Georgia Milestones achievement levels. ' +
+    'PRACTICE DATA ONLY. The levels below use Georgia Milestones NAMES but are based on teacher-set practice cut scores. ' +
+    'They are not official Georgia Milestones achievement levels and do not predict one. ' +
     'Milestones levels are based on scale scores set through GaDOE standard setting. Use these results to plan instruction, not to predict a Milestones score.', 8);
   if (!d.subs.length) { emptyNotice_(sh, 8); sh.setColumnWidth(1, 300); return; }
 
@@ -412,7 +451,7 @@ function buildDashboard_(ss, d) {
   var counts = {};
   BANDS.forEach(function (b) { counts[b.label] = 0; });
   d.subs.forEach(function (s) { counts[s.band] = (counts[s.band] || 0) + 1; });
-  r = writeTable_(sh, r, ['Practice Band', 'Students', '% of Class', 'What it means'], BANDS.map(function (b) {
+  r = writeTable_(sh, r, ['Practice Level', 'Students', '% of Class', 'What it means'], BANDS.map(function (b) {
     return [b.label, counts[b.label] || 0, (counts[b.label] || 0) / d.subs.length,
       b.min >= 80 ? 'Ready for independent peer revision.' :
       b.min >= 65 ? 'Close. Needs targeted practice on one or two traits.' :
@@ -474,7 +513,7 @@ function buildTraitMastery_(ss, d) {
     return [s.name, s.sid, s.period, s.earned, s.pct, s.band,
       t.t1, t.t2, t.t3, TRAIT_GUIDANCE[lowest].name, s.flags];
   });
-  var head = ['Student', 'ID', 'Period', 'Points /30', 'Overall %', 'Practice Band',
+  var head = ['Student', 'ID', 'Period', 'Points /30', 'Overall %', 'Practice Level',
     'T1 Purpose & Organization', 'T2 Evidence & Elaboration', 'T3 Language & Conventions',
     'Lowest Trait (focus here)', 'Vocab Flags'];
   writeTable_(sh, 4, head, rows);
