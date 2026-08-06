@@ -117,11 +117,13 @@ button{font-family:inherit;}
 .part-select.chosen{border-color:var(--navy);background:#eef3fb;}
 
 .match-wrap{overflow-x:auto;}
-.match-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:4px;min-width:520px;}
-.match-table th{background:var(--navy);color:white;padding:8px 9px;text-align:center;font-weight:600;font-size:.72rem;border:1px solid #2a4a6c;}
-.match-table th:first-child{text-align:left;min-width:190px;}
-.match-table td{padding:8px 9px;border:1px solid var(--gray-200);vertical-align:middle;background:white;}
-.match-table td:first-child{font-size:.82rem;color:var(--gray-700);background:var(--gray-100);line-height:1.45;}
+/* table-layout:fixed keeps the grid inside the question panel: header labels
+   wrap instead of forcing horizontal overflow. A min-width here would clip. */
+.match-table{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:4px;table-layout:fixed;}
+.match-table th{background:var(--navy);color:white;padding:7px 5px;text-align:center;font-weight:600;font-size:.67rem;border:1px solid #2a4a6c;line-height:1.25;word-break:break-word;hyphens:auto;}
+.match-table th:first-child{text-align:left;width:36%;font-size:.7rem;}
+.match-table td{padding:8px 5px;border:1px solid var(--gray-200);vertical-align:middle;background:white;}
+.match-table td:first-child{font-size:.78rem;color:var(--gray-700);background:var(--gray-100);line-height:1.4;word-break:break-word;}
 .match-table td:not(:first-child){text-align:center;}
 .match-radio{width:18px;height:18px;cursor:pointer;accent-color:var(--navy);}
 .match-table tr.row-answered td:first-child{font-weight:600;color:var(--navy);}
