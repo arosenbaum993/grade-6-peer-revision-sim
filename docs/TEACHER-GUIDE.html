@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Guide — Grade 6 Peer Revision Task</title>
+<style>
+:root{
+  --paper:#fdfcf8; --ink:#1a2733; --navy:#1a3a5c; --navy-soft:#2f5580;
+  --gold:#c8973a; --gold-pale:#f3e6c8; --gold-wash:#fdf8ed;
+  --t1:#0e7490; --t2:#b45309; --t3:#047857;
+  --grey:#6b6355; --grey-light:#a09789;
+  --rule:#e6ded0; --card:#ffffff; --danger:#a3312a;
+  --measure:68ch;
+  --step:1.5rem;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#14161a; --ink:#e8e3da; --navy:#9dc2e8; --navy-soft:#7ea6cf;
+    --gold:#d9ab55; --gold-pale:#3a3222; --gold-wash:#1e1c17;
+    --t1:#3fb6cf; --t2:#e0913c; --t3:#3dae83;
+    --grey:#a49c8e; --grey-light:#7c7568;
+    --rule:#2c2f36; --card:#1b1e23; --danger:#e08079;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14161a; --ink:#e8e3da; --navy:#9dc2e8; --navy-soft:#7ea6cf;
+  --gold:#d9ab55; --gold-pale:#3a3222; --gold-wash:#1e1c17;
+  --t1:#3fb6cf; --t2:#e0913c; --t3:#3dae83;
+  --grey:#a49c8e; --grey-light:#7c7568;
+  --rule:#2c2f36; --card:#1b1e23; --danger:#e08079;
+}
+:root[data-theme="light"]{
+  --paper:#fdfcf8; --ink:#1a2733; --navy:#1a3a5c; --navy-soft:#2f5580;
+  --gold:#c8973a; --gold-pale:#f3e6c8; --gold-wash:#fdf8ed;
+  --t1:#0e7490; --t2:#b45309; --t3:#047857;
+  --grey:#6b6355; --grey-light:#a09789;
+  --rule:#e6ded0; --card:#ffffff; --danger:#a3312a;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--measure); margin:0 auto; padding:0 1.5rem 5rem;}
+
+/* ── masthead ── */
+.masthead{padding:3.5rem 0 0;}
+.eyebrow{
+  font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--gold); font-weight:700; margin:0 0 .9rem;
+}
+h1{
+  font-family:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+  font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; font-weight:700;
+  color:var(--navy); margin:0 0 .7rem; text-wrap:balance; letter-spacing:-.012em;
+}
+.standfirst{
+  font-size:1.06rem; color:var(--grey); margin:0; max-width:56ch;
+}
+.masthead-rule{
+  height:3px; background:linear-gradient(90deg,var(--gold) 0%,var(--gold-pale) 70%,transparent 100%);
+  margin:2rem 0 0; border:0;
+}
+.meta-strip{
+  display:flex; flex-wrap:wrap; gap:.45rem 1.6rem; margin:1rem 0 0;
+  font-size:.76rem; color:var(--grey-light); letter-spacing:.03em;
+  font-variant-numeric:tabular-nums;
+}
+.meta-strip b{color:var(--grey); font-weight:600;}
+
+/* ── sections ── */
+section{margin-top:3.4rem;}
+h2{
+  font-family:Charter,"Iowan Old Style",Georgia,serif;
+  font-size:1.42rem; color:var(--navy); margin:0 0 .35rem;
+  font-weight:700; letter-spacing:-.008em; text-wrap:balance;
+}
+h2 + .lede{color:var(--grey); margin:0 0 1.5rem; font-size:.96rem; max-width:58ch;}
+h3{
+  font-size:1rem; color:var(--ink); margin:2rem 0 .5rem; font-weight:650;
+}
+p{margin:0 0 1rem;}
+a{color:var(--navy-soft);}
+
+/* ── numbered sequence (only where order is real) ── */
+.steps{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1.6rem;}
+.steps > li{
+  display:grid; grid-template-columns:var(--step) 1fr; gap:1.1rem; align-items:start;
+}
+.stepnum{
+  font-family:Charter,Georgia,serif; font-size:1.35rem; font-weight:700;
+  color:var(--gold); line-height:1.2; text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+.steps h3{margin:0 0 .3rem; font-size:1.02rem;}
+.steps p{margin:0 0 .5rem;}
+.steps p:last-child{margin-bottom:0;}
+
+/* ── tab reference cards (reference, not sequence) ── */
+.tabs{display:grid; gap:.75rem; margin:0; padding:0; list-style:none;}
+.tab{
+  background:var(--card); border:1px solid var(--rule); border-radius:7px;
+  padding:.95rem 1.1rem; display:grid; gap:.3rem;
+}
+.tab-name{
+  font-weight:650; color:var(--navy); font-size:.97rem;
+  display:flex; align-items:baseline; gap:.6rem; flex-wrap:wrap;
+}
+.when{
+  font-size:.66rem; text-transform:uppercase; letter-spacing:.1em;
+  color:var(--grey-light); font-weight:700;
+}
+.tab p{margin:0; font-size:.9rem; color:var(--grey); line-height:1.55;}
+.tab.primary{border-color:var(--gold); background:var(--gold-wash);}
+.tab.primary .tab-name{color:var(--navy);}
+
+/* ── trait strip ── */
+.traits{display:grid; gap:.7rem; margin:1.2rem 0 0;}
+.trait{
+  display:grid; grid-template-columns:4px 1fr; gap:.9rem;
+  background:var(--card); border:1px solid var(--rule); border-radius:6px;
+  overflow:hidden;
+}
+.trait-bar{background:var(--tc);}
+.trait-body{padding:.8rem 1rem .85rem 0;}
+.trait-name{font-weight:650; color:var(--tc); font-size:.95rem; margin:0 0 .15rem;}
+.trait-body p{margin:0; font-size:.88rem; color:var(--grey);}
+.t1{--tc:var(--t1);} .t2{--tc:var(--t2);} .t3{--tc:var(--t3);}
+
+/* ── callouts ── */
+.note{
+  border-left:3px solid var(--gold); background:var(--gold-wash);
+  padding:.9rem 1.1rem; margin:1.4rem 0; border-radius:0 5px 5px 0;
+  font-size:.92rem;
+}
+.note p{margin:0 0 .6rem;} .note p:last-child{margin:0;}
+.note strong{color:var(--navy);}
+.note.caution{border-left-color:var(--danger); background:color-mix(in srgb,var(--danger) 7%,transparent);}
+.note.caution strong{color:var(--danger);}
+
+/* ── say-this block ── */
+.script{
+  font-family:Charter,"Iowan Old Style",Georgia,serif;
+  font-size:1rem; line-height:1.7; color:var(--ink);
+  border:1px solid var(--rule); border-radius:7px; background:var(--card);
+  padding:1.1rem 1.3rem; margin:1rem 0;
+}
+.script p{margin:0 0 .7rem;} .script p:last-child{margin:0;}
+.script-label{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:.65rem; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--gold); font-weight:700; display:block; margin-bottom:.6rem;
+}
+
+/* ── troubleshooting ── */
+.fix{border-top:1px solid var(--rule); padding:1rem 0 .2rem;}
+.fix:first-of-type{border-top:0;}
+.symptom{font-weight:650; color:var(--ink); margin:0 0 .3rem; font-size:.95rem;}
+.fix p{font-size:.91rem; color:var(--grey); margin:0 0 .5rem;}
+kbd{
+  font:inherit; font-size:.88em; background:var(--gold-wash);
+  border:1px solid var(--gold-pale); border-radius:3px; padding:.05em .35em;
+  color:var(--navy); white-space:nowrap;
+}
+
+/* ── checklist ── */
+.check{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.55rem;}
+.check li{display:grid; grid-template-columns:1.15rem 1fr; gap:.7rem; align-items:start; font-size:.95rem;}
+.box{
+  width:1.05rem; height:1.05rem; border:1.5px solid var(--gold); border-radius:3px;
+  margin-top:.28rem;
+}
+
+footer{
+  margin-top:4rem; padding-top:1.4rem; border-top:1px solid var(--rule);
+  font-size:.78rem; color:var(--grey-light); line-height:1.6;
+}
+
+@media print{
+  :root{--paper:#fff; --ink:#111; --card:#fff; --grey:#444; --grey-light:#666;}
+  body{font-size:10.5pt;}
+  .wrap{max-width:none; padding:0;}
+  .masthead{padding-top:0;}
+  section{margin-top:1.6rem; page-break-inside:avoid;}
+  .tab,.trait,.note,.script,.steps>li{page-break-inside:avoid;}
+  h2{page-break-after:avoid;}
+  .no-print{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Georgia Milestones · Grade 6 ELA</p>
+  <h1>Peer Revision Task<br>Practice — Teacher Guide</h1>
+  <p class="standfirst">Everything you need to run the practice with a class and turn the results into next week's instruction. No technical setup required.</p>
+  <hr class="masthead-rule">
+  <div class="meta-strip">
+    <span><b>23</b> items</span>
+    <span><b>30</b> points</span>
+    <span><b>~45</b> minutes</span>
+    <span>Form <b>GR6-PRT-RECYCLING</b> v<b>2026.2</b></span>
+  </div>
+</header>
+
+<section>
+  <h2>What students actually do</h2>
+  <p class="lede">This mirrors the Peer Revision Task on the Georgia Milestones ELA assessment.</p>
+  <p>Students read two short sources and a first draft written by a fictional sixth grader named Marcus, arguing that his school should start a recycling program. His draft has real, deliberate problems: a claim buried in hedging, evidence that says "a huge amount" where a statistic belongs, slang, a subject-verb error, no counterclaim.</p>
+  <p>Every question asks the same thing the state task asks — <em>which revision would make this better?</em> Students aren't writing an essay. They're doing what a good peer reviewer does, and the 21 numbered sentences let each question point at exactly one place in the draft.</p>
+  <p>Questions are scored against the three traits of the Georgia Milestones writing rubric:</p>
+  <div class="traits">
+    <div class="trait t1"><div class="trait-bar"></div><div class="trait-body">
+      <p class="trait-name">Purpose &amp; Organization · 11 points</p>
+      <p>Introduction and claim, relevance, transitions, style for the audience, conclusion.</p>
+    </div></div>
+    <div class="trait t2"><div class="trait-bar"></div><div class="trait-body">
+      <p class="trait-name">Evidence &amp; Elaboration · 10 points</p>
+      <p>Reasons that support the claim, evidence from both sources, elaboration, counterclaim, crediting sources.</p>
+    </div></div>
+    <div class="trait t3"><div class="trait-bar"></div><div class="trait-body">
+      <p class="trait-name">Language Usage &amp; Conventions · 9 points</p>
+      <p>Sentence variety, verb tense, subject-verb agreement, active voice, punctuation.</p>
+    </div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Before the lesson</h2>
+  <p class="lede">Five minutes, once.</p>
+  <ul class="check">
+    <li><span class="box"></span><span>Open the student link yourself and take two or three questions, so you've seen the item types.</span></li>
+    <li><span class="box"></span><span>Check the bottom of the opening screen reads <b>version 2026.2</b> and <b>answer key hidden from students</b>.</span></li>
+    <li><span class="box"></span><span>In your results workbook, choose <b>📊 Peer Revision Reports → Clear all student data</b> to remove any test runs.</span></li>
+    <li><span class="box"></span><span>Confirm students can reach the link on the devices they'll use. It works on Chromebooks, iPads, and phones.</span></li>
+  </ul>
+  <div class="note">
+    <p><strong>Headphones and read-aloud.</strong> There's no audio. The page is plain HTML, so browser and district read-aloud tools work on it normally.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Running it with students</h2>
+  <p class="lede">The task is self-explanatory once they start. This is mostly about framing.</p>
+
+  <ol class="steps">
+    <li>
+      <span class="stepnum">1</span>
+      <div>
+        <h3>Set the purpose before they open it</h3>
+        <p>The framing that matters most: they are the reviewer, not the writer. Something like —</p>
+        <div class="script">
+          <span class="script-label">Say something like</span>
+          <p>"Today you're the peer reviewer. A student named Marcus wrote a first draft, and he's asked you to help him make it better. Your job isn't to write anything — it's to notice what's not working yet and choose the fix."</p>
+          <p>"Every question points at a specific sentence, and the sentences are numbered so you can find them fast. Read his two sources first. He had them too, and some of his weakest sentences are places where he had a fact available and didn't use it."</p>
+        </div>
+      </div>
+    </li>
+    <li>
+      <span class="stepnum">2</span>
+      <div>
+        <h3>Point out the vocabulary flag</h3>
+        <p>Each question has a <b>Flag Vocabulary</b> button. Tell students plainly: flagging costs them nothing, doesn't affect the score, and is the fastest way to tell you a word is in their way.</p>
+        <p>It's worth thirty seconds of setup. Students under-report confusion unless you make it explicitly safe, and this is the only place in the task where they can tell you something the score can't.</p>
+      </div>
+    </li>
+    <li>
+      <span class="stepnum">3</span>
+      <div>
+        <h3>Let them know they can change answers</h3>
+        <p>Nothing locks. They can change or clear any answer up to the moment they submit, and <b>Go to next unanswered</b> at the bottom finds anything skipped. Work saves automatically, so a closed tab or a dead battery doesn't lose it — reopening offers to resume.</p>
+      </div>
+    </li>
+    <li>
+      <span class="stepnum">4</span>
+      <div>
+        <h3>Afterwards, refresh the reports</h3>
+        <p>Scores arrive in your workbook the instant each student submits. The eight analysis tabs are built when you ask for them: <b>📊 Peer Revision Reports → Refresh all reports</b>.</p>
+        <p>Do this once after the class finishes rather than during. The Class Dashboard tells you when new results are waiting, so you'll never wonder whether what you're looking at is current.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <h2>Reading your reports</h2>
+  <p class="lede">Eight tabs. You do not need all of them. Start with the two marked below and stop there if that's all the time you have.</p>
+
+  <ul class="tabs">
+    <li class="tab primary">
+      <div class="tab-name">Class Dashboard <span class="when">Start here</span></div>
+      <p>Class mean, how many students landed at each level, and each of the three traits with a recommended instructional tier. Two minutes tells you whether this is a whole-class reteach or a small-group pull.</p>
+    </li>
+    <li class="tab primary">
+      <div class="tab-name">Intervention Groups <span class="when">Start here</span></div>
+      <p>Students grouped by their weakest trait, each group paired with the matching three-part guided questions and item stems from the GaDOE Peer Revision Guidance. This is close to a ready-made mini-lesson plan — the questions are the state's own wording, not a paraphrase.</p>
+    </li>
+    <li class="tab">
+      <div class="tab-name">Item Analysis <span class="when">Diagnosing</span></div>
+      <p>Per question: how hard it was, how well it separated stronger from weaker students, and <b>the wrong answer most students chose</b>. That last column is the most useful thing in the workbook — it names the misconception instead of just the gap.</p>
+    </li>
+    <li class="tab">
+      <div class="tab-name">Trait Mastery <span class="when">Conferring</span></div>
+      <p>Every student's three trait percentages, colour-banded, with their lowest trait named.</p>
+    </li>
+    <li class="tab">
+      <div class="tab-name">Long-Range Planning <span class="when">Unit planning</span></div>
+      <p>Class mastery by standard, weakest first, each with a concrete instructional move. Run the task again later in the year and compare to see whether it moved.</p>
+    </li>
+    <li class="tab">
+      <div class="tab-name">Vocabulary Flags <span class="when">Word work</span></div>
+      <p>The terms students flagged, ranked by how many flagged them. A vocabulary mini-lesson list built by the students themselves.</p>
+    </li>
+    <li class="tab">
+      <div class="tab-name">Student × Item <span class="when">Patterns</span></div>
+      <p>A colour-coded grid. Read down a column to find a question the whole class missed; read across a row for one student's pattern.</p>
+    </li>
+    <li class="tab">
+      <div class="tab-name">Student Report <span class="when">Conferences · MTSS</span></div>
+      <p>Choose a student from the dropdown for a one-page profile. Built to print for a conference, a family meeting, or MTSS documentation.</p>
+    </li>
+  </ul>
+
+  <h3>Turning Intervention Groups into Monday</h3>
+  <p>Open the group with the most students. Its focus line names the rubric criteria at stake, and beneath it sit the state's guided questions in three parts — noticing, judging, revising. Take one question, model it on Marcus's draft with the class, then hand the group a peer's real draft and the same question. That is the gradual-release sequence the GaDOE guidance describes, with the data telling you which criterion to spend the time on.</p>
+</section>
+
+<section>
+  <h2>What the score means — and what it doesn't</h2>
+  <p class="lede">Worth reading once before you share results with anyone.</p>
+
+  <div class="note caution">
+    <p><strong>The levels are not Georgia Milestones achievement levels.</strong> Students see Distinguished, Proficient, Developing, or Beginning Learner because those names are familiar. But the cut points behind them — 80%, 65%, 50% — were set by a teacher, not by GaDOE. Official Milestones levels come from scale scores established through standard setting, which happens after a new assessment is first administered. There is no percentage that converts to a Milestones level, so this score cannot predict one.</p>
+  </div>
+
+  <p><b>Trait scores rest on 9 to 11 points each.</b> That's enough to point a small group in a direction. It is not enough to diagnose an individual child. Before you act on one student's trait score, confirm the pattern in Item Analysis or Student × Item — or simply ask them.</p>
+
+  <p><b>Item Analysis needs numbers.</b> Below roughly twenty students, the discrimination column is flagged as unreliable rather than shown as a precise-looking figure. Difficulty and the most-common-wrong-answer are still useful at any class size.</p>
+
+  <p><b>Vocabulary flags are self-reported.</b> They show where students <em>know</em> they're stuck. Pair them with item difficulty to catch the words they didn't realise were blocking them.</p>
+</section>
+
+<section>
+  <h2>If something goes wrong</h2>
+  <p class="lede">Three things account for nearly every problem, and each has a specific check.</p>
+
+  <div class="fix">
+    <p class="symptom">Scores aren't appearing in the spreadsheet</p>
+    <p>In the Apps Script editor, open <b>Executions</b> in the left sidebar and look for <kbd>doPost</kbd> entries. <b>No <kbd>doPost</kbd> at all</b> means submissions are reaching a different script — the link's <kbd>SCRIPT_URL</kbd> doesn't match the Web app URL under <b>Deploy → Manage deployments</b>. <b><kbd>doPost — Failed</kbd></b> means the deployment is running old code; redeploy a new version.</p>
+  </div>
+
+  <div class="fix">
+    <p class="symptom">A red "Not connected to a results sheet" banner on the opening screen</p>
+    <p>The copy of the page students are opening has no results destination set. Scores won't be saved, though students can still take the practice and download their own results. Whoever set up the link needs to paste the Web app URL into it.</p>
+  </div>
+
+  <div class="fix">
+    <p class="symptom">Some report tabs look out of date</p>
+    <p>Choose <b>Refresh all reports</b>. If a tab genuinely failed, you'll get a message naming the tab and the reason, and the same detail is written at the bottom of the Class Dashboard — send that text on rather than describing the symptom.</p>
+  </div>
+
+  <div class="fix">
+    <p class="symptom">A student's submission didn't go through</p>
+    <p>On their results screen, <b>Download my results (CSV)</b> saves everything. Those columns match the <b>Item Responses</b> tab and can be pasted straight in. Nothing is lost as long as they don't close that screen.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Reusing the task</h2>
+  <p>Students see their score and which questions they earned points on — <b>not</b> the correct answers, and not the explanations. That's deliberate, so the same form works across periods and again next year. You hold the full key and every student's actual response in the workbook.</p>
+  <p>If you'd rather go over it with answers visible on screen, that can be switched on — it's a one-line change in the file, and worth doing on a deliberate review day rather than leaving on.</p>
+  <div class="note">
+    <p><strong>One honest limit.</strong> The questions and answers live inside the web page, so a determined student who opens the page source can read them. This setting stops answer-sharing between classes; it isn't exam security.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Built against Georgia's K-12 ELA Standards for Grade 6, the Grade 6 ELA Assessment Blueprint (August 2025), the Grade 6 Achievement Level Descriptors (October 2025), the Grade 6 Classroom Peer Revision Guidance (February 2026), and the Georgia Milestones 8-Point 3-Trait Writing Rubric.</p>
+  <p>Sources in the task are instructional texts written for this practice. Figures in Source 1 reflect published national waste data; the school in Source 2 is a composite example. This is a classroom practice activity and is not affiliated with or endorsed by the Georgia Department of Education.</p>
+</footer>
+
+</div>
+</body>
+</html>

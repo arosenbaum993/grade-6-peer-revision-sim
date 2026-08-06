@@ -4,15 +4,18 @@ A browser-based practice simulation of the Georgia Milestones **Peer Revision Ta
 
 Students read a peer's flawed draft article and two sources, then answer 23 items about how to revise it. Results post automatically to a Google Sheets workbook that produces class analytics, item analysis, intervention groupings, and printable individual student reports.
 
+**Handing this to teachers?** Give them [`docs/TEACHER-GUIDE.html`](docs/TEACHER-GUIDE.html) — a printable guide that covers running the task and reading the reports, with no technical setup in it. Everything below is for whoever does the setup.
+
 ---
 
 ## Contents
 
 | Path | What it is |
 |---|---|
+| **`docs/TEACHER-GUIDE.html`** | **Start here if you are handing this to teachers.** A printable, non-technical guide: how to run it with a class, what to say, how to read the eight report tabs, and what the score does and does not mean. Open in a browser, or File → Print for a 7-page PDF. |
 | `index.html` | The complete student-facing simulation. Single file, no build step, no dependencies. |
 | `apps-script/Code.gs` | Google Apps Script: results endpoint + report builder for the teacher workbook. |
-| `docs/ALIGNMENT.md` | Item-by-item alignment map, blueprint evidence, and psychometric notes. |
+| `docs/ALIGNMENT.md` | Item-by-item alignment map, blueprint evidence, and psychometric notes. Written for whoever vets the assessment quality, not for classroom teachers. |
 
 ---
 
