@@ -10,8 +10,10 @@
  *  First run:  reload the spreadsheet, then use the
  *              "📊 Peer Revision Reports" menu → "Set up workbook".
  *
- *  Reports refresh automatically after each submission, and on demand from
- *  the same menu.
+ *  Student results are written the instant they submit. The eight report tabs
+ *  are rebuilt on demand via "Refresh all reports" — a full rebuild is slow
+ *  enough that running it inside every submission made students wait and left
+ *  tabs half-built. The Class Dashboard shows when new results are pending.
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
@@ -194,7 +196,12 @@ function doPost(e) {
     writeSubmission_(sub, p);
     writeItems_(ss.getSheetByName(SH.ITEMS), p);
 
-    try { rebuildReports(); } catch (err) { /* never fail a student's submit over a report error */ }
+    // Deliberately NOT rebuilding reports here. A full rebuild is ~350 Sheets
+    // operations (10-20s). Running it inside every submit meant a class
+    // submitting together queued on the 30s script lock, later submissions were
+    // killed part-way through the rebuild, and tabs were left half-updated.
+    // Data is written immediately; reports refresh from the menu.
+    markDirty_(p.submissionId);
 
     return jsonOut({ok: true, submissionId: p.submissionId, points: p.pointsEarned});
   } catch (err) {
@@ -202,6 +209,25 @@ function doPost(e) {
   } finally {
     try { lock.releaseLock(); } catch (e2) {}
   }
+}
+
+/** Record that new results have landed since the last report refresh. */
+function markDirty_(id) {
+  try {
+    var props = PropertiesService.getScriptProperties();
+    var n = Number(props.getProperty('pendingCount') || 0) + 1;
+    props.setProperties({pendingCount: String(n), lastSubmissionAt: new Date().toISOString()});
+  } catch (e) { /* tracking is a convenience, never block a submit for it */ }
+}
+function clearDirty_() {
+  try {
+    PropertiesService.getScriptProperties().setProperties(
+      {pendingCount: '0', lastRefreshAt: new Date().toISOString()});
+  } catch (e) {}
+}
+function pendingCount_() {
+  try { return Number(PropertiesService.getScriptProperties().getProperty('pendingCount') || 0); }
+  catch (e) { return 0; }
 }
 
 function doGet() {
@@ -268,7 +294,7 @@ function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('📊 Peer Revision Reports')
     .addItem('Set up workbook', 'setupWorkbook')
-    .addItem('Refresh all reports', 'rebuildReports')
+    .addItem('Refresh all reports (do this after students submit)', 'refreshReportsFromMenu')
     .addSeparator()
     .addItem('Clear all student data', 'clearAllData')
     .addToUi();
@@ -288,8 +314,11 @@ function setupWorkbook() {
     });
   rebuildReports();
   ss.setActiveSheet(ss.getSheetByName(SH.DASH));
-  SpreadsheetApp.getUi().alert('Workbook ready.\n\nStudent results will appear automatically as they submit. ' +
-    'Use "Refresh all reports" any time you want to update the analysis by hand.');
+  SpreadsheetApp.getUi().alert('Workbook ready.\n\n' +
+    'Student scores land in the Submissions and Item Responses tabs the moment they submit.\n\n' +
+    'The eight report tabs are rebuilt when you choose "Refresh all reports" — not on every ' +
+    'submission, because a full rebuild takes 10-20 seconds and would make students wait. ' +
+    'The Class Dashboard tells you when new results are waiting to be included.');
 }
 
 function clearAllData() {
@@ -314,14 +343,58 @@ function rebuildReports() {
   var ss = getSS_();
   ensureDataSheets_(ss);
   var data = readData_(ss);
-  buildDashboard_(ss, data);
-  buildTraitMastery_(ss, data);
-  buildInterventionGroups_(ss, data);
-  buildItemAnalysis_(ss, data);
-  buildPlanning_(ss, data);
-  buildVocab_(ss, data);
-  buildMatrix_(ss, data);
-  buildStudentReport_(ss, data);
+  var steps = [
+    [SH.DASH,   buildDashboard_],
+    [SH.TRAIT,  buildTraitMastery_],
+    [SH.GROUPS, buildInterventionGroups_],
+    [SH.ITEMAN, buildItemAnalysis_],
+    [SH.PLAN,   buildPlanning_],
+    [SH.VOCAB,  buildVocab_],
+    [SH.MATRIX, buildMatrix_],
+    [SH.STU,    buildStudentReport_]
+  ];
+  var failures = [];
+  steps.forEach(function (step) {
+    // Each tab is isolated. Previously these ran in sequence with no guard, so
+    // a single failure left every later tab showing stale data with no warning.
+    try {
+      step[1](ss, data);
+      flushRules_(ss.getSheetByName(step[0]));
+    } catch (err) {
+      failures.push(step[0] + ' — ' + ((err && err.message) ? err.message : String(err)));
+    }
+  });
+  if (failures.length) {
+    console.error('rebuildReports: ' + failures.join(' | '));
+    noteFailures_(ss, failures);
+  } else {
+    clearDirty_();
+  }
+  return failures;
+}
+
+/** Make a failed rebuild visible instead of silent. */
+function noteFailures_(ss, failures) {
+  var sh = ss.getSheetByName(SH.DASH);
+  if (!sh) return;
+  try {
+    var r = sh.getLastRow() + 2;
+    sh.getRange(r, 1).setValue('\u26a0 Some reports could not be rebuilt. Use "Refresh all reports"; if it persists, send these lines to support:')
+      .setFontWeight('bold').setFontColor('#b3261e');
+    failures.forEach(function (f, i) { sh.getRange(r + 1 + i, 1).setValue(f).setFontColor('#b3261e'); });
+  } catch (e) { /* the dashboard itself may be the thing that failed */ }
+}
+
+/** Menu entry point: refresh, and say so plainly either way. */
+function refreshReportsFromMenu() {
+  var failures = rebuildReports();
+  var ui = SpreadsheetApp.getUi();
+  if (failures && failures.length) {
+    ui.alert('Some reports failed to rebuild:\n\n' + failures.join('\n\n') +
+             '\n\nThe details are also written at the bottom of the Class Dashboard.');
+  } else {
+    ui.alert('All reports refreshed.');
+  }
 }
 
 function readData_(ss) {
@@ -375,10 +448,15 @@ function styleHeader_(sh, cols) {
 }
 function resetSheet_(ss, name) {
   var sh = ss.getSheetByName(name) || ss.insertSheet(name);
+  var all = sh.getRange(1, 1, sh.getMaxRows(), sh.getMaxColumns());
+  // clear() does NOT remove merged regions. On a rebuild the row positions move
+  // with the data, so a later merge() that only partially overlaps a leftover
+  // merge throws — which used to abort the whole rebuild and leave every
+  // subsequent tab stale. Break merges explicitly first. No-op if none exist.
+  all.breakApart();
   sh.clear();
   sh.clearConditionalFormatRules();
-  var notes = sh.getRange(1, 1, sh.getMaxRows(), sh.getMaxColumns());
-  notes.clearNote();
+  all.clearNote();
   return sh;
 }
 function titleRow_(sh, text, sub, cols) {
@@ -394,6 +472,9 @@ function writeTable_(sh, startRow, head, rows) {
   return startRow + rows.length + 1;
 }
 function pctBands_(sh, range) {
+  // Rules are queued on the sheet object and written once, at the end of the
+  // report. Each get/set pair is a network round trip; doing it per call was a
+  // large share of the rebuild cost.
   var rules = [
     SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThanOrEqualTo(0.8)
       .setBackground('#d4efdc').setRanges([range]).build(),
@@ -404,8 +485,14 @@ function pctBands_(sh, range) {
     SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0.5)
       .setBackground('#fadbd8').setRanges([range]).build()
   ];
-  var existing = sh.getConditionalFormatRules();
-  sh.setConditionalFormatRules(existing.concat(rules));
+  sh.__pendingRules = (sh.__pendingRules || []).concat(rules);
+}
+
+/** Write all queued conditional-format rules for a sheet in one call. */
+function flushRules_(sh) {
+  if (!sh || !sh.__pendingRules || !sh.__pendingRules.length) return;
+  sh.setConditionalFormatRules(sh.__pendingRules);
+  sh.__pendingRules = [];
 }
 function mean_(arr) { return arr.length ? arr.reduce(function (a, b) { return a + b; }, 0) / arr.length : 0; }
 function bandFor_(pct) {
@@ -428,6 +515,14 @@ function buildDashboard_(ss, d) {
   if (!d.subs.length) { emptyNotice_(sh, 8); sh.setColumnWidth(1, 300); return; }
 
   var r = 4;
+  var pending = pendingCount_();
+  if (pending > 0) {
+    sh.getRange(r, 1).setValue('\u21bb ' + pending + ' new submission' + (pending === 1 ? '' : 's') +
+      ' since these reports were built. Use \u201cPeer Revision Reports \u2192 Refresh all reports\u201d to include them.')
+      .setFontWeight('bold').setFontColor('#7a5a00').setBackground('#fff8e6').setWrap(true);
+    sh.getRange(r, 1, 1, 5).merge();
+    r += 2;
+  }
   var pcts = d.subs.map(function (s) { return s.pct; });
   var sorted = pcts.slice().sort(function (a, b) { return a - b; });
   var median = sorted.length % 2 ? sorted[(sorted.length - 1) / 2]
@@ -768,16 +863,16 @@ function buildMatrix_(ss, d) {
     SpreadsheetApp.newConditionalFormatRule().whenNumberEqualTo(1).setBackground('#fdf1cf').setRanges([body]).build(),
     SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThanOrEqualTo(2).setBackground('#d4efdc').setRanges([body]).build()
   ];
-  sh.setConditionalFormatRules(sh.getConditionalFormatRules().concat(rules));
+  sh.__pendingRules = (sh.__pendingRules || []).concat(rules);
   // 1-point items: a 1 is full credit, so recolour those columns green
   var onePt = {};
   d.items.forEach(function (i) { if (i.possible === 1) onePt[i.n] = true; });
   nums.forEach(function (n, idx) {
     if (!onePt[n]) return;
     var col = sh.getRange(5, 3 + idx, rows.length, 1);
-    sh.setConditionalFormatRules(sh.getConditionalFormatRules().concat([
+    sh.__pendingRules = (sh.__pendingRules || []).concat([
       SpreadsheetApp.newConditionalFormatRule().whenNumberEqualTo(1).setBackground('#d4efdc').setRanges([col]).build()
-    ]));
+    ]);
   });
   sh.setFrozenRows(4); sh.setFrozenColumns(2);
   sh.setColumnWidth(1, 170);

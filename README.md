@@ -117,7 +117,15 @@ The results screen always offers **Download my results (CSV)** and **Print / Sav
 
 ## The teacher workbook
 
-**Set up workbook** creates ten tabs. All analysis refreshes automatically after each submission, and on demand via **Refresh all reports**. Only each student's **most recent attempt** is analyzed, so retakes do not double-count.
+**Set up workbook** creates ten tabs. Only each student's **most recent attempt** is analyzed, so retakes do not double-count.
+
+### How refreshing works
+
+Student scores land in **Submissions** and **Item Responses** the instant a student submits — that path is about two spreadsheet operations and finishes in well under a second.
+
+The eight *report* tabs are rebuilt when you choose **📊 Peer Revision Reports → Refresh all reports**. They are deliberately **not** rebuilt on every submission: a full rebuild is roughly 300 spreadsheet operations and takes 10–20 seconds. Running that inside every submit meant a class submitting together queued on the script lock, later submissions were killed part-way through their rebuild, and tabs were left half-updated — some current, some stale, with no warning.
+
+The **Class Dashboard** shows a banner counting submissions received since the last refresh, so you always know whether what you are looking at is current. Refresh once after a class finishes.
 
 | Tab | Use it to |
 |---|---|
