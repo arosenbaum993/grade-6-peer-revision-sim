@@ -462,12 +462,14 @@ button{font-family:inherit;}
    as append-only and review it for junk rows periodically.
    ═══════════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  // ⬇⬇⬇  PASTE YOUR OWN /exec URL BETWEEN THE QUOTES  ⬇⬇⬇
+  // The Apps Script Web App that receives results.
   // Apps Script → Deploy → Manage deployments → copy the Web app URL.
-  // Deliberately left empty: a URL belonging to some OTHER Apps Script project
-  // fails silently — students see "submitted" while nothing reaches your sheet.
-  // An empty value fails loudly instead, before a class period is wasted.
-  SCRIPT_URL: "",
+  // If you ever redeploy under a NEW deployment (rather than a new version of
+  // the existing one), the URL changes and must be updated here.
+  // Leaving this empty is safe: the page says so on the opening screen and
+  // falls back to the CSV download. A WRONG url is the dangerous case — it
+  // fails silently, writing to someone else's spreadsheet.
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbyxzkYl2X1rxqEWm8fJsDX3YITNixNqbCvrQYZ_bu5KwOm0PeZxHv8hLmgjd4EHLhkZ/exec",
   FORM_ID: "GR6-PRT-RECYCLING",
   // Bumped from 2026.1: items 8 and 23 were rewritten to remove cross-item
   // answer leakage, so scores on those items are not comparable across versions.

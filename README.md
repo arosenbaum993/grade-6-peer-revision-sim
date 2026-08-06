@@ -94,7 +94,7 @@ Host `index.html` anywhere that serves static files — GitHub Pages, Google Sit
 4. Reload the spreadsheet. A **📊 Peer Revision Reports** menu appears. Click **Set up workbook**.
 
 ### 3. Connect the two — the step most likely to bite you
-`CONFIG.SCRIPT_URL` ships **empty**. Paste your own `/exec` URL between the quotes, near the top of the `<script>` block in `index.html`:
+`CONFIG.SCRIPT_URL` in this repository points at the maintainer's own results sheet. **If you are deploying your own copy, replace it.** Paste your `/exec` URL between the quotes, near the top of the `<script>` block in `index.html`:
 
 ```js
 SCRIPT_URL: "https://script.google.com/macros/s/AKfy…/exec",
@@ -102,7 +102,7 @@ SCRIPT_URL: "https://script.google.com/macros/s/AKfy…/exec",
 
 Get it from **Deploy → Manage deployments** in the Apps Script editor — not from the browser address bar of the editor itself.
 
-Until you do, the opening screen shows a red **"Not connected to a results sheet"** banner. That is deliberate: a URL belonging to *someone else's* Apps Script project fails silently — students see "submitted" while nothing reaches your sheet — so an empty value that fails loudly is the safer default.
+If you leave it **empty**, the opening screen shows a red **"Not connected to a results sheet"** banner and the page falls back to the CSV download. That is the safe failure. The dangerous case is a URL belonging to *someone else's* Apps Script project: it fails silently — students see "submitted" while nothing reaches your sheet.
 
 **If scores are not arriving,** open **Executions** (⏱ in the Apps Script left sidebar) and look for `doPost` entries. No `doPost` at all means submissions are reaching a different script: your `SCRIPT_URL` is wrong. `doPost — Failed` means the deployed code is out of date; redeploy a new version.
 
