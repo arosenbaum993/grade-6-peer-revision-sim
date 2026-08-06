@@ -446,13 +446,23 @@ function styleHeader_(sh, cols) {
     .setVerticalAlignment('middle').setWrap(true);
   sh.setFrozenRows(1);
 }
+/**
+ * Return a sheet in a fully known state.
+ *
+ * clear() resets cell contents and formatting but leaves TWO things behind:
+ * merged ranges, and frozen rows/columns. Both then collide with what a
+ * rebuild wants to do — Sheets refuses to merge across a frozen boundary, and
+ * refuses to freeze across a merge. Either error aborted that report. The
+ * leftovers can come from a previous build OR from the teacher freezing a pane
+ * by hand while reading the sheet, so nothing may be assumed about the state.
+ *
+ * Unfreeze and unmerge first; each builder then applies what it needs.
+ */
 function resetSheet_(ss, name) {
   var sh = ss.getSheetByName(name) || ss.insertSheet(name);
+  sh.setFrozenRows(0);
+  sh.setFrozenColumns(0);
   var all = sh.getRange(1, 1, sh.getMaxRows(), sh.getMaxColumns());
-  // clear() does NOT remove merged regions. On a rebuild the row positions move
-  // with the data, so a later merge() that only partially overlaps a leftover
-  // merge throws — which used to abort the whole rebuild and leave every
-  // subsequent tab stale. Break merges explicitly first. No-op if none exist.
   all.breakApart();
   sh.clear();
   sh.clearConditionalFormatRules();
@@ -511,9 +521,11 @@ function bandFor_(pct) {
   return BANDS[BANDS.length - 1].label;
 }
 function emptyNotice_(sh, cols) {
-  sh.getRange(4, 1).setValue('No student submissions yet. This report fills in automatically as students submit.')
+  // Deliberately not merged. The text overflows the empty cells to its right,
+  // which reads the same, and an unmerged notice can never conflict with a
+  // frozen column a builder sets afterwards.
+  sh.getRange(4, 1).setValue('No student submissions yet. This report fills in as students submit — then use "Refresh all reports".')
     .setFontColor('#999999').setFontStyle('italic');
-  sh.getRange(4, 1, 1, cols).merge();
 }
 
 /* ── 1. CLASS DASHBOARD ──────────────────────────────────────────────── */
