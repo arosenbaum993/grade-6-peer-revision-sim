@@ -459,11 +459,22 @@ function resetSheet_(ss, name) {
   all.clearNote();
   return sh;
 }
-function titleRow_(sh, text, sub, cols) {
+/**
+ * Title and subtitle in rows 1-2.
+ * Pass willFreezeColumns=true on sheets that call setFrozenColumns(): Sheets
+ * refuses to freeze a column boundary that cuts through a merged range
+ * ("you can't freeze columns which contain only part of a merged cell"), which
+ * previously failed the whole report. On those sheets the text is left
+ * unmerged and simply overflows across the empty cells to its right.
+ */
+function titleRow_(sh, text, sub, cols, willFreezeColumns) {
   sh.getRange(1, 1).setValue(text).setFontSize(14).setFontWeight('bold').setFontColor('#1a3a5c');
-  sh.getRange(2, 1).setValue(sub).setFontSize(9).setFontColor('#666666').setWrap(true);
-  sh.getRange(1, 1, 1, cols).merge();
-  sh.getRange(2, 1, 1, cols).merge();
+  sh.getRange(2, 1).setValue(sub).setFontSize(9).setFontColor('#666666')
+    .setWrap(!willFreezeColumns);
+  if (!willFreezeColumns) {
+    sh.getRange(1, 1, 1, cols).merge();
+    sh.getRange(2, 1, 1, cols).merge();
+  }
 }
 function writeTable_(sh, startRow, head, rows) {
   sh.getRange(startRow, 1, 1, head.length).setValues([head])
@@ -528,6 +539,7 @@ function buildDashboard_(ss, d) {
   var median = sorted.length % 2 ? sorted[(sorted.length - 1) / 2]
     : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
 
+  var overviewHeader = r;
   r = writeTable_(sh, r, ['Overview', 'Value'], [
     ['Students assessed', d.subs.length],
     ['Class mean', mean_(pcts)],
@@ -539,7 +551,11 @@ function buildDashboard_(ss, d) {
     })()],
     ['Total attempts logged (incl. retakes)', d.allSubs.length]
   ]);
-  sh.getRange(6, 2, 2, 1).setNumberFormat('0%');   // rows 6-7 = class mean, class median
+  // Relative to the table, not absolute: the stale-results banner above shifts
+  // these rows, and a hard-coded range formatted "Students assessed" as 300%.
+  sh.getRange(overviewHeader + 2, 2, 2, 1).setNumberFormat('0%');  // class mean, class median
+  sh.getRange(overviewHeader + 1, 2, 1, 1).setNumberFormat('0');   // students assessed = a count
+  sh.getRange(overviewHeader + 6, 2, 1, 1).setNumberFormat('0');   // total attempts = a count
   r += 1;
 
   // Band distribution
@@ -599,7 +615,7 @@ function buildTraitMastery_(ss, d) {
   titleRow_(sh, 'Trait Mastery by Student',
     'Each student\'s percentage on the three traits of the Georgia Milestones writing rubric. ' +
     'Trait scores come from 9–11 points each, so treat a single student\'s trait score as a starting point for a conversation, not a diagnosis. ' +
-    'Look at the Item Analysis and Student x Item sheets to confirm a pattern before grouping.', 8);
+    'Look at the Item Analysis and Student x Item sheets to confirm a pattern before grouping.', 8, true);
   if (!d.subs.length) { emptyNotice_(sh, 8); return; }
 
   var rows = d.subs.map(function (s) {
@@ -824,7 +840,7 @@ function buildMatrix_(ss, d) {
   var sh = resetSheet_(ss, SH.MATRIX);
   titleRow_(sh, 'Student x Item Matrix',
     'Points earned on each item. Green = full credit, yellow = partial, red = none. ' +
-    'Read down a column to find an item the whole class missed (reteach it). Read across a row to find a student\'s pattern.', 8);
+    'Read down a column to find an item the whole class missed (reteach it). Read across a row to find a student\'s pattern.', 8, true);
   if (!d.items.length) { emptyNotice_(sh, 8); return; }
 
   var nums = [];
