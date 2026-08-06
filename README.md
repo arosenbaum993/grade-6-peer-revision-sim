@@ -4,7 +4,7 @@ A browser-based practice simulation of the Georgia Milestones **Peer Revision Ta
 
 Students read a peer's flawed draft article and two sources, then answer 23 items about how to revise it. Results post automatically to a Google Sheets workbook that produces class analytics, item analysis, intervention groupings, and printable individual student reports.
 
-**Handing this to teachers?** Give them [`docs/TEACHER-GUIDE.html`](docs/TEACHER-GUIDE.html) — a printable guide that covers running the task and reading the reports, with no technical setup in it. Everything below is for whoever does the setup.
+**Using this in a classroom?** [`docs/TEACHER-GUIDE.html`](docs/TEACHER-GUIDE.html) is the printable guide — running the task with students and reading the reports, with no technical setup in it. Everything below is for whoever maintains the files.
 
 ---
 
@@ -97,7 +97,7 @@ Host `index.html` anywhere that serves static files — GitHub Pages, Google Sit
 4. Reload the spreadsheet. A **📊 Peer Revision Reports** menu appears. Click **Set up workbook**.
 
 ### 3. Connect the two — the step most likely to bite you
-`CONFIG.SCRIPT_URL` in this repository points at the maintainer's own results sheet. **If you are deploying your own copy, replace it.** Paste your `/exec` URL between the quotes, near the top of the `<script>` block in `index.html`:
+`CONFIG.SCRIPT_URL` is already set to this project's own results deployment, so a copy taken from here works as-is. **If you are setting up a separate workbook, replace it** — paste your `/exec` URL between the quotes, near the top of the `<script>` block in `index.html`:
 
 ```js
 SCRIPT_URL: "https://script.google.com/macros/s/AKfy…/exec",
